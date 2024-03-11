@@ -10,7 +10,7 @@ OBJS			:= $(SRCS:.c=.o)
 CC				:= gcc
 RM				:= rm -rf
 CFLAGS			:= -Wall -Wextra -Werror  -I. #-ggdb3 -fsanitize=address
-MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -I MLX42/include
+MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit  -L "/Users/$(USER)/.brew/opt/glfw/lib/" -I MLX42/include -lglfw
 NAME			:= cub3d
 
 all:			libmlx $(NAME) 
@@ -20,7 +20,7 @@ libmlx:
 
 $(NAME):		$(OBJS) 
 				$(MAKE) bonus -C ./libft
-				$(CC) $(CFLAGS) -o $(NAME) $(OBJS) libft/libft.a MLX42/build/libmlx42.a
+				$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) libft/libft.a MLX42/build/libmlx42.a
 
 clean:
 				$(MAKE) clean -C ./libft
@@ -32,7 +32,7 @@ fclean:			clean
 				$(RM) $(NAME)
 				$(RM) $(NAME_BONUS)
 
-re:				fclean $(NAME)
+re:				fclean libmlx $(NAME)
 
 .PHONY:			all clean fclean re bonus
 # .SILENT:
