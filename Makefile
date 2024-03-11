@@ -8,15 +8,15 @@ OBJS			:= $(SRCS:.c=.o)
 # OBJS_PIPEX		:= $(addprefix pipex/,$(SRCS_PIPEX:.c=.o))
 # OBJS_EXEC		:= $(addprefix exec/,$(SRCS_EXEC:.c=.o))
 CC				:= gcc
-RM				:= rm -f
+RM				:= rm -rf
 CFLAGS			:= -Wall -Wextra -Werror  -I. #-ggdb3 -fsanitize=address
-MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
-NAME			:= minishell
+MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -I MLX42/include
+NAME			:= cub3d
 
-all:			$(NAME) libmlx
+all:			libmlx $(NAME) 
 
 libmlx:
-	@cmake 42MLX -B 42MLX/build && make -C 42MLX/build -j4
+	@cmake ./MLX42 -B ./MLX42/build && make -C ./MLX42/build -j4
 
 $(NAME):		$(OBJS) 
 				$(MAKE) bonus -C ./libft
@@ -25,7 +25,7 @@ $(NAME):		$(OBJS)
 clean:
 				$(MAKE) clean -C ./libft
 				$(RM) $(OBJS)
-				$(RM) 42MLX/build
+				$(RM) MLX42/build
 
 fclean:			clean
 				$(MAKE) fclean -C ./libft
