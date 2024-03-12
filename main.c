@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/12 14:07:11 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:42:07 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ int	main(int argc, char **argv)
 	t_player	player;
 
 	if (argc != 2)
-		return (ft_printf(2, "Error: wrong number of arguments."), 0);
+		return (ft_printf(2, ERR_ARGV), 0);
 	map_data = init_map();
 	player = init_player();
 	data = init_data(&map_data, &player);
 	parsing(argv[1], &data);
+	raycast_test();
 	free_all(0, 0, &map_data);
-	// raycast_test();
 	return (0);
 }

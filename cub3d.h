@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/12 15:17:29 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:16:10 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 
+# define WIDTH 1920
+# define HEIGHT 1080
+
+# define ERR_ARGV "Error\nwrong number of arguments.\n"
 # define ERR_MALLOC "Error\nMalloc error.\n"
-# define ERR_OUFLOW "Error\nCan't you count? 0 <= RGB <= 255\n"
+# define ERR_OUFLOW "Error\nCan't you count? RGB E [0, 255]\n"
 # define ERR_RGB "Error\nRGB is 3 values :(.\n"
 # define ERR_EMPTYRGB "Error\nVoid is not a color.\n"
 # define ERR_EMPTYPATH "Error\nWhere is the path? >:(\n"
