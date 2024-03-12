@@ -17,7 +17,7 @@ BONUS_OBJS		:= $(BONUS:.c=.o)
 
 CC				:= gcc
 RM				:= rm -f
-CFLAGS			:= -Wall -Wextra -Werror -I. -O3
+CFLAGS			:= -Wall -Wextra -Werror -I. -O3 -ggdb3 -fsanitize=address
 
 NAME			:= libft.a
 

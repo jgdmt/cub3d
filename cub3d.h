@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/11 15:27:36 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:12:21 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef	struct s_player
 {
 	double	x;
 	double	y;
+	int		direction; // temp
 }	t_player;
 
 typedef struct s_map
@@ -46,6 +47,7 @@ typedef struct s_data
 void raycast_test(void);
 
 int		parsing(char *map_name, t_data *data);
+void	get_infos(int fd, t_data *data);
 
 void	free_all(char *str, int out, t_map *map);
 

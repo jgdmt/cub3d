@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/11 12:58:53 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:24:05 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,43 @@ t_map	init_map(void)
 	map.so_texture = 0;
 	map.we_texture = 0;
 	map.ea_texture = 0;
-	map.floor_color = 0;
-	map.ceiling_color = 0;
+	map.floor_color = -1;
+	map.ceiling_color = -1;
 	return (map);
 }
+t_player	init_player(void)
+{
+	t_player	player;
 
-t_data	init_data(t_map *map)
+	player.direction = -1;
+	player.x = -1;
+	player.y = -1;
+	return (player);
+}
+
+t_data	init_data(t_map *map, t_player *player)
 {
 	t_data	data;
 
-	data.player = 0;
+	data.player = player;
 	data.map_data = map;
 	return (data);
 }
+
 
 int	main(int argc, char **argv)
 {
 	t_map		map_data;
 	t_data		data;
+	t_player	player;
 
 	if (argc != 2)
 		return (ft_printf(2, "Error: wrong number of arguments."), 0);
 	map_data = init_map();
-	data = init_data(&map_data);
+	player = init_player();
+	data = init_data(&map_data, &player);
 	parsing(argv[1], &data);
-	(void) argc;
-	(void) argv;
+	free_all(0, 0, &map_data);
 	// raycast_test();
 	return (0);
 }
