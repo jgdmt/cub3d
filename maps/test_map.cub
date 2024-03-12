@@ -1,10 +1,10 @@
 NO ./maps/pics/bluestone.png
-SO       ./path_to_the_south_texture
+SO       ./maps/pics/bluestone.png
 
 
-WE ./path_to_the_west_texture
+WE ./maps/pics/bluestone.png
 
-EA ./path_to_the_east_texture
+EA ./maps/pics/bluestone.png
 F 1,0,0       
 
 

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/12 15:25:37 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:03:50 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	check_char(t_data *data, char c, int y, int x)
 	else if (c == 'E')
 		data->player->direction = 3;
 	else if (c != '0' && c != '1' && c != ' ')
-		free_all(ERR_FORBIDDENCHAR, 2, data->map_data);
+		free_all(ERR_FORBIDDENCHAR, 2, data);
 }
 
 void	check_line(char *line, t_data *data, t_map *map, int i)
@@ -64,10 +64,10 @@ void	check_line(char *line, t_data *data, t_map *map, int i)
 		{
 			if (j == 0 || j == strnlen(line, '\n') - 1 || l[0] <= j
 				|| l[1] <= j || i == 0 || i == ft_strslen(map->map) - 1)
-				free_all(ERR_MAPNOTCLOSED, 2, map);
+				free_all(ERR_MAPNOTCLOSED, 2, data);
 			if (map->map[i - 1][j] == ' ' || map->map[i + 1][j] == ' '
 				|| map->map[i][j - 1] == ' ' || map->map[i][j + 1] == ' ')
-				free_all(ERR_MAPNOTCLOSED, 2, map);
+				free_all(ERR_MAPNOTCLOSED, 2, data);
 		}
 		j++;
 	}
@@ -84,9 +84,9 @@ void	check_map(t_data *data, t_map *map)
 		i++;
 	}
 	if (data->player->nb == 0)
-		free_all(ERR_NOPLAYER, 2, map);
+		free_all(ERR_NOPLAYER, 2, data);
 	if (data->player->nb > 1)
-		free_all(ERR_MANYPLAYERS, 2, map);
+		free_all(ERR_MANYPLAYERS, 2, data);
 }
 
 int	parsing(char *map_name, t_data *data)

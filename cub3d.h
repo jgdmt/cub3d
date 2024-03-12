@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/12 18:16:10 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:29:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 
-# define ERR_ARGV "Error\nwrong number of arguments.\n"
+# define ERR_MLX "Error\nMlx crash.\n"
+# define ERR_ARGV "Error\nWrong number of arguments.\n"
 # define ERR_MALLOC "Error\nMalloc error.\n"
 # define ERR_OUFLOW "Error\nCan't you count? RGB E [0, 255]\n"
 # define ERR_RGB "Error\nRGB is 3 values :(.\n"
@@ -41,6 +42,20 @@
 # define ERR_FILENAME "Error\nFile name invalid.\n"
 # define ERR_FILEEXTENSION "Error\nFile extension invalid.\n"
 
+# define ESC	53
+# define LEFT	-1
+# define RIGHT	1
+# define DOWN	1
+# define UP		-1
+# define A		0
+# define S		1
+# define D		2
+# define W		13
+# define LARROW	123
+# define DARROW	125
+# define RARROW	124
+# define UARROW	126
+
 typedef	struct s_player
 {
 	double	x;
@@ -51,19 +66,20 @@ typedef	struct s_player
 
 typedef struct s_map
 {
-	char	**map;
-	char	*no_texture;
-	char	*so_texture;
-	char	*we_texture;
-	char	*ea_texture;
-	int		floor_color;
-	int		ceiling_color;
+	char		**map;
+	mlx_image_t	*no_texture;
+	mlx_image_t	*so_texture;
+	mlx_image_t	*we_texture;
+	mlx_image_t	*ea_texture;
+	int			floor_color;
+	int			ceiling_color;
 }	t_map;
 
 typedef struct s_data
 {
 	t_map		*map_data;
 	t_player	*player;
+	mlx_t		*mlx;
 }	t_data;
 
 void raycast_test(void);
@@ -71,6 +87,9 @@ void raycast_test(void);
 int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);
 
-void	free_all(char *str, int out, t_map *map);
+void	free_all(char *str, int out, t_data *data);
+
+void	keypress(mlx_key_data_t key, void *data);
+void	close_window(void *gdata);
 
 #endif // CUB3D_H
