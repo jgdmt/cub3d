@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/12 15:54:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:33:17 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*check_texture(char *line, int start, t_map *map)
 	char	*text;
 
 	if (ft_strlen(line) - start == 1)
-		return (free(line), free_all(ERR_EMPTYPATH, 2, map), 2);
+		return (free(line), free_all(ERR_EMPTYPATH, 2, map), NULL);
 	text = strdup_to(line, start);
 	return (text);
 }
