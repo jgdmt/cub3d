@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 14:45:24 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:44:32 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define ERR_NOMAP "Error\nThe map is a lie.\n"
 # define ERR_UNKNOWNID "Error\nUnknown identifier.\n"
 # define ERR_PARSING "Error\nParsing error.\n"
-# define ERR_MISSINGID "Error\nMissing identifier(s).\n"
+// # define ERR_MISSINGID "Error\nMissing identifier(s).\n"
 # define ERR_MAPNOTCLOSED "Error\nMap not closed.\n"
 # define ERR_FORBIDDENCHAR "Error\nForbidden character detected.\n"
 # define ERR_NOPLAYER "Error\n404 Player not found.\n"
@@ -73,6 +73,7 @@ typedef struct s_map
 	mlx_image_t	*ea;
 	int			floor_color;
 	int			ceiling_color;
+	int			fc[2];
 }	t_map;
 
 typedef struct s_data
