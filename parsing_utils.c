@@ -6,11 +6,19 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/12 15:20:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:09:18 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	add_color(char t, t_data *data)
+{
+	if (t == 'C')
+		data->map->fc[1]++;
+	else if (t == 'F')
+		data->map->fc[0]++;
+}
 
 char	*strdup_to(char *line, int start)
 {
