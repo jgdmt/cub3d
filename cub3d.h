@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 18:21:16 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:52:07 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
+
+# define RSPEED 0.5
+# define MSPEED 1.0
 
 # define ERR_MLX "Error\nMlx crash.\n"
 # define ERR_ARGV "Error\nWrong number of arguments.\n"
@@ -119,5 +122,6 @@ void	free_all(char *str, int out, t_data *data);
 
 void	keypress(mlx_key_data_t key, void *data);
 void	close_window(void *gdata);
+void	resize_window(int32_t width, int32_t height, void *gdata);
 
 #endif // CUB3D_H

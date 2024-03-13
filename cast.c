@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 18:42:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:45:28 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	test(t_data *data, t_raycast *rc)
 void	raycast(t_data *data)
 {
 	t_raycast rc;
-	data->player->dir.x = -1; //temp
-	data->player->dir.y = 0; //temp
-	data->player->plane.x = 0; //temp
-	data->player->plane.y = 0.66; //temp
+	// data->player->dir.x = -1; //temp
+	// data->player->dir.y = 0; //temp
+	// data->player->plane.x = 0; //temp
+	// data->player->plane.y = 0.66; //temp
 
 	data->width = WIDTH; // a deplacer
 	data->height = HEIGHT;

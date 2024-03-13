@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/13 16:18:15 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:47:50 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,25 @@ void	check_char(t_data *data, char c, int y, int x)
 		data->player->nb++;
 	}
 	if (c == 'N')
-		data->player->direction = 0;
+	{
+		data->player->dir.x = -1;
+		data->player->dir.y = 0;
+	}
 	else if (c == 'S')
-		data->player->direction = 1;
+	{
+		data->player->dir.x = 1;
+		data->player->dir.y = 0;
+	}
 	else if (c == 'W')
-		data->player->direction = 2;
+	{
+		data->player->dir.x = 1;
+		data->player->dir.y = 0;
+	}
 	else if (c == 'E')
-		data->player->direction = 3;
+	{
+		data->player->dir.x = 1;
+		data->player->dir.y = 0;
+	}
 	else if (c != '0' && c != '1' && c != ' ')
 		free_all(ERR_FORBIDDENCHAR, 2, data);
 }
