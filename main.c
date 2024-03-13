@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/12 21:28:19 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:58:34 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx)
 	data.mlx = mlx;
 	return (data);
 }
-
+mlx_image_t *img;
 
 int	main(int argc, char **argv)
 {
@@ -64,11 +64,14 @@ int	main(int argc, char **argv)
 	player = init_player();
 	data = init_data(&map_data, &player, mlx);
 	parsing(argv[1], &data);
-	mlx_image_to_window(mlx, map_data.no_texture, 0, 0);
+	// mlx_image_to_window(mlx, map_data.no_texture, 0, 0);
+	img = mlx_new_image(mlx, 1920, 1080);
+	raycast_test();
+	mlx_image_to_window(mlx, img, 0, 0);
 	mlx_key_hook(mlx, &keypress, &data);
 	mlx_close_hook(mlx, &close_window, &data);
 	mlx_loop(mlx);
 	// raycast_test();
-	free_all(0, 0, &data);
+	// free_all(0, 0, &data);
 	return (0);
 }

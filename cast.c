@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cast.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/12 19:54:01 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:29:26 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-/*
+
 int worldMap[24][24]=
 {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -39,20 +39,41 @@ int worldMap[24][24]=
   {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
+
+mlx_image_t *img;
+
+void verLine(x, drawStart, drawEnd, color)
+{
+	while(drawStart < drawEnd)
+	{
+		mlx_put_pixel(img, x, drawStart, color);
+		drawStart++;
+	}
+}
+# include <sys/time.h>
+
+size_t	get_current_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+
 void	raycast_test(void)
 {
-	mlx_t *mlxptr;
-	mlxptr = mlx_init(WIDTH, HEIGHT, "Test", false);
 	double posX = 22;
 	double posY = 12;
 	double dirX = -1;
 	double dirY = 0;
 	double planeX = 0;
 	double planeY = 0.66;
-	double time = 0;
-	double oldTime = 0;
+	// double time = 0;
+	// double oldTime = 0;
 
-	int i = 0;
+	// int i = 0;
 
     for(int x = 0; x < WIDTH; x++)
     {
@@ -126,16 +147,16 @@ void	raycast_test(void)
       int drawStart = -lineHeight / 2 + HEIGHT/ 2;
       if(drawStart < 0) drawStart = 0;
       int drawEnd = lineHeight / 2 + HEIGHT/ 2;
-      if(drawEnd >= HEIGTH) drawEnd = HEIGHT- 1;
+      if(drawEnd >= HEIGHT) drawEnd = HEIGHT- 1;
 
       //choose wall color
       int color;
       switch(worldMap[mapX][mapY])
       {
-        case 1:  color = 16711680;    break; //red
-        case 2:  color = 65280;  break; //green
+        case 1:  color = -16776961;    break; //red
+        case 2:  color = 16711935;  break; //green
         case 3:  color = 255;   break; //blue
-        case 4:  color = 16777215;  break; //white
+        case 4:  color = -2147483648;  break; //white
         default: color = 16776960; break; //yellow
       }
 
@@ -146,16 +167,16 @@ void	raycast_test(void)
       verLine(x, drawStart, drawEnd, color);
     }
     //timing for input and FPS counter
-    oldTime = time;
-    time = 1;
-    double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
+    // oldTime = time;
+    // time = get_current_time();
+    // double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
     // print(1.0 / frameTime); //FPS counter
-    redraw();
-    cls();
+    //redraw();
+    //cls();
 
     //speed modifiers
-    double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-    double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
+    // double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
+    // double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
     //move forward if no wall in front of you
 	
 	// ATTTENTIOoooooooooooooooooooooooooooooooooooooooooooooooooooooioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooiooooooooooooooooooooon
@@ -194,6 +215,5 @@ void	raycast_test(void)
     // }
   
 
-	mlx_loop(mlxptr);
+	// mlx_loop(mlxptr);
 }
-*/

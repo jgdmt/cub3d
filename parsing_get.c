@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/12 21:04:32 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:25:39 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_color(char *line, int start, t_data *data)
 	}
 	if (j != 3 || (line[i] && line[i] != '\n') || line[i - 1] == ',')
 		return (free(line), free_all(ERR_RGB, 2, data), 1);
-	return (255 << 24 | rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
 }
 
 static int	get_map(int fd, t_map *map)
@@ -108,6 +108,7 @@ static int	get_elements(char *line, t_data *data, t_map *map, int infos)
 		map->ceiling_color = check_color(line, 2, data);
 	else
 		return (-1);
+	printf("%i\n", map->ceiling_color);
 	if (infos + 1 == 6 && (!map->no_texture || !map->so_texture
 			|| !map->we_texture || !map->ea_texture || map->floor_color == -1
 			|| map->ceiling_color == -1))
