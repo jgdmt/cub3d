@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 14:36:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:44:51 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,23 +172,23 @@ void	raycast_test(t_data *data)
       else           wallX = posX + perpWallDist * rayDirX;
       wallX -= floor((wallX));
  //x coordinate on the texture
-      int texX = (int)(wallX * (double)(data->map_data->no_texture->width));
-      if(side == 0 && rayDirX > 0) texX = data->map_data->no_texture->width - texX - 1;
-      if(side == 1 && rayDirY < 0) texX = data->map_data->no_texture->width - texX - 1;
+      int texX = (int)(wallX * (double)(data->map->no->width));
+      if(side == 0 && rayDirX > 0) texX = data->map->no->width - texX - 1;
+      if(side == 1 && rayDirY < 0) texX = data->map->no->width - texX - 1;
       //draw the pixels of the stripe as a vertical line
 	              // How much to increase the texture coordinate per screen pixel
-      double step = 1.0 * data->map_data->no_texture->height / lineHeight;
+      double step = 1.0 * data->map->no->height / lineHeight;
       // Starting texture coordinate
       double texPos = (drawStart - HEIGHT / 2 + lineHeight / 2) * step;
       for(int y = drawStart; y<drawEnd; y++)
       {
         // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-        int texY = (int)texPos & (data->map_data->no_texture->height - 1);
+        int texY = (int)texPos & (data->map->no->height - 1);
         texPos += step;
-        u_int32_t color = data->map_data->no_texture->pixels[texNum * (data->map_data->no_texture->height * texY + texX)];
+        u_int32_t color = data->map->no->pixels[texNum * (data->map->no->height * texY + texX)];
         //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
         if(side == 1) color = (color >> 1) & 8355711;
-        mlx_put_pixel(data->map_data->no_texture, x, y, color);
+        mlx_put_pixel(data->map->no, x, y, color);
       }
     //   verLine(x, drawStart, drawEnd, color);
     }

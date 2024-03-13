@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/13 12:25:39 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:45:24 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	check_color(char *line, int start, t_data *data)
 	}
 	if (j != 3 || (line[i] && line[i] != '\n') || line[i - 1] == ',')
 		return (free(line), free_all(ERR_RGB, 2, data), 1);
+	ft_printf(1, "%i\n", rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
 	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
 }
 
@@ -92,25 +93,26 @@ static int	get_map(int fd, t_map *map)
 
 static int	get_elements(char *line, t_data *data, t_map *map, int infos)
 {
+	ft_printf(1, "line %s", line);
 	if (line[0] == '\n')
 		return (infos);
 	else if (!ft_strncmp(line, "NO ", 3))
-		map->no_texture = check_texture(line, 3, data);
+		map->no = check_texture(line, 3, data);
 	else if (!ft_strncmp(line, "SO ", 3))
-		map->so_texture = check_texture(line, 3, data);
+		map->so = check_texture(line, 3, data);
 	else if (!ft_strncmp(line, "WE ", 3))
-		map->we_texture = check_texture(line, 3, data);
+		map->we = check_texture(line, 3, data);
 	else if (!ft_strncmp(line, "EA ", 3))
-		map->ea_texture = check_texture(line, 3, data);
+		map->ea = check_texture(line, 3, data);
 	else if (!ft_strncmp(line, "F ", 2))
 		map->floor_color = check_color(line, 2, data);
 	else if (!ft_strncmp(line, "C ", 2))
 		map->ceiling_color = check_color(line, 2, data);
 	else
 		return (-1);
-	printf("%i\n", map->ceiling_color);
-	if (infos + 1 == 6 && (!map->no_texture || !map->so_texture
-			|| !map->we_texture || !map->ea_texture || map->floor_color == -1
+	// printf("%i\n", map->ceiling_color);
+	if (infos + 1 == 6 && (!map->no || !map->so
+			|| !map->we || !map->ea || map->floor_color == -1
 			|| map->ceiling_color == -1))
 		return (-2);
 	return (infos + 1);
@@ -125,7 +127,7 @@ void	get_infos(int fd, t_data *data)
 	line = get_next_line(fd);
 	while (line && infos != 6 && infos >= 0)
 	{
-		infos = get_elements(line, data, data->map_data, infos);
+		infos = get_elements(line, data, data->map, infos);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -138,7 +140,7 @@ void	get_infos(int fd, t_data *data)
 		free_all(ERR_PARSING, 2, data);
 	if (infos < 6)
 		free_all(ERR_MISSINGID, 2, data);
-	if (get_map(fd, data->map_data))
+	if (get_map(fd, data->map))
 	{
 		close(fd);
 		free_all(0, 0, data);

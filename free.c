@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/12 21:06:23 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:45:24 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	free_all(char *str, int out, t_data *data)
 	i = 0;
 	if (str)
 		ft_printf(out, "%s", str);
-	if (data->map_data->map)
-		while (data->map_data->map[i])
-			free(data->map_data->map[i++]);
-	free(data->map_data->map);
-	if (data->map_data->no_texture)
-		mlx_delete_image(data->mlx, data->map_data->no_texture);
-	if (data->map_data->so_texture)
-		mlx_delete_image(data->mlx, data->map_data->so_texture);
-	if (data->map_data->we_texture)
-		mlx_delete_image(data->mlx, data->map_data->we_texture);
-	if (data->map_data->ea_texture)
-		mlx_delete_image(data->mlx, data->map_data->ea_texture);
+	if (data->map->map)
+		while (data->map->map[i])
+			free(data->map->map[i++]);
+	free(data->map->map);
+	if (data->map->no)
+		mlx_delete_image(data->mlx, data->map->no);
+	if (data->map->so)
+		mlx_delete_image(data->mlx, data->map->so);
+	if (data->map->we)
+		mlx_delete_image(data->mlx, data->map->we);
+	if (data->map->ea)
+		mlx_delete_image(data->mlx, data->map->ea);
 	mlx_terminate(data->mlx);
 	exit (0);
 }

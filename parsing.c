@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/12 21:03:50 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:44:03 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ int	parsing(char *map_name, t_data *data)
 		return (perror("cub3d"), 1);
 	get_infos(fd, data);
 	close(fd);
-	check_map(data, data->map_data);
+	check_map(data, data->map);
 	return (0);
 }

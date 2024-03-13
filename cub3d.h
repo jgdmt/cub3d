@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 14:11:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:45:24 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ typedef	struct s_player
 typedef struct s_map
 {
 	char		**map;
-	mlx_image_t	*no_texture;
-	mlx_image_t	*so_texture;
-	mlx_image_t	*we_texture;
-	mlx_image_t	*ea_texture;
+	mlx_image_t	*no;
+	mlx_image_t	*so;
+	mlx_image_t	*we;
+	mlx_image_t	*ea;
 	int			floor_color;
 	int			ceiling_color;
 }	t_map;
 
 typedef struct s_data
 {
-	t_map		*map_data;
+	t_map		*map;
 	t_player	*player;
 	mlx_t		*mlx;
 }	t_data;
