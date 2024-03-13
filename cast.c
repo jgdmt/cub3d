@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 14:44:51 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:59:54 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	raycast_test(t_data *data)
     //   if(side == 1) {color = color / 2;}
 
  //texturing calculations
-      int texNum = worldMap[mapX][mapY] - 1; //1 subtracted from it so that texture 0 can be used!
+    //   int texNum = worldMap[mapX][mapY] - 1; //1 subtracted from it so that texture 0 can be used!
 
       //calculate value of wallX
       double wallX; //where exactly the wall was hit
@@ -185,10 +185,10 @@ void	raycast_test(t_data *data)
         // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
         int texY = (int)texPos & (data->map->no->height - 1);
         texPos += step;
-        u_int32_t color = data->map->no->pixels[texNum * (data->map->no->height * texY + texX)];
+        u_int32_t color = data->map->no->pixels[data->map->no->height * texY + texX];
         //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
         if(side == 1) color = (color >> 1) & 8355711;
-        mlx_put_pixel(data->map->no, x, y, color);
+        mlx_put_pixel(img, x, y, color);
       }
     //   verLine(x, drawStart, drawEnd, color);
     }
