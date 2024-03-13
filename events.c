@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/13 19:16:19 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 20:40:20 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,25 @@ void	rotate(double speed, t_data *data)
 	raycast(data);
 }
 
-void	move_forward(t_data *data, double xspeed, double yspeed)
+void	move_forward(t_data *data, double speed)
 {
-	data->player->pos.x += data->player->dir.x * xspeed;
-	data->player->pos.y += data->player->dir.y * yspeed;
+	if (data->map->map[(int) (data->player->pos.x + data->player->dir.x * speed)][(int) data->player->pos.y] == '0')
+		data->player->pos.x += data->player->dir.x * speed;
+	if (data->map->map[(int) (data->player->pos.x)][(int) (data->player->pos.y - data->player->dir.y * speed)] == '0')
+		data->player->pos.y += data->player->dir.y * speed;
+	printf("%f %f %c %c\n", data->player->dir.x, data->player->dir.y, data->map->map[(int) (data->player->pos.x + data->player->dir.x * speed)][(int) data->player->pos.y], data->map->map[(int) (data->player->pos.x)][(int) (data->player->pos.y - data->player->dir.y * speed)]);
+	printf("%f %f\n", data->player->pos.x, data->player->pos.y);
+	raycast(data);
+}
 
+void	move(t_data *data, double speed)
+{
+	data->player->pos.x += (data->player->plane.x) * speed;
+	data->player->pos.y += (data->player->plane.y) * speed;
+	// data->player->pos.y += data->player->dir.y * speed;
+	printf("%f %f %c %c\n", data->player->dir.x, data->player->dir.y, data->map->map[(int) (data->player->pos.x + data->player->dir.x * speed)][(int) data->player->pos.y], data->map->map[(int) (data->player->pos.x)][(int) (data->player->pos.y - data->player->dir.y * speed)]);
+	printf("%f %f\n", data->player->pos.x, data->player->pos.y);
+	raycast(data);
 }
 
 void	keypress(mlx_key_data_t key, void *gdata)
@@ -47,13 +61,13 @@ void	keypress(mlx_key_data_t key, void *gdata)
 	else if (key.key == MLX_KEY_RIGHT)
 		rotate(-RSPEED, data);
 	else if (key.key == MLX_KEY_W)
-		move_forward(data, MSPEED, MSPEED);
-	// else if (key.key == S)
-	// 	move();
-	// else if (key.key == A)
-	// 	move();
-	// else if (key.key == D)
-	// 	move();
+		move_forward(data, MSPEED);
+	else if (key.key == MLX_KEY_S)
+		move_forward(data, -MSPEED);
+	else if (key.key == MLX_KEY_A)
+		move(data, -MSPEED);
+	else if (key.key == MLX_KEY_D)
+		move(data, MSPEED);
 }
 
 void	close_window(void *gdata)

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 19:04:58 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 21:02:42 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_player	init_player(void)
 	player.dir.x = -1;
 	player.dir.y = 0;
 	player.plane.x = 0;
-	player.plane.y = 0.66;
+	player.plane.y = 1;
 	return (player);
 }
 

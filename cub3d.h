@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 18:52:07 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:26:42 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 
-# define RSPEED 0.5
-# define MSPEED 1.0
+# define RSPEED 0.1
+# define MSPEED 0.1
 
 # define ERR_MLX "Error\nMlx crash.\n"
 # define ERR_ARGV "Error\nWrong number of arguments.\n"

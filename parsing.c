@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/13 18:47:50 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 21:14:23 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,31 @@ void	check_char(t_data *data, char c, int y, int x)
 	}
 	if (c == 'N')
 	{
-		data->player->dir.x = -1;
-		data->player->dir.y = 0;
+		data->player->dir.x = 0;
+		data->player->dir.y = -1;
+		data->player->plane.x = -1;
+		data->player->plane.y = 0;
 	}
 	else if (c == 'S')
 	{
-		data->player->dir.x = 1;
-		data->player->dir.y = 0;
+		data->player->dir.x = 0;
+		data->player->dir.y = 1;
+		data->player->plane.x = 1;
+		data->player->plane.y = 0;
 	}
 	else if (c == 'W')
 	{
 		data->player->dir.x = 1;
 		data->player->dir.y = 0;
+		data->player->plane.x = 0;
+		data->player->plane.y = -1;
 	}
 	else if (c == 'E')
 	{
-		data->player->dir.x = 1;
+		data->player->dir.x = -1;
 		data->player->dir.y = 0;
+		data->player->plane.x = 0;
+		data->player->plane.y = 1;
 	}
 	else if (c != '0' && c != '1' && c != ' ')
 		free_all(ERR_FORBIDDENCHAR, 2, data);
