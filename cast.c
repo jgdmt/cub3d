@@ -6,39 +6,11 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 17:44:07 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:42:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int worldMap[24][24]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
 
 # include <sys/time.h>
 
@@ -62,31 +34,30 @@ int	correct_color(u_int8_t *pixel)
 	rgba += pixel[3];
 	return (rgba);
 }
-// void	test(t_data *data, )
-// {
-//  		double step = 1.0 * data->map->no->height / lineHeight;
-//       // Starting texture coordinate
-//       double texPos = (drawStart - data->height / 2 + lineHeight / 2) * step;
-// 	  int y;
-// 	  y = drawStart;
-	  
-//       while(y < drawEnd)
-//       {
-//         // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-//         int texY = (int)texPos & (data->map->no->height - 1);
-//         texPos += step;
-//         u_int32_t color = correct_color((u_int8_t*)&((u_int32_t*)data->map->no->pixels)[data->map->no->width * texY + (data->map->no->width - texX - 1)]);
-//         //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-//         if(side == 1) color = (color >> 1) & 8355711;
-//         mlx_put_pixel(data->img, x, y, color);
-// 		y++;
-//       }
-// }
+void	test(t_data *data, t_raycast *rc)
+{
+	double	step;
+	step = 1.0 * data->map->no->height / rc->line_height;
+	// Starting texture coordinate
+	double texPos = (rc->draw_start - data->height / 2 + rc->line_height / 2) * step;
+	int y;
+	y = rc->draw_start;
+	while(y < rc->draw_end)
+	{
+	// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+    int texY = (int)texPos & (data->map->no->height - 1);
+    texPos += step;
+	u_int32_t color = correct_color((u_int8_t*)&((u_int32_t*)data->map->no->pixels)[data->map->no->width * texY + (data->map->no->width - rc->tex_x - 1)]);
+	//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+	if (rc->side == 1) color = (color >> 1) & 8355711;
+	mlx_put_pixel(data->img, rc->x, y, color);
+	y++;
+	}
+}
 
 void	raycast(t_data *data)
 {
-	// data->player->pos.x = 22; //temp
-	// data->player->pos.y = 12; //temp
+	t_raycast rc;
 	data->player->dir.x = -1; //temp
 	data->player->dir.y = 0; //temp
 	data->player->plane.x = 0; //temp
@@ -94,11 +65,11 @@ void	raycast(t_data *data)
 
 	data->width = WIDTH; // a deplacer
 	data->height = HEIGHT;
-	int x;
-	x = 0;
-	while (x < data->width)
+	ft_memset(data->img->pixels, 0, data->img->width * data->img->height * sizeof(int32_t));
+	rc.x = 0;
+	while (rc.x < data->width)
 	{
-		double	cameraX = 2 * x / (double) data->width - 1;
+		double	cameraX = 2 * rc.x / (double) data->width - 1;
 		double	rayDirX = data->player->dir.x + data->player->plane.x * cameraX;
 		double	rayDirY = data->player->dir.y  + data->player->plane.y * cameraX;
 		t_int_vector ipos; // old mapX and mapY
@@ -113,30 +84,28 @@ void	raycast(t_data *data)
       double perpWallDist;
 
       //what direction to step in x or y-direction (either +1 or -1)
-      int stepX;
-      int stepY;
+      t_int_vector step;
 
       int hit = 0; //was there a wall hit?
-      int side; //was a NS or a EW wall hit?
       //calculate step and initial sideDist
       if(rayDirX < 0)
       {
-        stepX = -1;
+        step.x = -1;
         sideDist.x = (data->player->pos.x - ipos.x) * deltaDistX;
       }
       else
       {
-        stepX = 1;
+        step.x = 1;
         sideDist.x = (ipos.x + 1.0 - data->player->pos.x) * deltaDistX;
       }
       if(rayDirY < 0)
       {
-        stepY = -1;
+        step.y = -1;
         sideDist.y = (data->player->pos.y - ipos.y) * deltaDistY;
       }
       else
       {
-        stepY = 1;
+        step.y = 1;
         sideDist.y = (ipos.y + 1.0 - data->player->pos.y) * deltaDistY;
       }
       //perform DDA
@@ -146,29 +115,29 @@ void	raycast(t_data *data)
         if(sideDist.x < sideDist.y)
         {
           sideDist.x += deltaDistX;
-          ipos.x += stepX;
-          side = 0;
+          ipos.x += step.x;
+          rc.side = 0;
         }
         else
         {
           sideDist.y += deltaDistY;
-          ipos.y += stepY;
-          side = 1;
+          ipos.y += step.x;
+          rc.side = 1;
         }
         //Check if ray has hit a wall
         if(data->map->map[ipos.y][ipos.x] == '1') hit = 1;
       }
-      if(side == 0) perpWallDist = (sideDist.x - deltaDistX);
+      if(rc.side == 0) perpWallDist = (sideDist.x - deltaDistX);
       else          perpWallDist = (sideDist.y - deltaDistY);
 
       //Calculate height of line to draw on screen
-      int lineHeight = (int)(data->height / perpWallDist);
+      rc.line_height = (int)(data->height / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + data->height/ 2;
-      if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + data->height/ 2;
-      if(drawEnd >= data->height) drawEnd = data->height- 1;
+      rc.draw_start = - rc.line_height / 2 + data->height/ 2;
+      if(rc.draw_start < 0) rc.draw_start = 0;
+      rc.draw_end = rc.line_height / 2 + data->height/ 2;
+      if(rc.draw_end >= data->height) rc.draw_end = data->height- 1;
 
 
  //texturing calculations
@@ -176,33 +145,15 @@ void	raycast(t_data *data)
 
       //calculate value of wallX
       double wallX; //where exactly the wall was hit
-      if (side == 0) wallX = data->player->pos.y + perpWallDist * rayDirY;
+      if (rc.side == 0) wallX = data->player->pos.y + perpWallDist * rayDirY;
       else           wallX = data->player->pos.x + perpWallDist * rayDirX;
       wallX -= floor((wallX));
  //x coordinate on the texture
-      int texX = (int)(wallX * (double)(data->map->no->width));
-      if(side == 0 && rayDirX > 0) texX = data->map->no->width - texX - 1;
-      if(side == 1 && rayDirY < 0) texX = data->map->no->width - texX - 1;
-      //draw the pixels of the stripe as a vertical line
-	              // How much to increase the texture coordinate per screen pixel
-     	double step = 1.0 * data->map->no->height / lineHeight;
-      // Starting texture coordinate
-      double texPos = (drawStart - data->height / 2 + lineHeight / 2) * step;
-	  int y;
-	  y = drawStart;
-	  
-      while(y < drawEnd)
-      {
-        // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-        int texY = (int)texPos & (data->map->no->height - 1);
-        texPos += step;
-        u_int32_t color = correct_color((u_int8_t*)&((u_int32_t*)data->map->no->pixels)[data->map->no->width * texY + (data->map->no->width - texX - 1)]);
-        //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-        if(side == 1) color = (color >> 1) & 8355711;
-        mlx_put_pixel(data->img, x, y, color);
-		y++;
-      }
-	x++;
+      rc.tex_x = (int)(wallX * (double)(data->map->no->width));
+      if(rc.side == 0 && rayDirX > 0) rc.tex_x = data->map->no->width - rc.tex_x - 1;
+      if(rc.side == 1 && rayDirY < 0) rc.tex_x = data->map->no->width - rc.tex_x - 1;
+     test(data, &rc);
+	(rc.x)++;
     }
     mlx_image_to_window(data->mlx, data->img, 0, 0);
 }

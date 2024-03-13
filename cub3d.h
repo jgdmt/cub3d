@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 17:41:59 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:21:16 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_int_vector
 	int	y;
 }	t_int_vector;
 
-typedef	struct s_player
+typedef struct s_player
 {
 	t_vector	pos;
 	t_vector	plane;
@@ -78,8 +78,13 @@ typedef	struct s_player
 
 typedef struct s_raycast
 {
-	int drawStart;
-	int drawEnd;
+	int	draw_start;
+	int	draw_end;
+	int	line_height;
+	int	tex_x;
+	int	side;
+	int	x;
+	int	y;
 }	t_raycast;
 
 typedef struct s_map
