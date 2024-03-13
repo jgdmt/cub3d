@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/12 21:29:34 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:11:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_data
 	mlx_t		*mlx;
 }	t_data;
 
-void raycast_test(void);
+void raycast_test(t_data *data);
 
 int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);

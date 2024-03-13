@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 11:58:34 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:37:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,12 @@ int	main(int argc, char **argv)
 	parsing(argv[1], &data);
 	// mlx_image_to_window(mlx, map_data.no_texture, 0, 0);
 	img = mlx_new_image(mlx, 1920, 1080);
-	raycast_test();
+	raycast_test(&data);
 	mlx_image_to_window(mlx, img, 0, 0);
 	mlx_key_hook(mlx, &keypress, &data);
 	mlx_close_hook(mlx, &close_window, &data);
 	mlx_loop(mlx);
+	// mlx_terminate(mlx);
 	// raycast_test();
 	// free_all(0, 0, &data);
 	return (0);

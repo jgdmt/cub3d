@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 12:29:26 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:36:24 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ size_t	get_current_time(void)
 }
 
 
-void	raycast_test(void)
+void	raycast_test(t_data *data)
 {
 	double posX = 22;
 	double posY = 12;
@@ -149,22 +149,48 @@ void	raycast_test(void)
       int drawEnd = lineHeight / 2 + HEIGHT/ 2;
       if(drawEnd >= HEIGHT) drawEnd = HEIGHT- 1;
 
-      //choose wall color
-      int color;
-      switch(worldMap[mapX][mapY])
-      {
-        case 1:  color = -16776961;    break; //red
-        case 2:  color = 16711935;  break; //green
-        case 3:  color = 255;   break; //blue
-        case 4:  color = -2147483648;  break; //white
-        default: color = 16776960; break; //yellow
-      }
+    //   //choose wall color
+    //   int color;
+    //   switch(worldMap[mapX][mapY])
+    //   {
+    //     case 1:  color = -16776961;    break; //red
+    //     case 2:  color = 16711935;  break; //green
+    //     case 3:  color = 65535;   break; //blue
+    //     case 4:  color = -45765745;  break; //white
+    //     default: color = -65281; break; //yellow
+    //   }
 
-      //give x and y sides different brightness
-      if(side == 1) {color = color / 2;}
+    //   //give x and y sides different brightness
+    //   if(side == 1) {color = color / 2;}
 
+ //texturing calculations
+      int texNum = worldMap[mapX][mapY] - 1; //1 subtracted from it so that texture 0 can be used!
+
+      //calculate value of wallX
+      double wallX; //where exactly the wall was hit
+      if (side == 0) wallX = posY + perpWallDist * rayDirY;
+      else           wallX = posX + perpWallDist * rayDirX;
+      wallX -= floor((wallX));
+ //x coordinate on the texture
+      int texX = (int)(wallX * (double)(data->map_data->no_texture->width));
+      if(side == 0 && rayDirX > 0) texX = data->map_data->no_texture->width - texX - 1;
+      if(side == 1 && rayDirY < 0) texX = data->map_data->no_texture->width - texX - 1;
       //draw the pixels of the stripe as a vertical line
-      verLine(x, drawStart, drawEnd, color);
+	              // How much to increase the texture coordinate per screen pixel
+      double step = 1.0 * data->map_data->no_texture->height / lineHeight;
+      // Starting texture coordinate
+      double texPos = (drawStart - HEIGHT / 2 + lineHeight / 2) * step;
+      for(int y = drawStart; y<drawEnd; y++)
+      {
+        // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+        int texY = (int)texPos & (data->map_data->no_texture->height - 1);
+        texPos += step;
+        u_int32_t color = data->map_data->no_texture->pixels[texNum * (data->map_data->no_texture->height * texY + texX)];
+        //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+        if(side == 1) color = (color >> 1) & 8355711;
+        mlx_put_pixel(data->map_data->no_texture, x, y, color);
+      }
+    //   verLine(x, drawStart, drawEnd, color);
     }
     //timing for input and FPS counter
     // oldTime = time;
