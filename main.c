@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 16:14:18 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:37:14 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_player	init_player(void)
 {
 	t_player	player;
 
-	player.direction = 0;
 	player.pos.x = 0;
 	player.pos.y = 0;
 	player.nb = 0;
@@ -56,21 +55,19 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_printf(2, ERR_ARGV), 0);
-	mlx = mlx_init(WIDTH, HEIGHT, "Test", true);
+	mlx = mlx_init(WIDTH, HEIGHT, "🐺Cub3D 🐉🐺", true);
 	if (!mlx)
 		return (ft_printf(2, ERR_MLX), 0);
 	map = init_map();
 	player = init_player();
 	data = init_data(&map, &player, mlx);
 	parsing(argv[1], &data);
-	// mlx_image_to_window(mlx, map.no, 0, 0);
-	data.img = mlx_new_image(mlx, 1920, 1080);
+	data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	raycast(&data);
 	mlx_key_hook(mlx, &keypress, &data);
 	mlx_close_hook(mlx, &close_window, &data);
 	mlx_loop(mlx);
 	// mlx_terminate(mlx);
-	// raycast_test();
 	// free_all(0, 0, &data);
 	return (0);
 }

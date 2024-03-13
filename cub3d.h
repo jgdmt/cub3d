@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 16:13:52 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:41:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,25 @@ typedef struct s_vector
 	double	y;
 }	t_vector;
 
+typedef struct s_int_vector
+{
+	int	x;
+	int	y;
+}	t_int_vector;
+
 typedef	struct s_player
 {
 	t_vector	pos;
 	t_vector	plane;
 	t_vector	dir;
 	int			nb;
-	int			direction; // temp
 }	t_player;
+
+typedef struct s_raycast
+{
+	int drawStart;
+	int drawEnd;
+}	t_raycast;
 
 typedef struct s_map
 {
@@ -88,13 +99,13 @@ typedef struct s_data
 	t_map		*map;
 	t_player	*player;
 	mlx_t		*mlx;
-	mlx_image_t *img;
+	mlx_image_t	*img;
 	size_t		time;
 	int			width;
 	int			height;
 }	t_data;
 
-void raycast(t_data *data);
+void	raycast(t_data *data);
 
 int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);
