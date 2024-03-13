@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 14:45:24 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:14:18 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ t_player	init_player(void)
 	t_player	player;
 
 	player.direction = 0;
-	player.x = 0;
-	player.y = 0;
+	player.pos.x = 0;
+	player.pos.y = 0;
 	player.nb = 0;
 	return (player);
 }
@@ -46,7 +46,6 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx)
 	data.mlx = mlx;
 	return (data);
 }
-mlx_image_t *img;
 
 int	main(int argc, char **argv)
 {
@@ -65,9 +64,8 @@ int	main(int argc, char **argv)
 	data = init_data(&map, &player, mlx);
 	parsing(argv[1], &data);
 	// mlx_image_to_window(mlx, map.no, 0, 0);
-	img = mlx_new_image(mlx, 1920, 1080);
-	raycast_test(&data);
-	mlx_image_to_window(mlx, img, 0, 0);
+	data.img = mlx_new_image(mlx, 1920, 1080);
+	raycast(&data);
 	mlx_key_hook(mlx, &keypress, &data);
 	mlx_close_hook(mlx, &close_window, &data);
 	mlx_loop(mlx);

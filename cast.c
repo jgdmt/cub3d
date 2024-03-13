@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 14:59:54 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:23:52 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ int worldMap[24][24]=
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-mlx_image_t *img;
-
-void verLine(x, drawStart, drawEnd, color)
-{
-	while(drawStart < drawEnd)
-	{
-		mlx_put_pixel(img, x, drawStart, color);
-		drawStart++;
-	}
-}
 # include <sys/time.h>
 
 size_t	get_current_time(void)
@@ -61,27 +51,37 @@ size_t	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-
-void	raycast_test(t_data *data)
+int	correct_color(u_int8_t *pixel)
 {
-	double posX = 22;
-	double posY = 12;
-	double dirX = -1;
-	double dirY = 0;
-	double planeX = 0;
-	double planeY = 0.66;
-	// double time = 0;
-	// double oldTime = 0;
+	int	rgba;
 
-	// int i = 0;
+	rgba = 0;
+	rgba += pixel[0] << 24;
+	rgba += pixel[1] << 16;
+	rgba += pixel[2] << 8;
+	rgba += pixel[3];
+	return (rgba);
+}
 
-    for(int x = 0; x < WIDTH; x++)
-    {
-      double cameraX = 2 * x / (double) WIDTH - 1;
-      double rayDirX = dirX + planeX * cameraX;
-      double rayDirY = dirY + planeY * cameraX;
-      int mapX = (int)posX;
-      int mapY = (int)posY;
+void	raycast(t_data *data)
+{
+	// data->player->pos.x = 22; //temp
+	// data->player->pos.y = 12; //temp
+	data->player->dir.x = -1; //temp
+	data->player->dir.y = 0; //temp
+	data->player->plane.x = 0; //temp
+	data->player->plane.y = 0.66; //temp
+
+	data->width = WIDTH; // a deplacer
+	int x;
+	x = 0;
+	while (x < data->width)
+	{
+		double	cameraX = 2 * x / (double) data->width - 1;
+		double	rayDirX = data->player->dir.x + data->player->plane.x * cameraX;
+		double	rayDirY = data->player->dir.y  + data->player->plane.y * cameraX;
+		int mapX = (int)data->player->pos.x;
+		int mapY = (int)data->player->pos.x;
 
       double sideDistX;
       double sideDistY;
@@ -101,22 +101,22 @@ void	raycast_test(t_data *data)
       if(rayDirX < 0)
       {
         stepX = -1;
-        sideDistX = (posX - mapX) * deltaDistX;
+        sideDistX = (data->player->pos.x - mapX) * deltaDistX;
       }
       else
       {
         stepX = 1;
-        sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+        sideDistX = (mapX + 1.0 - data->player->pos.x) * deltaDistX;
       }
       if(rayDirY < 0)
       {
         stepY = -1;
-        sideDistY = (posY - mapY) * deltaDistY;
+        sideDistY = (data->player->pos.y - mapY) * deltaDistY;
       }
       else
       {
         stepY = 1;
-        sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+        sideDistY = (mapY + 1.0 - data->player->pos.y) * deltaDistY;
       }
       //perform DDA
       while(hit == 0)
@@ -135,7 +135,7 @@ void	raycast_test(t_data *data)
           side = 1;
         }
         //Check if ray has hit a wall
-        if(worldMap[mapX][mapY] > 0) hit = 1;
+        if(data->map->map[mapY][mapX] == '1') hit = 1;
       }
       if(side == 0) perpWallDist = (sideDistX - deltaDistX);
       else          perpWallDist = (sideDistY - deltaDistY);
@@ -149,27 +149,14 @@ void	raycast_test(t_data *data)
       int drawEnd = lineHeight / 2 + HEIGHT/ 2;
       if(drawEnd >= HEIGHT) drawEnd = HEIGHT- 1;
 
-    //   //choose wall color
-    //   int color;
-    //   switch(worldMap[mapX][mapY])
-    //   {
-    //     case 1:  color = -16776961;    break; //red
-    //     case 2:  color = 16711935;  break; //green
-    //     case 3:  color = 65535;   break; //blue
-    //     case 4:  color = -45765745;  break; //white
-    //     default: color = -65281; break; //yellow
-    //   }
-
-    //   //give x and y sides different brightness
-    //   if(side == 1) {color = color / 2;}
 
  //texturing calculations
     //   int texNum = worldMap[mapX][mapY] - 1; //1 subtracted from it so that texture 0 can be used!
 
       //calculate value of wallX
       double wallX; //where exactly the wall was hit
-      if (side == 0) wallX = posY + perpWallDist * rayDirY;
-      else           wallX = posX + perpWallDist * rayDirX;
+      if (side == 0) wallX = data->player->pos.y + perpWallDist * rayDirY;
+      else           wallX = data->player->pos.x + perpWallDist * rayDirX;
       wallX -= floor((wallX));
  //x coordinate on the texture
       int texX = (int)(wallX * (double)(data->map->no->width));
@@ -185,12 +172,12 @@ void	raycast_test(t_data *data)
         // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
         int texY = (int)texPos & (data->map->no->height - 1);
         texPos += step;
-        u_int32_t color = data->map->no->pixels[data->map->no->height * texY + texX];
+        u_int32_t color = correct_color((u_int8_t*)&((u_int32_t*)data->map->no->pixels)[data->map->no->width * texY + (data->map->no->width - texX - 1)]);
         //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
         if(side == 1) color = (color >> 1) & 8355711;
-        mlx_put_pixel(img, x, y, color);
+        mlx_put_pixel(data->img, x, y, color);
       }
-    //   verLine(x, drawStart, drawEnd, color);
+	x++;
     }
     //timing for input and FPS counter
     // oldTime = time;
@@ -241,5 +228,5 @@ void	raycast_test(t_data *data)
     // }
   
 
-	// mlx_loop(mlxptr);
+	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }

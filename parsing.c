@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/13 14:44:03 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:18:15 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	check_char(t_data *data, char c, int y, int x)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
-		data->player->x = x;
-		data->player->y = y;
+		data->player->pos.x = x;
+		data->player->pos.y = y;
 		data->player->nb++;
 	}
 	if (c == 'N')
