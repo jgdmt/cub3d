@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 16:30:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:19:28 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static int	correct_color(u_int8_t *pixel)
 	return (rgba);
 }
 
-
-
 static void	ray_to_img(t_data *data, t_raycast *rc)
 {
 	double	step;
@@ -64,12 +62,10 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 	}
 }
 
-
-
 static void	get_screen_coord(t_data *data, t_raycast *rc)
 {
 	rc->line_height = (int)(data->height / rc->perpWallDist);
-	rc->draw_start = - rc->line_height / 2 + data->height / 2;
+	rc->draw_start = -rc->line_height / 2 + data->height / 2;
 	if (rc->draw_start < 0)
 		rc->draw_start = 0;
 	rc->draw_end = rc->line_height / 2 + data->height / 2;
@@ -80,7 +76,6 @@ static void	get_screen_coord(t_data *data, t_raycast *rc)
 static void	get_tex_coord(t_data *data, t_raycast *rc)
 {
 	double	wall_x;
-
 
 	if (rc->side == 0)
 		wall_x = data->player->pos.y + rc->perpWallDist * rc->ray_dir.y;
@@ -93,7 +88,6 @@ static void	get_tex_coord(t_data *data, t_raycast *rc)
 	if (rc->side == 1 && rc->ray_dir.y < 0)
 		rc->tex.x = data->map->no->width - rc->tex.x - 1;
 }
-
 
 void	raycast(t_data *data)
 {

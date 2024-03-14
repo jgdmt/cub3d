@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 16:27:25 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:20:53 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	init_ray_param(t_data *data, t_raycast *rc)
 		+ data->player->plane.y * camera_x; 
 	rc->ipos.x = (int)data->player->pos.x;
 	rc->ipos.y = (int)data->player->pos.y;
-
 	if (rc->ray_dir.x == 0)
 		rc->delta_dist.x = 1e30;
 	else
@@ -98,7 +97,6 @@ void	step_init(t_data *data, t_raycast *rc)
 
 void	dda(t_data *data, t_raycast *rc)
 {
-
 	while (1 != 0)
 	{
 		if (rc->side_dist.x < rc->side_dist.y)
@@ -117,4 +115,3 @@ void	dda(t_data *data, t_raycast *rc)
 			return ;
 	}
 }
-
