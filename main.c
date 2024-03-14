@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 21:02:42 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:17:13 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx)
 	data.player = player;
 	data.map = map;
 	data.mlx = mlx;
+	data.width = WIDTH;
+	data.height = HEIGHT;
 	return (data);
 }
 
@@ -70,6 +72,7 @@ int	main(int argc, char **argv)
 	parsing(argv[1], &data);
 	data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	raycast(&data);
+	mlx_image_to_window(data.mlx, data.img, 0, 0);
 	mlx_key_hook(mlx, &keypress, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 11:43:28 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:19:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	raycast(t_data *data)
 	// data->player->plane.x = 0; //temp
 	// data->player->plane.y = 0.66; //temp
 
-	data->width = WIDTH; // a deplacer
-	data->height = HEIGHT;
+
 	ft_memset(data->img->pixels, 0, data->img->width * data->img->height * sizeof(int32_t));
 	rc.x = 0;
 	while (rc.x < data->width)
@@ -156,5 +155,5 @@ void	raycast(t_data *data)
      ray_to_img(data, &rc);
 	(rc.x)++;
     }
-    mlx_image_to_window(data->mlx, data->img, 0, 0);
+    // mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
