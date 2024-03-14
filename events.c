@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 13:02:47 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:23:58 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,45 @@ void	rotate(double speed, t_data *data)
 
 void	move_forward(t_data *data, double speed)
 {
-	// printf("x %i %i %c\n", (int) (data->player->pos.x + data->player->dir.x * speed * 2), (int) data->player->pos.y, data->map->map[(int) data->player->pos.y][(int) (data->player->pos.x + data->player->dir.x * speed)]);
-	if (data->map->map[(int) data->player->pos.y][(int) (data->player->pos.x + data->player->dir.x * speed * 2)] == '0')
+	int			sign;
+	int			x;
+	int			y;
+
+	sign = 0;
+	if (fabs(data->player->dir.x) == 1)
+		sign = data->player->dir.x; 
+	x = (int)(data->player->pos.x + data->player->dir.x * speed * 2);
+	y = (int)(data->player->pos.y + sign * 0.1);
+	if (data->map->map[y][x] == '0')
 		data->player->pos.x += data->player->dir.x * speed;
-	// printf("y %i %i %c\n", (int) (data->player->pos.x), (int) (data->player->pos.y + data->player->dir.y * speed * 2), data->map->map[(int) (data->player->pos.y + data->player->dir.y * speed)][(int) (data->player->pos.x)]);
-	if (data->map->map[(int) (data->player->pos.y + data->player->dir.y * speed * 2)][(int) (data->player->pos.x)] == '0')
+	if (fabs(data->player->dir.y) == 1)
+		sign = data->player->dir.y;
+	x = (int)(data->player->pos.x + sign * 0.1);
+	y = (int)(data->player->pos.y + data->player->dir.y * speed * 2);
+	if (data->map->map[y][x] == '0')
 		data->player->pos.y += data->player->dir.y * speed;
-	// printf("%f %f\n", data->player->pos.x, data->player->pos.y);
 	raycast(data);
 }
 
 void	move(t_data *data, double speed)
 {
-	printf("x %i %i %c\n", (int) (data->player->pos.x + data->player->plane.x * speed * 2), (int) data->player->pos.y, data->map->map[(int) data->player->pos.y][(int) (data->player->pos.x + data->player->plane.x * speed * 2)]);
-	if (data->map->map[(int) data->player->pos.y][(int) (data->player->pos.x + data->player->plane.x * speed * 2)] == '0')
-		data->player->pos.x += (data->player->plane.x) * speed;
-	printf("y %i %i %c\n", (int) (data->player->pos.x), (int) (data->player->pos.y + data->player->plane.y * speed * 2), data->map->map[(int) (data->player->pos.y + data->player->plane.y * speed * 2)][(int) (data->player->pos.x)]);
-	if (data->map->map[(int) (data->player->pos.y + data->player->plane.y * speed * 2)][(int) (data->player->pos.x)] == '0')
+	int			sign;
+	int			x;
+	int			y;
+
+	sign = 0;
+	if (fabs(data->player->plane.x) == 1)
+		sign = data->player->plane.x;
+	x = (int)(data->player->pos.x + data->player->plane.x * speed * 2);
+	y = (int)(data->player->pos.y + 0.1 * sign);
+	if (data->map->map[y][x] == '0')
+		data->player->pos.x += data->player->plane.x * speed;
+	if (fabs(data->player->plane.y) == 1)
+		sign = data->player->plane.y;
+	x = (int)(data->player->pos.x + sign * 0.1);
+	y = (int)(data->player->pos.y + data->player->plane.y * speed * 2);
+	if (data->map->map[y][x] == '0')
 		data->player->pos.y += (data->player->plane.y) * speed;
-	printf("%f %f\n", data->player->pos.x, data->player->pos.y);
 	raycast(data);
 }
 
