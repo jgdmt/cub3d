@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 17:39:16 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:48:48 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	check_line(char *line, t_data *data, t_map *map, int i)
 
 	fill_board(l, map, i);
 	j = 0;
-	while (line[j] && line[j] != '\n')
+	while (line[j])
 	{
 		check_char(data, line[j], i, j);
 		if (line[j] == '0' || line[j] == 'N' || line[j] == 'S'
@@ -75,14 +75,45 @@ void	check_line(char *line, t_data *data, t_map *map, int i)
 	}
 }
 
+char	*fill_line(t_data *data, char *str, size_t size)
+{
+	size_t	i;
+	char	*s;
+
+	s = malloc(size + 1);
+	if (!s)
+		free_all(ERR_MALLOC, 2, data);
+	i = 0;
+	while (str[i])
+	{
+		s[i] = str[i];
+		if (s[i] == '\n')
+			s[i] = ' ';
+		i++; 
+	}
+	while (i < size)
+		s[i++] = ' ';
+	s[i] = 0;
+	free(str);
+	return (s);
+}
+
 void	check_map(t_data *data, t_map *map)
 {
-	int	i;
+	int		i;
+	size_t	max;
 
+	i = 0;
+	max = 0;
+	while (map->map[i])
+		if (ft_strlen(map->map[i++]) > max)
+			max = ft_strlen(map->map[i - 1]);
 	i = 0;
 	while (map->map[i])
 	{
+		map->map[i] = fill_line(data, map->map[i], max);
 		check_line(map->map[i], data, map, i);
+		map->map[i] = ft_strrev(map->map[i]);
 		i++;
 	}
 	if (data->player->nb == 0)

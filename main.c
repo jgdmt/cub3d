@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 17:40:08 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:57:11 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_map	init_map(void)
 	map.floor_color = -1;
 	map.ceiling_color = -1;
 	map.fc[0] = 0;
+	map.max = 0;
 	map.fc[1] = 0;
 	return (map);
 }

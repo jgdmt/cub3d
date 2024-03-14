@@ -1,0 +1,18 @@
+NO ./maps/pics/greystone.png
+SO       ./maps/pics/bluestone.png
+
+
+WE ./maps/pics/bluestone.png
+
+EA ./maps/pics/bluestone.png
+F 255,255,0
+
+
+
+
+C 0,0,255
+
+
+ 1
+1N1
+ 1

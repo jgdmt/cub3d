@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 17:08:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:49:07 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ u_int32_t	check_color(char *line, int start, char t, t_data *data)
 	}
 	if (j != 3 || (line[i] && line[i] != '\n') || line[i - 1] == ',')
 		return (free(line), free_all(ERR_RGB, 2, data), 1);
-	printf("%i %i %i\n", rgb[0], rgb[1], rgb[2]);
 	return (255 << 24 | rgb[2] << 16 | rgb[1] << 8 | rgb[0]);
 }
 

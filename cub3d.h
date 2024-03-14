@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 17:00:35 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:56:47 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,20 @@ typedef struct s_player
 
 typedef struct s_raycast
 {
-	int	draw_start;
-	int	draw_end;
-	int	line_height;
-	t_int_vector tex;
-	t_int_vector ipos;
-	t_int_vector step;
-	int	side;
-	int	x;
-	int	y;
-	t_vector ray_dir;
-	t_vector delta_dist;
-	t_vector	side_dist;
-	double perpWallDist;
+	int				draw_start;
+	int				draw_end;
+	int				line_height;
+	t_int_vector	tex;
+	t_int_vector	ipos;
+	t_int_vector	step;
+	int				side;
+	int				x;
+	int				y;
+	t_vector		ray_dir;
+	t_vector		delta_dist;
+	t_vector		side_dist;
+	double			perp_wall_dist;
+	mlx_image_t		*t;
 }	t_raycast;
 
 typedef struct s_map
@@ -91,6 +92,7 @@ typedef struct s_map
 	mlx_image_t	*ea;
 	u_int32_t	floor_color;
 	u_int32_t	ceiling_color;
+	size_t		max;
 	int			fc[2];
 }	t_map;
 

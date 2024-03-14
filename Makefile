@@ -9,7 +9,7 @@ OBJS			:= $(SRCS:.c=.o)
 # OBJS_EXEC		:= $(addprefix exec/,$(SRCS_EXEC:.c=.o))
 CC				:= cc
 RM				:= rm -rf
-CFLAGS			:= -Wall -Wextra -Werror  -I. -O3 #-ggdb3 -fsanitize=address
+CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3 #-fsanitize=address
 MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit  -L "/Users/$(USER)/.brew/opt/glfw/lib/" -I MLX42/include -lglfw
 NAME			:= cub3d
 

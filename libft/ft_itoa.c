@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 16:36:59 by vicode            #+#    #+#             */
-/*   Updated: 2024/01/24 13:41:05 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:57:32 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_nbrlen(int n, int *neg)
 	return (i);
 }
 
-static char	*ft_strrev(char *str)
+char	*ft_strrev(char *str)
 {
 	int		i;
 	int		len;

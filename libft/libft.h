@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:20:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 18:23:46 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:58:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int				ft_strslen(char **s);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strnstr(const char *hay, const char *needle, size_t len);
 char			*ft_strrchr(const char *s, int c);
+char			*ft_strrev(char *str);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
 
