@@ -1,4 +1,4 @@
-SRCS			:=	main.c cast.c free.c parsing.c parsing_get.c parsing_utils.c events.c
+SRCS			:=	main.c raycast.c raycast_bis.c free.c parsing.c parsing_get.c parsing_utils.c events.c
 # SRCS_BUILTINS	:=	env.c cd.c pwd.c export_utils.c export.c export_add.c export_parsing.c export_print.c unset.c echo.c exit.c
 # SRCS_PARSING	:=	parsing_env_utils.c lexer.c lexer_utils.c expander.c parser.c parser_utils.c here_doc.c here_doc_utils.c checker.c checker_utils.c
 # SRCS_EXEC		:=	exec.c exec_utils.c pipex.c
@@ -9,7 +9,7 @@ OBJS			:= $(SRCS:.c=.o)
 # OBJS_EXEC		:= $(addprefix exec/,$(SRCS_EXEC:.c=.o))
 CC				:= cc
 RM				:= rm -rf
-CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3 -fsanitize=address
+CFLAGS			:= -Wall -Wextra -Werror  -I. -O3 #-ggdb3 -fsanitize=address
 MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit  -L "/Users/$(USER)/.brew/opt/glfw/lib/" -I MLX42/include -lglfw
 NAME			:= cub3d
 

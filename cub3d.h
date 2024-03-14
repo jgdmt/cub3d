@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 12:44:22 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:39:00 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 
-# define WIDTH 600
-# define HEIGHT 450
+# define WIDTH 1920
+# define HEIGHT 1080
 
-# define RSPEED 0.1
+# define RSPEED 0.2
 # define MSPEED 0.1
 
 # define ERR_MLX "Error\nMlx crash.\n"
@@ -71,9 +71,15 @@ typedef struct s_raycast
 	int	draw_end;
 	int	line_height;
 	t_int_vector tex;
+	t_int_vector ipos;
+	t_int_vector step;
 	int	side;
 	int	x;
 	int	y;
+	t_vector ray_dir;
+	t_vector delta_dist;
+	t_vector	side_dist;
+	double perpWallDist;
 }	t_raycast;
 
 typedef struct s_map
