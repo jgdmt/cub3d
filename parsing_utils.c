@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 17:38:57 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:26:50 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,25 @@ char	*strdup_to(char *line, int start)
 	return (path);
 }
 
-int	strnlen(char *str, char c)
+char	*fill_line(t_data *data, char *str)
 {
-	int	len;
+	size_t	i;
+	char	*s;
 
-	len = 0;
-	while (str[len] && str[len] != c)
-		len++;
-	return (len);
-}
-
-int	*fill_board(int *prev_next_length, t_map *map, int i)
-{
-	prev_next_length[0] = 0;
-	prev_next_length[1] = 0;
-	if (i > 0)
-		prev_next_length[0] = strnlen(map->map[i - 1], '\n');
-	if (map->map[i + 1])
-		prev_next_length[1] = strnlen(map->map[i + 1], '\n');
-	return (prev_next_length);
+	s = malloc(data->map->max + 1);
+	if (!s)
+		free_all(ERR_MALLOC, 2, data);
+	i = 0;
+	while (str[i])
+	{
+		s[i] = str[i];
+		if (s[i] == '\n')
+			s[i] = ' ';
+		i++; 
+	}
+	while (i < data->map->max)
+		s[i++] = ' ';
+	s[i] = 0;
+	free(str);
+	return (s);
 }

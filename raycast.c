@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 19:17:46 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:32:00 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ static int	correct_color(u_int8_t *pixel)
 
 static void	ray_to_img(t_data *data, t_raycast *rc)
 {
-	double	step;
-	double	tex_pos;
-	int		y;
+	double		step;
+	double		tex_pos;
+	u_int32_t	color;
+	int			y;
 
 	step = 1.0 * data->map->no->height / rc->line_height;
 	tex_pos = (rc->draw_start - data->height / 2 + rc->line_height / 2) * step;
@@ -43,7 +44,7 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 	{
 		rc->tex.y = (int)tex_pos & (data->map->no->height - 1);
 		tex_pos += step;
-		u_int32_t color = correct_color((u_int8_t*)&((u_int32_t*)rc->t->pixels)[rc->t->width * rc->tex.y + (rc->t->width - rc->tex.x - 1)]);
+		color = correct_color((u_int8_t *)&((u_int32_t *)rc->t->pixels)[rc->t->width * rc->tex.y + (rc->t->width - rc->tex.x - 1)]);
 		mlx_put_pixel(data->img, rc->x, y, color);
 		y++;
 	}

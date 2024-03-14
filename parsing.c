@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 19:48:48 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:33:40 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		*fill_board(int *prev_next_length, t_map *map, int i);
-int		strnlen(char *str, char c);
 void	fill_player_infos(t_data *data, double dir[2], double plane[2]);
+char	*fill_line(t_data *data, char *str);
 
-void	check_name(char *map_name)
+static void	check_name(char *map_name)
 {
 	if (ft_strlen(map_name) < 4)
 	{
@@ -30,12 +29,12 @@ void	check_name(char *map_name)
 	}
 }
 
-void	check_char(t_data *data, char c, int y, int x)
+static void	check_char(t_data *data, char c, int y, int x)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
-		data->player->pos.x = x;
-		data->player->pos.y = y;
+		data->player->pos.x = x + 0.5f;
+		data->player->pos.y = y + 0.5f;
 		data->player->nb++;
 		data->map->map[y][x] = '0';
 		if (c == 'N')
@@ -51,12 +50,10 @@ void	check_char(t_data *data, char c, int y, int x)
 		free_all(ERR_FORBIDDENCHAR, 2, data);
 }
 
-void	check_line(char *line, t_data *data, t_map *map, int i)
+static void	check_line(char *line, t_data *data, t_map *map, int i)
 {
-	int	l[2];
-	int	j;
+	size_t	j;
 
-	fill_board(l, map, i);
 	j = 0;
 	while (line[j])
 	{
@@ -64,8 +61,8 @@ void	check_line(char *line, t_data *data, t_map *map, int i)
 		if (line[j] == '0' || line[j] == 'N' || line[j] == 'S'
 			|| line[j] == 'W' || line[j] == 'E')
 		{
-			if (j == 0 || j == strnlen(line, '\n') - 1 || l[0] <= j
-				|| l[1] <= j || i == 0 || i == ft_strslen(map->map) - 1)
+			if (j == 0 || j == data->map->max - 1
+				|| i == 0 || i == ft_strslen(map->map) - 1)
 				free_all(ERR_MAPNOTCLOSED, 2, data);
 			if (map->map[i - 1][j] == ' ' || map->map[i + 1][j] == ' '
 				|| map->map[i][j - 1] == ' ' || map->map[i][j + 1] == ' ')
@@ -75,45 +72,21 @@ void	check_line(char *line, t_data *data, t_map *map, int i)
 	}
 }
 
-char	*fill_line(t_data *data, char *str, size_t size)
-{
-	size_t	i;
-	char	*s;
-
-	s = malloc(size + 1);
-	if (!s)
-		free_all(ERR_MALLOC, 2, data);
-	i = 0;
-	while (str[i])
-	{
-		s[i] = str[i];
-		if (s[i] == '\n')
-			s[i] = ' ';
-		i++; 
-	}
-	while (i < size)
-		s[i++] = ' ';
-	s[i] = 0;
-	free(str);
-	return (s);
-}
-
-void	check_map(t_data *data, t_map *map)
+static void	check_map(t_data *data, t_map *map)
 {
 	int		i;
-	size_t	max;
 
-	i = 0;
-	max = 0;
-	while (map->map[i])
-		if (ft_strlen(map->map[i++]) > max)
-			max = ft_strlen(map->map[i - 1]);
 	i = 0;
 	while (map->map[i])
 	{
-		map->map[i] = fill_line(data, map->map[i], max);
-		check_line(map->map[i], data, map, i);
+		map->map[i] = fill_line(data, map->map[i]);
 		map->map[i] = ft_strrev(map->map[i]);
+		i++;
+	}
+	i = 0;
+	while (map->map[i])
+	{
+		check_line(map->map[i], data, map, i);
 		i++;
 	}
 	if (data->player->nb == 0)

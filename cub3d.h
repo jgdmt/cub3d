@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 19:56:47 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:30:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -37,7 +36,6 @@
 # define ERR_NOMAP "Error\nThe map is a lie.\n"
 # define ERR_UNKNOWNID "Error\nUnknown identifier.\n"
 # define ERR_PARSING "Error\nParsing error.\n"
-// # define ERR_MISSINGID "Error\nMissing identifier(s).\n"
 # define ERR_MAPNOTCLOSED "Error\nMap not closed.\n"
 # define ERR_FORBIDDENCHAR "Error\nForbidden character detected.\n"
 # define ERR_NOPLAYER "Error\n404 Player not found.\n"

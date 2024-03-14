@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 19:49:07 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:33:03 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*strdup_to(char *line, int start);
 void	add_color(char t, t_data *data);
 
-mlx_image_t	*check_texture(char *line, int start, t_data *data)
+static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 {
 	char			*text;
 	mlx_texture_t	*texture;
@@ -35,7 +35,7 @@ mlx_image_t	*check_texture(char *line, int start, t_data *data)
 	return (img);
 }
 
-u_int32_t	check_color(char *line, int start, char t, t_data *data)
+static u_int32_t	check_color(char *line, int start, char t, t_data *data)
 {
 	int	rgb[3];
 	int	i;
@@ -70,17 +70,18 @@ static int	get_map(int fd, char *line, t_map *map)
 	map->map = ft_calloc(2, sizeof(char *));
 	if (!map->map)
 		return (free(line), ft_printf(2, "%s", ERR_MALLOC), 1);
-	map->map[0] = line;
-	while (map->map[0] && map->map[0][0] == '\n')
+	while (line && line[0] == '\n')
 	{
-		free(map->map[0]);
-		map->map[0] = get_next_line(fd);
+		free(line);
+		line = get_next_line(fd);
 	}
+	map->map[0] = line;
 	if (!map->map[0])
 		return (free(line), ft_printf(2, "%s", ERR_NOMAP), 1);
-	line = "";
 	while (line && line[0] != '\n')
 	{
+		if (ft_strlen(line) > map->max)
+			map->max = ft_strlen(line);
 		line = get_next_line(fd);
 		temp = map->map;
 		map->map = ft_arrayjoin(map->map, &line, 1);
