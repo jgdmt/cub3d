@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 18:45:28 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:43:28 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,25 @@ int	correct_color(u_int8_t *pixel)
 	rgba += pixel[3];
 	return (rgba);
 }
-void	test(t_data *data, t_raycast *rc)
+
+void	ray_to_img(t_data *data, t_raycast *rc)
 {
 	double	step;
+	double	tex_pos;
+	int		y;
+
 	step = 1.0 * data->map->no->height / rc->line_height;
-	// Starting texture coordinate
-	double texPos = (rc->draw_start - data->height / 2 + rc->line_height / 2) * step;
-	int y;
+	tex_pos = (rc->draw_start - data->height / 2 + rc->line_height / 2) * step;
 	y = rc->draw_start;
-	while(y < rc->draw_end)
+	while (y < rc->draw_end)
 	{
-	// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-    int texY = (int)texPos & (data->map->no->height - 1);
-    texPos += step;
-	u_int32_t color = correct_color((u_int8_t*)&((u_int32_t*)data->map->no->pixels)[data->map->no->width * texY + (data->map->no->width - rc->tex_x - 1)]);
-	//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-	if (rc->side == 1) color = (color >> 1) & 8355711;
-	mlx_put_pixel(data->img, rc->x, y, color);
-	y++;
+		rc->tex.y = (int)tex_pos & (data->map->no->height - 1);
+		tex_pos += step;
+		u_int32_t color = correct_color((u_int8_t*)&((u_int32_t*)data->map->no->pixels)[data->map->no->width * rc->tex.y + (data->map->no->width - rc->tex.x - 1)]);
+		if (rc->side == 1)
+			color = (color >> 1) & 8355711;
+		mlx_put_pixel(data->img, rc->x, y, color);
+		y++;
 	}
 }
 
@@ -121,7 +122,7 @@ void	raycast(t_data *data)
         else
         {
           sideDist.y += deltaDistY;
-          ipos.y += step.x;
+          ipos.y += step.y;
           rc.side = 1;
         }
         //Check if ray has hit a wall
@@ -149,10 +150,10 @@ void	raycast(t_data *data)
       else           wallX = data->player->pos.x + perpWallDist * rayDirX;
       wallX -= floor((wallX));
  //x coordinate on the texture
-      rc.tex_x = (int)(wallX * (double)(data->map->no->width));
-      if(rc.side == 0 && rayDirX > 0) rc.tex_x = data->map->no->width - rc.tex_x - 1;
-      if(rc.side == 1 && rayDirY < 0) rc.tex_x = data->map->no->width - rc.tex_x - 1;
-     test(data, &rc);
+      rc.tex.x = (int)(wallX * (double)(data->map->no->width));
+      if(rc.side == 0 && rayDirX > 0) rc.tex.x = data->map->no->width - rc.tex.x - 1;
+      if(rc.side == 1 && rayDirY < 0) rc.tex.x = data->map->no->width - rc.tex.x - 1;
+     ray_to_img(data, &rc);
 	(rc.x)++;
     }
     mlx_image_to_window(data->mlx, data->img, 0, 0);

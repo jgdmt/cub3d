@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/13 19:26:42 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:43:07 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,6 @@
 # define ERR_FILENAME "Error\nFile name invalid.\n"
 # define ERR_FILEEXTENSION "Error\nFile extension invalid.\n"
 
-# define ESC	53
-# define LEFT	-1
-# define RIGHT	1
-# define DOWN	1
-# define UP		-1
-# define A		0
-# define S		1
-# define D		2
-# define W		13
-# define LARROW	123
-# define DARROW	125
-# define RARROW	124
-# define UARROW	126
-
 typedef struct s_vector
 {
 	double	x;
@@ -84,7 +70,7 @@ typedef struct s_raycast
 	int	draw_start;
 	int	draw_end;
 	int	line_height;
-	int	tex_x;
+	t_int_vector tex;
 	int	side;
 	int	x;
 	int	y;
