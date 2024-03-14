@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 16:23:58 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:38:54 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,47 +28,71 @@ void	rotate(double speed, t_data *data)
 	raycast(data);
 }
 
-void	move_forward(t_data *data, double speed)
+// void	move_forward(t_data *data, double sp)
+// {
+// 	int			sign;
+// 	t_vector	pos;
+// 	t_vector	dir;
+// 	char		**map;
+
+// 	sign = 0;
+// 	map = data->map->map;
+// 	pos = data->player->pos;
+// 	dir = data->player->dir;
+// 	if (fabs(data->player->dir.x) == 1)
+// 		sign = data->player->dir.x;
+// 	if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + dir.x * sp * 2)] == '0'
+// 		&& map[(int)(pos.y - sign * 0.1)][(int)(pos.x + dir.x * sp * 2)] == '0')
+// 		data->player->pos.x += data->player->dir.x * sp;
+// 	if (fabs(data->player->dir.y) == 1)
+// 		sign = data->player->dir.y;
+// 	if (map[(int)(pos.y + dir.y * sp * 2)][(int)(pos.x + sign * 0.1)] == '0'
+// 		&& map[(int)(pos.y + dir.y * sp * 2)][(int)(pos.x - sign * 0.1)] == '0')
+// 		data->player->pos.y += data->player->dir.y * sp;
+// 	raycast(data);
+// }
+
+// void	move(t_data *data, double speed)
+// {
+// 	int			sign;
+// 	int			x;
+// 	int			y;
+
+// 	sign = 0;
+// 	if (fabs(data->player->plane.x) == 1)
+// 		sign = data->player->plane.x;
+// 	x = (int)(data->player->pos.x + data->player->plane.x * speed * 2);
+// 	y = (int)(data->player->pos.y + 0.1 * sign);
+// 	if (data->map->map[y][x] == '0')
+// 		data->player->pos.x += data->player->plane.x * speed;
+// 	if (fabs(data->player->plane.y) == 1)
+// 		sign = data->player->plane.y;
+// 	x = (int)(data->player->pos.x + sign * 0.1);
+// 	y = (int)(data->player->pos.y + data->player->plane.y * speed * 2);
+// 	if (data->map->map[y][x] == '0')
+// 		data->player->pos.y += (data->player->plane.y) * speed;
+// 	raycast(data);
+// }
+
+void	move(t_data *data, double sp, t_vector v)
 {
 	int			sign;
-	int			x;
-	int			y;
+	t_vector	pos;
+	char		**map;
 
 	sign = 0;
-	if (fabs(data->player->dir.x) == 1)
-		sign = data->player->dir.x; 
-	x = (int)(data->player->pos.x + data->player->dir.x * speed * 2);
-	y = (int)(data->player->pos.y + sign * 0.1);
-	if (data->map->map[y][x] == '0')
-		data->player->pos.x += data->player->dir.x * speed;
-	if (fabs(data->player->dir.y) == 1)
-		sign = data->player->dir.y;
-	x = (int)(data->player->pos.x + sign * 0.1);
-	y = (int)(data->player->pos.y + data->player->dir.y * speed * 2);
-	if (data->map->map[y][x] == '0')
-		data->player->pos.y += data->player->dir.y * speed;
-	raycast(data);
-}
-
-void	move(t_data *data, double speed)
-{
-	int			sign;
-	int			x;
-	int			y;
-
-	sign = 0;
-	if (fabs(data->player->plane.x) == 1)
-		sign = data->player->plane.x;
-	x = (int)(data->player->pos.x + data->player->plane.x * speed * 2);
-	y = (int)(data->player->pos.y + 0.1 * sign);
-	if (data->map->map[y][x] == '0')
-		data->player->pos.x += data->player->plane.x * speed;
-	if (fabs(data->player->plane.y) == 1)
-		sign = data->player->plane.y;
-	x = (int)(data->player->pos.x + sign * 0.1);
-	y = (int)(data->player->pos.y + data->player->plane.y * speed * 2);
-	if (data->map->map[y][x] == '0')
-		data->player->pos.y += (data->player->plane.y) * speed;
+	map = data->map->map;
+	pos = data->player->pos;
+	if (fabs(v.x) == 1)
+		sign = v.x;
+	if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + v.x * sp * 2)] == '0'
+		&& map[(int)(pos.y - sign * 0.1)][(int)(pos.x + v.x * sp * 2)] == '0')
+		data->player->pos.x += v.x * sp;
+	if (fabs(v.y) == 1)
+		sign = v.y;
+	if (map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x + sign * 0.1)] == '0'
+		&& map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x - sign * 0.1)] == '0')
+		data->player->pos.y += v.y * sp;
 	raycast(data);
 }
 
@@ -84,13 +108,13 @@ void	keypress(mlx_key_data_t key, void *gdata)
 	else if (key.key == MLX_KEY_RIGHT)
 		rotate(-RSPEED, data);
 	else if (key.key == MLX_KEY_W)
-		move_forward(data, MSPEED);
+		move(data, MSPEED, data->player->dir);
 	else if (key.key == MLX_KEY_S)
-		move_forward(data, -MSPEED);
+		move(data, -MSPEED, data->player->dir);
 	else if (key.key == MLX_KEY_A)
-		move(data, -MSPEED);
+		move(data, -MSPEED, data->player->plane);
 	else if (key.key == MLX_KEY_D)
-		move(data, MSPEED);
+		move(data, MSPEED, data->player->plane);
 }
 
 void	close_window(void *gdata)
