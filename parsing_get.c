@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/13 19:04:31 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:08:38 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ mlx_image_t	*check_texture(char *line, int start, t_data *data)
 	return (img);
 }
 
-int	check_color(char *line, int start, char t, t_data *data)
+u_int32_t	check_color(char *line, int start, char t, t_data *data)
 {
 	int	rgb[3];
 	int	i;
@@ -60,7 +60,8 @@ int	check_color(char *line, int start, char t, t_data *data)
 	}
 	if (j != 3 || (line[i] && line[i] != '\n') || line[i - 1] == ',')
 		return (free(line), free_all(ERR_RGB, 2, data), 1);
-	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
+	printf("%i %i %i\n", rgb[0], rgb[1], rgb[2]);
+	return (255 << 24 | rgb[2] << 16 | rgb[1] << 8 | rgb[0]);
 }
 
 static int	get_map(int fd, char *line, t_map *map)

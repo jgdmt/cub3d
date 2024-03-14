@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 15:39:00 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:00:35 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ typedef struct s_map
 	mlx_image_t	*so;
 	mlx_image_t	*we;
 	mlx_image_t	*ea;
-	int			floor_color;
-	int			ceiling_color;
+	u_int32_t	floor_color;
+	u_int32_t	ceiling_color;
 	int			fc[2];
 }	t_map;
 
