@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 12:17:13 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:40:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,5 @@ int	main(int argc, char **argv)
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);
 	mlx_loop(mlx);
-	// mlx_terminate(mlx);
-	// free_all(0, 0, &data);
 	return (0);
 }

@@ -6,14 +6,15 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 12:34:55 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:39:16 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	*fill_board(int *prev_next_length, t_map *map, int i);
-int	strnlen(char *str, char c);
+int		*fill_board(int *prev_next_length, t_map *map, int i);
+int		strnlen(char *str, char c);
+void	fill_player_infos(t_data *data, double dir[2], double plane[2]);
 
 void	check_name(char *map_name)
 {
@@ -37,35 +38,14 @@ void	check_char(t_data *data, char c, int y, int x)
 		data->player->pos.y = y;
 		data->player->nb++;
 		data->map->map[y][x] = '0';
-	}
-	if (c == 'N')
-	{
-		data->player->dir.x = 0;
-		data->player->dir.y = -1;
-		data->player->plane.x = -1;
-		data->player->plane.y = 0;
-	}
-	else if (c == 'S')
-	{
-		data->player->dir.x = 0;
-		data->player->dir.y = 1;
-		data->player->plane.x = 1;
-		data->player->plane.y = 0;
-	}
-	else if (c == 'W')
-	{
-		data->player->dir.x = -1;
-		data->player->dir.y = 0;
-		data->player->plane.x = 0;
-		data->player->plane.y = 1;
-		
-	}
-	else if (c == 'E')
-	{
-		data->player->dir.x = 1;
-		data->player->dir.y = 0;
-		data->player->plane.x = 0;
-		data->player->plane.y = -1;
+		if (c == 'N')
+			fill_player_infos(data, (double []){0, -1}, (double []){-1, 0});
+		else if (c == 'S')
+			fill_player_infos(data, (double []){0, 1}, (double []){1, 0});
+		else if (c == 'W')
+			fill_player_infos(data, (double []){-1, 0}, (double []){0, 1});
+		else if (c == 'E')
+			fill_player_infos(data, (double []){1, 0}, (double []){0, -1});
 	}
 	else if (c != '0' && c != '1' && c != ' ')
 		free_all(ERR_FORBIDDENCHAR, 2, data);

@@ -6,11 +6,19 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/13 15:09:18 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:38:57 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	fill_player_infos(t_data *data, double dir[2], double plane[2])
+{
+	data->player->dir.x = dir[0];
+	data->player->dir.y = dir[1];
+	data->player->plane.x = plane[0];
+	data->player->plane.y = plane[1];
+}
 
 void	add_color(char t, t_data *data)
 {
