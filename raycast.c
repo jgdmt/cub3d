@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/15 11:14:13 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:28:17 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	draw_wall_floor(t_data *data);
 void	init_ray_param(t_data *data, t_raycast *rc);
 void	step_init(t_data *data, t_raycast *rc);
 void	dda(t_data *data, t_raycast *rc);
+void	get_tex_ptr(t_data *data, t_raycast *rc);
 
 static int	correct_color(u_int8_t *pixel)
 {
@@ -76,26 +77,6 @@ static void	get_tex_coord(t_data *data, t_raycast *rc)
 		rc->tex.x = rc->t->width - rc->tex.x - 1;
 	if (rc->side == 1 && rc->ray_dir.y < 0)
 		rc->tex.x = rc->t->width - rc->tex.x - 1;
-}
-
-void	get_tex_ptr(t_data *data, t_raycast *rc)
-{
-	if (rc->ipos.x >= data->player->pos.x && rc->side == 0)
-	{
-		rc->t = data->map->ea;
-	}
-	if (rc->ipos.x < data->player->pos.x && rc->side == 0)
-	{
-		rc->t = data->map->we;
-	}
-	if (rc->ipos.y >= data->player->pos.y && rc->side == 1)
-	{
-		rc->t = data->map->no;
-	}
-	if (rc->ipos.y < data->player->pos.y && rc->side == 1)
-	{
-		rc->t = data->map->so;
-	}
 }
 
 void	raycast(t_data *data)
