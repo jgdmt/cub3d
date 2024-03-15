@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/15 12:11:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:52:51 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 char	*strdup_to(char *line, int start);
 void	add_color(char t, t_data *data);
+char	**ft_modif_split(char *str, char *sep);
+void	split_free(char **array, int len);
 
 static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 {
@@ -35,32 +37,29 @@ static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 	return (img);
 }
 
-static u_int32_t	check_color(char *line, int i, char t, t_data *data)
+static u_int32_t	check_color(char *l, char t, t_data *data)
 {
-	int	rgb[3];
-	int	j;
+	int		rgb[3];
+	char	**col;
+	int		i;
 
-	if (ft_strlen(line) - i == 1)
-		return (free(line), free_all(ERR_EMPTYRGB, 2, data), 1);
 	add_color(t, data);
-	j = 0;
-	while (line[i] && j < 3)
+	col = ft_modif_split(l, " ,\n");
+	if (!col)
+		return (free(l), free_all(ERR_MALLOC, 2, data), 1);
+	if (ft_strslen(col) == 1)
+		return (split_free(col, -1), free(l), free_all(ERR_NORGB, 2, data), 1);
+	if (ft_strslen(col) != 4)
+		return (split_free(col, -1), free(l), free_all(ERR_RGB, 2, data), 1);
+	i = -1;
+	while (++i < 3)
 	{
-		rgb[j++] = ft_atoi(line + i);
-		if (rgb[j - 1] > 255 || rgb[j - 1] < 0)
-			return (free(line), free_all(ERR_OUFLOW, 2, data), 1);
-		while (line[i] && line[i] == ' ')
-			i++;
-		while (line[i] && ft_isdigit(line[i]))
-			i++;
-		while (line[i] && line[i] != '\n' && line[i] != ',')
-			if (line[i++] != ' ' && line[i - 1] != ',')
-				return (free(line), free_all(ERR_OUFLOW, 2, data), 1);
-		if (line[i] == ',')
-			i++;
+		rgb[i] = ft_atoi(col[i + 1]);
+		if (ft_strlen(col[i + 1]) > 3 || rgb[i] > 255 || rgb[i] < 0)
+			return (split_free(col, -1), free(l),
+				free_all(ERR_OUFLOW, 2, data), 1);
 	}
-	if (j != 3 || (line[i] && line[i] != '\n') || line[i - 1] == ',')
-		return (free(line), free_all(ERR_RGB, 2, data), 1);
+	split_free(col, -1);
 	return (255 << 24 | rgb[2] << 16 | rgb[1] << 8 | rgb[0]);
 }
 
@@ -106,9 +105,9 @@ static int	get_elements(char *line, t_data *data, t_map *map, int infos)
 	else if (!ft_strncmp(line, "EA ", 3))
 		map->ea = check_texture(line, 3, data);
 	else if (!ft_strncmp(line, "F ", 2))
-		map->floor_color = check_color(line, 2, 'F', data);
+		map->floor_color = check_color(line, 'F', data);
 	else if (!ft_strncmp(line, "C ", 2))
-		map->ceiling_color = check_color(line, 2, 'C', data);
+		map->ceiling_color = check_color(line, 'C', data);
 	else
 		return (-1);
 	if (infos + 1 == 6 && (!map->no || !map->so

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/15 11:15:16 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:11:44 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	free_all(char *str, int out, t_data *data)
 	int	i;
 
 	i = 0;
+	if (out == 2)
+		ft_printf(out, "Error\n");
 	if (str)
-		ft_printf(out, "%s", str);
+		ft_printf(out, "%s\n", str);
 	if (data->map->map)
 		while (data->map->map[i])
 			free(data->map->map[i++]);

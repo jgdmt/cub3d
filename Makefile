@@ -1,10 +1,10 @@
-SRCS			:=	main.c raycast.c raycast_bis.c cardinal_handler.c free.c parsing.c parsing_get.c parsing_utils.c events.c
+SRCS			:=	main.c raycast.c raycast_bis.c cardinal_handler.c free.c parsing.c parsing_get.c parsing_utils.c events.c parsing_split.c
 
 OBJS			:= $(SRCS:.c=.o)
 
 CC				:= cc
 RM				:= rm -rf
-CFLAGS			:= -Wall -Wextra -Werror  -I. #-ggdb3 -fsanitize=address
+CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3 -fsanitize=address
 MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit  -L "/Users/$(USER)/.brew/opt/glfw/lib/" -I MLX42/include -lglfw
 NAME			:= cub3D
 

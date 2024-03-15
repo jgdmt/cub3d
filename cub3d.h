@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 21:13:28 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:13:36 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,22 @@
 # define RSPEED 0.2
 # define MSPEED 0.1
 
-# define ERR_MLX "Error\nMlx crash.\n"
-# define ERR_ARGV "Error\nWrong number of arguments.\n"
-# define ERR_MALLOC "Error\nMalloc error.\n"
-# define ERR_OUFLOW "Error\nCan't you count? RGB E [0, 255]\n"
-# define ERR_RGB "Error\nRGB is 3 values :(.\n"
-# define ERR_EMPTYRGB "Error\nVoid is not a color.\n"
-# define ERR_EMPTYPATH "Error\nWhere is the path? >:(\n"
-# define ERR_NOMAP "Error\nThe map is a lie.\n"
-# define ERR_UNKNOWNID "Error\nUnknown identifier.\n"
-# define ERR_PARSING "Error\nParsing error.\n"
-# define ERR_MAPNOTCLOSED "Error\nMap not closed.\n"
-# define ERR_FORBIDDENCHAR "Error\nForbidden character detected.\n"
-# define ERR_NOPLAYER "Error\n404 Player not found.\n"
-# define ERR_MANYPLAYERS "Error\nThis is not a multiplayer game.\n"
-# define ERR_FILENAME "Error\nFile name invalid.\n"
-# define ERR_FILEEXTENSION "Error\nFile extension invalid.\n"
+# define ERR_MLX "Mlx crash."
+# define ERR_ARGV "Wrong number of arguments."
+# define ERR_MALLOC "Malloc error."
+# define ERR_OUFLOW "Can't you count? RGB E [0, 255]"
+# define ERR_RGB "RGB is 3 values, are you really a dev?"
+# define ERR_NORGB "Void is not a color."
+# define ERR_EMPTYPATH "Where is the path? >:("
+# define ERR_NOMAP "The map is a lie."
+# define ERR_UNKNOWNID "NO,SO,WE,EA,F or C only. It's not that hard, is it?"
+# define ERR_PARSING "Parsing error. And you call yourself a student."
+# define ERR_MAPNOTCLOSED "Do you need glasses? Close your map."
+# define ERR_FORBIDDENCHAR "Forbidden character detected. Are you even trying?"
+# define ERR_NOPLAYER "404 Player not found."
+# define ERR_MANYPLAYERS "This is not a multiplayer game."
+# define ERR_FILENAME "File name invalid."
+# define ERR_FILEEXTENSION "File extension invalid."
 
 typedef struct s_vector
 {
