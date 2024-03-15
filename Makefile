@@ -11,7 +11,7 @@ CC				:= cc
 RM				:= rm -rf
 CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3 #-fsanitize=address
 MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit  -L "/Users/$(USER)/.brew/opt/glfw/lib/" -I MLX42/include -lglfw
-NAME			:= cub3d
+NAME			:= cub3D
 
 all:			libmlx $(NAME) 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 20:33:40 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:51:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ static void	check_char(t_data *data, char c, int y, int x)
 			fill_player_infos(data, (double []){0, -1}, (double []){-1, 0});
 		else if (c == 'S')
 			fill_player_infos(data, (double []){0, 1}, (double []){1, 0});
-		else if (c == 'W')
-			fill_player_infos(data, (double []){-1, 0}, (double []){0, 1});
 		else if (c == 'E')
+			fill_player_infos(data, (double []){-1, 0}, (double []){0, 1});
+		else if (c == 'W')
 			fill_player_infos(data, (double []){1, 0}, (double []){0, -1});
 	}
 	else if (c != '0' && c != '1' && c != ' ')
@@ -102,7 +102,7 @@ int	parsing(char *map_name, t_data *data)
 	check_name(map_name);
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
-		return (perror("cub3d"), 1);
+		return (perror("cub3d"), free_all(0, 0, data), 1);
 	get_infos(fd, data);
 	close(fd);
 	check_map(data, data->map);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 20:26:50 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:27:39 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*strdup_to(char *line, int start)
 	path = malloc(ft_strlen(line) - start + 1);
 	if (!path)
 		return (NULL);
-	while (line[start] && line[start] != '\n')
+	while (line[start] && line[start] != '\n' && line[start] != ' ')
 		path[j++] = line[start++];
 	path[j] = 0;
 	return (path);

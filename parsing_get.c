@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/14 20:33:03 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:11:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,26 @@ static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 	return (img);
 }
 
-static u_int32_t	check_color(char *line, int start, char t, t_data *data)
+static u_int32_t	check_color(char *line, int i, char t, t_data *data)
 {
 	int	rgb[3];
-	int	i;
 	int	j;
 
-	if (ft_strlen(line) - start == 1)
+	if (ft_strlen(line) - i == 1)
 		return (free(line), free_all(ERR_EMPTYRGB, 2, data), 1);
 	add_color(t, data);
-	i = start;
 	j = 0;
 	while (line[i] && j < 3)
 	{
 		rgb[j++] = ft_atoi(line + i);
 		if (rgb[j - 1] > 255 || rgb[j - 1] < 0)
 			return (free(line), free_all(ERR_OUFLOW, 2, data), 1);
+		while (line[i] && line[i] == ' ')
+			i++;
+		while (line[i] && ft_isdigit(line[i]))
+			i++;
 		while (line[i] && line[i] != '\n' && line[i] != ',')
-			if (line[i++] != ' ' && line[i - 1] != ','
-				&& !ft_isdigit(line[i - 1]))
+			if (line[i++] != ' ' && line[i - 1] != ',')
 				return (free(line), free_all(ERR_OUFLOW, 2, data), 1);
 		if (line[i] == ',')
 			i++;
@@ -77,17 +78,17 @@ static int	get_map(int fd, char *line, t_map *map)
 	}
 	map->map[0] = line;
 	if (!map->map[0])
-		return (free(line), ft_printf(2, "%s", ERR_NOMAP), 1);
+		return (ft_printf(2, "%s", ERR_NOMAP), 1);
 	while (line && line[0] != '\n')
 	{
 		if (ft_strlen(line) > map->max)
 			map->max = ft_strlen(line);
 		line = get_next_line(fd);
-		temp = map->map;
-		map->map = ft_arrayjoin(map->map, &line, 1);
-		free(temp);
-		if (!map->map)
-			return (ft_printf(1, ERR_MALLOC), 1);
+		temp = ft_arrayjoin(map->map, &line, 1);
+		if (!temp)
+			return (free(line), ft_printf(1, ERR_MALLOC), 1);
+		free(map->map);
+		map->map = temp;
 	}
 	return (0);
 }

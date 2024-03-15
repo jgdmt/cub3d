@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 17:20:53 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:32:00 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	resize_render(t_data *data)
 	{
 		mlx_delete_image(data->mlx, data->img);
 		data->img = mlx_new_image(data->mlx, data->width, data->height);
-		mlx_image_to_window(data->mlx, data->img, 0, 0);
+		if (!data->img)
+			free_all(ERR_MALLOC, 2, data);
+		if (mlx_image_to_window(data->mlx, data->img, 0, 0) == -1)
+			free_all(ERR_MLX, 2, data);
 		width = data->width;
 		height = data->height;
 	}

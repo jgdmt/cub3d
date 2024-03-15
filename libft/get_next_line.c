@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:41:58 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/11 17:36:07 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:07:03 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static char	*get_next_buff(char *buff)
 	j = 0;
 	while (buff[i] && buff[i] != '\n')
 		i++;
-	// if (!buff[i])
-	// 	return (ft_error(buff, 0));
 	result = malloc((ft_strlen(buff) -i + 1) * sizeof(char));
 	if (!result)
 		return (ft_error(buff, 0));
@@ -122,6 +120,7 @@ char	*get_next_line(int fd)
 	free(tmp);
 	return (line);
 }
+
 // # include <stdio.h>
 
 // int	main(void)

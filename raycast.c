@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/14 20:32:00 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:14:13 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 	{
 		rc->tex.y = (int)tex_pos & (data->map->no->height - 1);
 		tex_pos += step;
-		color = correct_color((u_int8_t *)&((u_int32_t *)rc->t->pixels)[rc->t->width * rc->tex.y + (rc->t->width - rc->tex.x - 1)]);
+		color = correct_color((u_int8_t *)&((u_int32_t *)rc->t->pixels)
+			[rc->t->width * rc->tex.y + (rc->t->width - rc->tex.x - 1)]);
 		mlx_put_pixel(data->img, rc->x, y, color);
 		y++;
 	}
@@ -103,20 +104,20 @@ void	raycast(t_data *data)
 
 	resize_render(data);
 	draw_wall_floor(data);
-	rc.x = -1;
+	rc.x = 0;
 	while (rc.x < data->width)
 	{
 		init_ray_param(data, &rc);
 		step_init(data, &rc);
 		dda(data, &rc);
-		get_screen_coord(data, &rc);
 		if (rc.side == 0)
 			rc.perp_wall_dist = (rc.side_dist.x - rc.delta_dist.x);
 		else
 			rc.perp_wall_dist = (rc.side_dist.y - rc.delta_dist.y);
+		get_screen_coord(data, &rc);
 		get_tex_ptr(data, &rc);
 		get_tex_coord(data, &rc);
 		ray_to_img(data, &rc);
-		(rc.x)++;
+		rc.x += 1;
 	}
 }
