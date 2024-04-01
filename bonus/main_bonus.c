@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 17:48:41 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 18:03:54 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int	main(int argc, char **argv)
 	data = init_data(&map, &player, mlx);
 	parsing(argv[1], &data);
 	data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (!data.img)
+	data.buff = malloc(WIDTH * HEIGHT * sizeof(int));
+	if (!data.img || !data.buff)
 		free_all(ERR_MALLOC, 2, &data);
 	if (pthread_create(&thread, NULL, raycast_threader, &data))
 		free_all(ERR_MUTEX, 2, &data);

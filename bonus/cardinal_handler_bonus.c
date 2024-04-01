@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cardinal_handler_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:27:43 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 15:02:53 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 17:58:26 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,35 @@ void	ft_usleep(size_t msec)
 		usleep(500);
 }
 
+void	my_mlx_put_pixel(t_data *data, int x, int y, int color)
+{
+	int	*buff;
+
+	buff = (int *)data->buff;
+	if (y < data->height && x < data->width)
+		buff[(y * data->width) + x] = color;
+}
+
+void	put_to_screen(t_data *data)
+{
+	int	x;
+	int	*buff;
+
+	buff = (int *)data->buff;
+	x = 0;
+	while (x < data->width * data->height)
+	{
+		mlx_put_pixel(data->img, x - ((x % data->width)* data->width), x % data->width, buff[x]);
+		x++;
+	}
+}
+
 void	*raycast_threader(void *data)
 {
 	size_t	last_time;
 	size_t	time;
 
 	last_time = get_time();
-	// printf("%zu\n", get_time());
-	// ft_usleep(30);
-	// printf("%zu\n", get_time());
 	while (1)
 	{
 		raycast((t_data *)data);
