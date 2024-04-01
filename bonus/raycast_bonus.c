@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 18:10:26 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/01 18:33:02 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	raycast(t_data *data)
 	t_raycast	rc;
 
 	pthread_mutex_lock(&(data->lock));
+	if (data->exit)
+		return ;
 	resize_render(data);
 	rc.x = 0;
 	while (rc.x < data->width)

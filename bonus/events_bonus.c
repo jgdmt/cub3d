@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/01 17:59:17 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 18:31:00 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	rotate(double speed, t_data *data)
 	double	old_x;
 	double	old_y;
 
-	// pthread_mutex_lock(&(data->lock));
 	old_x = data->player->dir.x;
 	old_y = data->player->dir.y;
 	data->player->dir.x = old_x * cos(speed) - old_y * sin(speed);
@@ -26,7 +25,6 @@ void	rotate(double speed, t_data *data)
 	old_y = data->player->plane.y;
 	data->player->plane.x = old_x * cos(speed) - old_y * sin(speed);
 	data->player->plane.y = old_x * sin(speed) + old_y * cos(speed);
-	// pthread_mutex_unlock(&(data->lock));
 	// raycast(data);
 }
 
@@ -40,7 +38,6 @@ void	move(t_data *data, double sp, t_vector v)
 	sign = 0;
 	map = data->map->map;
 	pos = data->player->pos;
-	printf("%f %f\n", v.x, v.y);
 	if (fabs(v.x) == 1)
 		sign = v.x;
 	if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + v.x * sp * 2)] == '0'
@@ -56,29 +53,23 @@ void	move(t_data *data, double sp, t_vector v)
 }
 
 
-// void	mouse_move(void *gdata)
-// {
-// 	int32_t		x;
-// 	int32_t		y;
-// 	t_data		*data;
+void	mouse_move(void *gdata)
+{
+	static int32_t	old_x = WIDTH / 2;
+	static int32_t	old_y = HEIGHT / 2;
+	int32_t			x;
+	int32_t			y;
+	t_data			*data;
 
-// 	data = gdata;
-// 	mlx_get_mouse_pos(data->mlx, &x, &y);
-// 	if (x < WIDTH / 2 - 50)
-// 	{
-// 		if (x <= 0)
-// 			rotate(RSPEED, data);
-// 		else
-// 			rotate(RSPEED / x, data);
-// 	}
-// 	else if (x > WIDTH / 2 + 50)
-// 	{
-// 		if (x >= WIDTH)
-// 			rotate(-RSPEED, data);
-// 		else
-// 			rotate(-RSPEED / (WIDTH - x), data);
-// 	}
-// }
+	data = gdata;
+	mlx_get_mouse_pos(data->mlx, &x, &y);
+	if (x < old_x)
+		rotate(RSPEED, data);
+	else if (x > old_x)
+		rotate(-RSPEED, data);
+	old_x = x;
+	old_y = y;
+}
 
 void	hook(void *gdata)
 {
@@ -105,7 +96,8 @@ void	hook(void *gdata)
 		move(data, -MSPEED, data->player->plane);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
 		move(data, MSPEED, data->player->plane);
-	
+	if (!data->exit)
+		mouse_move(gdata);
 	
 	// int32_t		x;
 	// int32_t		y;
