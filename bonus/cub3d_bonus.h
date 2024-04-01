@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 12:12:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 12:37:54 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-# include "MLX42/include/MLX42/MLX42.h"
-# include "libft/libft.h"
+# include <pthread.h>
+# include "../MLX42/include/MLX42/MLX42.h"
+# include "../libft/libft.h"
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -27,6 +28,7 @@
 # define MSPEED 0.1
 
 # define ERR_MLX "Mlx crash."
+# define ERR_MUTEX "Mutex crash."
 # define ERR_ARGV "Wrong number of arguments."
 # define ERR_MALLOC "Malloc error."
 # define ERR_OUFLOW "Can't you count? RGB E [0, 255]"
@@ -96,16 +98,18 @@ typedef struct s_map
 
 typedef struct s_data
 {
-	t_map		*map;
-	t_player	*player;
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	size_t		time;
-	int			width;
-	int			height;
+	t_map			*map;
+	t_player		*player;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	size_t			time;
+	int				width;
+	int				height;
+	pthread_mutex_t	lock;
 }	t_data;
 
 void	raycast(t_data *data);
+void	*raycast_threader(void *data);
 
 int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);
@@ -116,4 +120,4 @@ void	keypress(mlx_key_data_t key, void *data);
 void	close_window(void *gdata);
 void	resize_window(int32_t width, int32_t height, void *gdata);
 
-#endif // CUB3D_H
+#endif // CUB3D_BONUS_H
