@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/01 15:47:55 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 17:59:17 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	move(t_data *data, double sp, t_vector v)
 	sign = 0;
 	map = data->map->map;
 	pos = data->player->pos;
+	printf("%f %f\n", v.x, v.y);
 	if (fabs(v.x) == 1)
 		sign = v.x;
 	if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + v.x * sp * 2)] == '0'
@@ -54,32 +55,62 @@ void	move(t_data *data, double sp, t_vector v)
 	// raycast(data);
 }
 
-void	keypress(mlx_key_data_t key, void *gdata)
+
+// void	mouse_move(void *gdata)
+// {
+// 	int32_t		x;
+// 	int32_t		y;
+// 	t_data		*data;
+
+// 	data = gdata;
+// 	mlx_get_mouse_pos(data->mlx, &x, &y);
+// 	if (x < WIDTH / 2 - 50)
+// 	{
+// 		if (x <= 0)
+// 			rotate(RSPEED, data);
+// 		else
+// 			rotate(RSPEED / x, data);
+// 	}
+// 	else if (x > WIDTH / 2 + 50)
+// 	{
+// 		if (x >= WIDTH)
+// 			rotate(-RSPEED, data);
+// 		else
+// 			rotate(-RSPEED / (WIDTH - x), data);
+// 	}
+// }
+
+void	hook(void *gdata)
 {
-	t_data	*data;
+	t_data 		*data;
+	static int	i = 0;
 
 	data = gdata;
-	// pthread_mutex_lock(&(data->lock));
-	if (key.key == MLX_KEY_ESCAPE)
-		free_all("Game escaped\n", 1, data);
-	else if (key.key == MLX_KEY_LEFT)
+	if (i < 2)
+	{
+		mlx_set_mouse_pos(data->mlx, WIDTH / 2, HEIGHT / 2);
+		i++;
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		free_all("Game escaped", 1, data);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 		rotate(RSPEED, data);
-	else if (key.key == MLX_KEY_RIGHT)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 		rotate(-RSPEED, data);
-	else if (key.key == MLX_KEY_W)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 		move(data, MSPEED, data->player->dir);
-	else if (key.key == MLX_KEY_S)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
 		move(data, -MSPEED, data->player->dir);
-	else if (key.key == MLX_KEY_A)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
 		move(data, -MSPEED, data->player->plane);
-	else if (key.key == MLX_KEY_D)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
 		move(data, MSPEED, data->player->plane);
-	// pthread_mutex_unlock(&(data->lock));
-}
-
-void	hook(t_data *data)
-{
-	// if (mlx_is_key_down(data->))
+	
+	
+	// int32_t		x;
+	// int32_t		y;
+	// mlx_get_mouse_pos(data->mlx, &x, &y);
+	// printf("%i %i\n", x, y);
 }
 
 void	close_window(void *gdata)
@@ -87,7 +118,7 @@ void	close_window(void *gdata)
 	t_data	*data;
 
 	data = gdata;
-	free_all("Game closed\n", 1, data);
+	free_all("Game closed", 1, data);
 }
 
 void	resize_window(int32_t width, int32_t height, void *gdata)

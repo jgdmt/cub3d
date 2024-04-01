@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 15:34:31 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:05:23 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,6 @@ void	free_all(char *str, int out, t_data *data);
 void	keypress(mlx_key_data_t key, void *data);
 void	close_window(void *gdata);
 void	resize_window(int32_t width, int32_t height, void *gdata);
+void	hook(void *data);
 
 #endif // CUB3D_BONUS_H
