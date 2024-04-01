@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 12:45:44 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:46:01 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx)
 	data.width = WIDTH;
 	data.height = HEIGHT;
 	data.img = 0;
+	data.exit = 0;
 	return (data);
 }
 
@@ -66,7 +67,7 @@ int	main(int argc, char **argv)
 	mlx_t		*mlx;
 	pthread_t	thread;
 
-	if (argc != 2)
+	if (argc < 2 || argc > 11)
 		return (ft_printf(2, ERR_ARGV), 0);
 	mlx = mlx_init(WIDTH, HEIGHT, "🐺Cub3D 🐉🐺", true);
 	if (!mlx)
@@ -80,10 +81,10 @@ int	main(int argc, char **argv)
 		free_all(ERR_MALLOC, 2, &data);
 	if (pthread_create(&thread, NULL, raycast_threader, &data))
 		free_all(ERR_MUTEX, 2, &data);
-	// raycast(&data);
 	if (mlx_image_to_window(data.mlx, data.img, 0, 0) == -1)
 		free_all(ERR_MLX, 2, &data);
-	mlx_key_hook(mlx, &keypress, &data);
+	// mlx_key_hook(mlx, &keypress, &data);
+	hook(&data);
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);
 	mlx_loop(mlx);

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 12:37:54 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:34:31 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_data
 	size_t			time;
 	int				width;
 	int				height;
+	int				exit;
 	pthread_mutex_t	lock;
 }	t_data;
 

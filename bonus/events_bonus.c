@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/01 14:56:24 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:47:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	rotate(double speed, t_data *data)
 	double	old_x;
 	double	old_y;
 
+	// pthread_mutex_lock(&(data->lock));
 	old_x = data->player->dir.x;
 	old_y = data->player->dir.y;
 	data->player->dir.x = old_x * cos(speed) - old_y * sin(speed);
@@ -25,6 +26,7 @@ void	rotate(double speed, t_data *data)
 	old_y = data->player->plane.y;
 	data->player->plane.x = old_x * cos(speed) - old_y * sin(speed);
 	data->player->plane.y = old_x * sin(speed) + old_y * cos(speed);
+	// pthread_mutex_unlock(&(data->lock));
 	// raycast(data);
 }
 
@@ -34,6 +36,7 @@ void	move(t_data *data, double sp, t_vector v)
 	t_vector	pos;
 	char		**map;
 
+	// pthread_mutex_lock(&(data->lock));
 	sign = 0;
 	map = data->map->map;
 	pos = data->player->pos;
@@ -47,6 +50,7 @@ void	move(t_data *data, double sp, t_vector v)
 	if (map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x + sign * 0.1)] == '0'
 		&& map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x - sign * 0.1)] == '0')
 		data->player->pos.y += v.y * sp;
+	// pthread_mutex_unlock(&(data->lock));
 	// raycast(data);
 }
 
@@ -71,6 +75,11 @@ void	keypress(mlx_key_data_t key, void *gdata)
 	else if (key.key == MLX_KEY_D)
 		move(data, MSPEED, data->player->plane);
 	// pthread_mutex_unlock(&(data->lock));
+}
+
+void	hook(t_data *data)
+{
+	// if (mlx_is_key_down(data->))
 }
 
 void	close_window(void *gdata)

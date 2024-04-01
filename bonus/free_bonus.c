@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/01 12:44:08 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:35:25 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	free_all(char *str, int out, t_data *data)
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
 	mlx_terminate(data->mlx);
+	data->exit = 1;
 	pthread_mutex_unlock(&data->lock);
 	pthread_mutex_destroy(&data->lock);
 	exit (0);
