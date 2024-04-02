@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 15:12:08 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:20:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,18 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 	step = 1.0 * data->map->no->height / rc->line_height;
 	tex_pos = (rc->draw_start - data->height / 2 + rc->line_height / 2) * step;
 	while (y <= rc->draw_start)
-		my_mlx_put_pixel(data, rc->x, y++, data->map->ceiling_color);
+		mlx_put_pixel(data->img, rc->x, y++, data->map->ceiling_color);
 	while (y <= rc->draw_end)
 	{
 		rc->tex.y = (int)tex_pos & (data->map->no->height - 1);
 		tex_pos += step;
 		color = correct_color((u_int8_t *)&((u_int32_t *)rc->t->pixels)
 			[rc->t->width * rc->tex.y + (rc->t->width - rc->tex.x - 1)]);
-		my_mlx_put_pixel(data, rc->x, y, color);
+		mlx_put_pixel(data->img, rc->x, y, color);
 		y++;
 	}
 	while (y <= data->height)
-		my_mlx_put_pixel(data, rc->x, y++, data->map->floor_color);
+		mlx_put_pixel(data->img, rc->x, y++, data->map->floor_color);
 }
 
 static void	get_screen_coord(t_data *data, t_raycast *rc)
@@ -108,6 +108,6 @@ void	raycast(t_data *data)
 		ray_to_img(data, &rc);
 		rc.x += 1;
 	}
-	put_to_screen(data);
+	// put_to_screen(data);
 	// pthread_mutex_undlock(&(data->lock));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/01 18:31:00 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:14:03 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,17 @@ void	hook(void *gdata)
 {
 	t_data 		*data;
 	static int	i = 0;
+	static size_t	last_time = 0;
 
 	data = gdata;
 	if (i < 2)
 	{
+		last_time = get_time();
 		mlx_set_mouse_pos(data->mlx, WIDTH / 2, HEIGHT / 2);
 		i++;
 	}
+	if (42 > get_time() - last_time)
+		return ;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		free_all("Game escaped", 1, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
@@ -98,7 +102,8 @@ void	hook(void *gdata)
 		move(data, MSPEED, data->player->plane);
 	if (!data->exit)
 		mouse_move(gdata);
-	
+	last_time = get_time();
+	// raycast(data);
 	// int32_t		x;
 	// int32_t		y;
 	// mlx_get_mouse_pos(data->mlx, &x, &y);

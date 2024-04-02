@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:27:43 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 15:11:42 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:18:51 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,16 @@ void	my_mlx_put_pixel(t_data *data, int x, int y, int color)
 void	put_to_screen(t_data *data)
 {
 	int	x;
+	int	width;
 	int	*buff;
 
 	buff = (int *)data->buff;
+	width = data->width;
 	x = 0;
-	while (x < data->width * data->height)
+	while (x < width * data->height)
 	{
-		mlx_put_pixel(data->img, x - ((x % data->width)* data->width), x % data->width, buff[x]);
-		x++;
+		mlx_put_pixel(data->img, x - ((x % width) * width), x % width, buff[x]);
+		++x;
 	}
 }
 
@@ -83,8 +85,8 @@ void	*raycast_threader(void *data)
 	{
 		raycast((t_data *)data);
 		time = get_time();
-		if (time - last_time < 16)
-			ft_usleep(16 - (time - last_time));
+		if (time - last_time < 42)
+			ft_usleep(42 - (time - last_time));
 		last_time = time;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 15:13:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:14:16 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int argc, char **argv)
 		free_all(ERR_MALLOC, 2, &data);
 	if (pthread_create(&thread, NULL, raycast_threader, &data))
 		free_all(ERR_MUTEX, 2, &data);
+	// raycast(&data);
 	if (mlx_image_to_window(data.mlx, data.img, 0, 0) == -1)
 		free_all(ERR_MLX, 2, &data);
 	// mlx_key_hook(mlx, &keypress, &data);

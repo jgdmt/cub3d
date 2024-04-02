@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 14:48:09 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:23:35 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void	raycast(t_data *data);
 void	*raycast_threader(void *data);
 void	my_mlx_put_pixel(t_data *data, int x, int y, int color);
 void	put_to_screen(t_data *data);
+void	ft_usleep(size_t msec);
+size_t	get_time(void);
 
 int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);
