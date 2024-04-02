@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/02 17:14:03 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 21:13:56 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ void	mouse_move(void *gdata)
 
 	data = gdata;
 	mlx_get_mouse_pos(data->mlx, &x, &y);
+	if (data->exit)
+	{
+		old_x = x;
+		old_y = y;
+		return ;
+	}
 	if (x < old_x)
 		rotate(RSPEED, data);
 	else if (x > old_x)
@@ -87,7 +93,11 @@ void	hook(void *gdata)
 	if (42 > get_time() - last_time)
 		return ;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-		free_all("Game escaped", 1, data);
+		menu(data);
+	if (data->exit)
+		return ;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_Q))
+		free_all("Game quit", 1, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 		rotate(RSPEED, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
@@ -100,14 +110,11 @@ void	hook(void *gdata)
 		move(data, -MSPEED, data->player->plane);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
 		move(data, MSPEED, data->player->plane);
-	if (!data->exit)
-		mouse_move(gdata);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
+		change_map(data);
+	mouse_move(gdata);
 	last_time = get_time();
 	// raycast(data);
-	// int32_t		x;
-	// int32_t		y;
-	// mlx_get_mouse_pos(data->mlx, &x, &y);
-	// printf("%i %i\n", x, y);
 }
 
 void	close_window(void *gdata)

@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/02 15:36:29 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 19:36:48 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+void	free_smap(mlx_t *mlx, t_map *map)
+{
+	int	i;
+
+	i = 0;
+	if (map->map)
+		while (map->map[i])
+			free(map->map[i++]);
+	free(map->map);
+	if (map->no)
+		mlx_delete_image(mlx, map->no);
+	if (map->so)
+		mlx_delete_image(mlx, map->so);
+	if (map->we)
+		mlx_delete_image(mlx, map->we);
+	if (map->ea)
+		mlx_delete_image(mlx, map->ea);
+}
 
 void	free_all(char *str, int out, t_data *data)
 {
@@ -24,18 +43,7 @@ void	free_all(char *str, int out, t_data *data)
 	if (str)
 		ft_printf(out, "%s\n", str);
 	ft_usleep(250);
-	if (data->map->map)
-		while (data->map->map[i])
-			free(data->map->map[i++]);
-	free(data->map->map);
-	if (data->map->no)
-		mlx_delete_image(data->mlx, data->map->no);
-	if (data->map->so)
-		mlx_delete_image(data->mlx, data->map->so);
-	if (data->map->we)
-		mlx_delete_image(data->mlx, data->map->we);
-	if (data->map->ea)
-		mlx_delete_image(data->mlx, data->map->ea);
+	free_smap(data->mlx, data->map);
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
 	mlx_terminate(data->mlx);

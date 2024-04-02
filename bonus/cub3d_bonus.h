@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 16:23:35 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 21:29:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 # define ERR_MANYPLAYERS "This is not a multiplayer game."
 # define ERR_FILENAME "File name invalid."
 # define ERR_FILEEXTENSION "File extension invalid."
+
+# define MSG_END "You reached the end. Congratulations, your cake is waiting."
 
 typedef struct s_vector
 {
@@ -97,13 +99,20 @@ typedef struct s_map
 	int			fc[2];
 }	t_map;
 
+typedef struct s_portal
+{
+
+}	t_portal;
+
 typedef struct s_data
 {
 	t_map			*map;
 	t_player		*player;
+	t_portal		portal[2];
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	size_t			time;
+	char			**argv;
 	char			*buff;
 	int				width;
 	int				height;
@@ -122,10 +131,12 @@ int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);
 
 void	free_all(char *str, int out, t_data *data);
+void	free_smap(mlx_t *mlx, t_map *map);
 
-void	keypress(mlx_key_data_t key, void *data);
 void	close_window(void *gdata);
 void	resize_window(int32_t width, int32_t height, void *gdata);
 void	hook(void *data);
+void	change_map(t_data *data);
+void	menu(t_data *data);
 
 #endif // CUB3D_BONUS_H

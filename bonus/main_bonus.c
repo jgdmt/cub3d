@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 17:14:16 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 21:04:06 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_player	init_player(void)
 	return (player);
 }
 
-t_data	init_data(t_map *map, t_player *player, mlx_t *mlx)
+t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 {
 	t_data	data;
 
@@ -56,6 +56,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx)
 	data.height = HEIGHT;
 	data.img = 0;
 	data.exit = 0;
+	data.argv = argv;
 	return (data);
 }
 
@@ -74,7 +75,7 @@ int	main(int argc, char **argv)
 		return (ft_printf(2, ERR_MLX), 0);
 	map = init_map();
 	player = init_player();
-	data = init_data(&map, &player, mlx);
+	data = init_data(&map, &player, mlx, argv);
 	parsing(argv[1], &data);
 	data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	data.buff = malloc(WIDTH * HEIGHT * sizeof(int));
@@ -89,8 +90,7 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(mlx, &hook, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);
-	// mlx_set_cursor_mode(mlx, MLX_MOUSE_DISABLED);
-
+	mlx_set_cursor_mode(mlx, MLX_MOUSE_DISABLED);
 	mlx_loop(mlx);
 	return (0);
 }
