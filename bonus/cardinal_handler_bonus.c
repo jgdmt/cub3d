@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:27:43 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 17:58:26 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:11:42 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 
 void	get_tex_ptr(t_data *data, t_raycast *rc)
 {
-	if (rc->ipos.x >= data->player->pos.x && rc->side == 0)
+	if (rc->ipos.x >= rc->player.pos.x && rc->side == 0)
 	{
 		rc->t = data->map->ea;
 	}
-	if (rc->ipos.x < data->player->pos.x && rc->side == 0)
+	if (rc->ipos.x < rc->player.pos.x && rc->side == 0)
 	{
 		rc->t = data->map->we;
 	}
-	if (rc->ipos.y >= data->player->pos.y && rc->side == 1)
+	if (rc->ipos.y >= rc->player.pos.y && rc->side == 1)
 	{
 		rc->t = data->map->no;
 	}
-	if (rc->ipos.y < data->player->pos.y && rc->side == 1)
+	if (rc->ipos.y < rc->player.pos.y && rc->side == 1)
 	{
 		rc->t = data->map->so;
 	}

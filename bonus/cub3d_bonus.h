@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 18:04:43 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:48:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_raycast
 	t_vector		ray_dir;
 	t_vector		delta_dist;
 	t_vector		side_dist;
+	t_player		player;
 	double			perp_wall_dist;
 	mlx_image_t		*t;
 }	t_raycast;

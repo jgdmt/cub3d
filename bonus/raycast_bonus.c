@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/01 18:33:02 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:12:08 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	resize_render(t_data *data);
 void	draw_wall_floor(t_data *data);
-void	init_ray_param(t_data *data, t_raycast *rc);
-void	step_init(t_data *data, t_raycast *rc);
+void	init_ray_param(int width, t_raycast *rc);
+void	step_init(t_raycast *rc);
 void	dda(t_data *data, t_raycast *rc);
 void	get_tex_ptr(t_data *data, t_raycast *rc);
 
@@ -67,14 +67,14 @@ static void	get_screen_coord(t_data *data, t_raycast *rc)
 		rc->draw_end = data->height - 1;
 }
 
-static void	get_tex_coord(t_data *data, t_raycast *rc)
+static void	get_tex_coord(t_raycast *rc)
 {
 	double	wall_x;
 
 	if (rc->side == 0)
-		wall_x = data->player->pos.y + rc->perp_wall_dist * rc->ray_dir.y;
+		wall_x = rc->player.pos.y + rc->perp_wall_dist * rc->ray_dir.y;
 	else
-		wall_x = data->player->pos.x + rc->perp_wall_dist * rc->ray_dir.x;
+		wall_x = rc->player.pos.x + rc->perp_wall_dist * rc->ray_dir.x;
 	wall_x -= floor((wall_x));
 	rc->tex.x = (int)(wall_x * (double)(rc->t->width));
 	if (rc->side == 0 && rc->ray_dir.x > 0)
@@ -87,15 +87,16 @@ void	raycast(t_data *data)
 {
 	t_raycast	rc;
 
-	pthread_mutex_lock(&(data->lock));
+	//pthread_mutex_lock(&(data->lock));
 	if (data->exit)
 		return ;
+	rc.player = *(data->player);
 	resize_render(data);
 	rc.x = 0;
 	while (rc.x < data->width)
 	{
-		init_ray_param(data, &rc);
-		step_init(data, &rc);
+		init_ray_param(data->width, &rc);
+		step_init(&rc);
 		dda(data, &rc);
 		if (rc.side == 0)
 			rc.perp_wall_dist = (rc.side_dist.x - rc.delta_dist.x);
@@ -103,10 +104,10 @@ void	raycast(t_data *data)
 			rc.perp_wall_dist = (rc.side_dist.y - rc.delta_dist.y);
 		get_screen_coord(data, &rc);
 		get_tex_ptr(data, &rc);
-		get_tex_coord(data, &rc);
+		get_tex_coord(&rc);
 		ray_to_img(data, &rc);
 		rc.x += 1;
 	}
 	put_to_screen(data);
-	pthread_mutex_unlock(&(data->lock));
+	// pthread_mutex_undlock(&(data->lock));
 }
