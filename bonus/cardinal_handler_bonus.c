@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:27:43 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 17:18:51 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:19:05 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	*raycast_threader(void *data)
 	{
 		raycast((t_data *)data);
 		time = get_time();
-		if (time - last_time < 42)
-			ft_usleep(42 - (time - last_time));
+		if (time - last_time < 13)
+			ft_usleep(13 - (time - last_time));
 		last_time = time;
 	}
 }
