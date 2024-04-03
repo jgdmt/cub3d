@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 17:33:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:24:22 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	step_init( t_raycast *rc)
 
 void	dda(t_data *data, t_raycast *rc)
 {
-	while (1 != 0)
+	while (1)
 	{
 		if (rc->side_dist.x < rc->side_dist.y)
 		{

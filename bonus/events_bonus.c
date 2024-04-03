@@ -3,14 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/03 21:02:02 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:36:45 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+void	tp(t_data *data, int to)
+{
+	int	sign;
+
+	data->exit = 2;
+	ft_usleep(250);
+	data->player->pos.x = data->player->portal[to].pos.x + data->player->portal[to].dir.x;
+	data->player->pos.y = data->player->portal[to].pos.y + data->player->portal[to].dir.y;
+	data->player->dir.x = data->player->portal[to].dir.x;
+	data->player->dir.y = data->player->portal[to].dir.y;
+	sign = -1;
+	if (data->player->portal[to].dir.x == 0)
+		sign = 1;
+	data->player->plane.x = sign * data->player->portal[to].dir.y;
+	data->player->plane.y = sign * data->player->portal[to].dir.x;
+	data->exit = 0;
+}
+
+int	check_portal(t_data *data, int x, int y)
+{
+	t_portal	*port;
+	int			i;
+
+	port = data->player->portal;
+	i = 0;
+	printf("Going to %i %i\n", x, y);
+	while (i < 2)
+	{
+		if (port[i].status && ((port[i].pos.y == y && (port[i].pos.x == x + 1
+						|| port[i].pos.x == x - 1)) || (port[i].pos.x == x
+					&& (port[i].pos.y == y + 1 || port[i].pos.y == y - 1))))
+		{
+			if (i == BLUE && port[ORANGE].status)
+				return (tp(data, ORANGE), 1);
+			if (i == ORANGE && port[BLUE].status)
+				return (tp(data, BLUE), 1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 void	rotate(double speed, t_data *data)
 {
@@ -42,13 +84,18 @@ void	move(t_data *data, double sp, t_vector v)
 	if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + v.x * sp * 2)] == '0'
 		&& map[(int)(pos.y - sign * 0.1)][(int)(pos.x + v.x * sp * 2)] == '0')
 		data->player->pos.x += v.x * sp;
+	else
+		if (check_portal(data, pos.x + v.x * sp, data->player->pos.y))
+			return ;
 	if (fabs(v.y) == 1)
 		sign = v.y;
 	if (map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x + sign * 0.1)] == '0'
 		&& map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x - sign * 0.1)] == '0')
 		data->player->pos.y += v.y * sp;
+	else
+		if (check_portal(data, pos.x, data->player->pos.y + v.y * sp))
+			return ;
 }
-
 
 void	mouse_move(void *gdata)
 {

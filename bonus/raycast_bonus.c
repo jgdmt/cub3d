@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 20:55:21 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:31:15 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
 void	draw_wall_floor(t_data *data);
-void	init_ray_param(int width, t_raycast *rc);
-void	step_init(t_raycast *rc);
-void	dda(t_data *data, t_raycast *rc);
 void	get_tex_ptr(t_data *data, t_raycast *rc);
 
 static int	correct_color(u_int8_t *pixel)

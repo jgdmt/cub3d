@@ -1,6 +1,6 @@
 SRCS			:=	main.c raycast.c raycast_bis.c cardinal_handler.c free.c parsing.c parsing_get.c parsing_utils.c events.c parsing_split.c
 
-SRCS_BONUS		:=	main_bonus.c raycast_bonus.c raycast_bis_bonus.c cardinal_handler_bonus.c free_bonus.c parsing_bonus.c parsing_get_bonus.c parsing_utils_bonus.c events_bonus.c parsing_split_bonus.c events_level_bonus.c loading_bonus.c
+SRCS_BONUS		:=	main_bonus.c raycast_bonus.c raycast_bis_bonus.c cardinal_handler_bonus.c free_bonus.c parsing_bonus.c parsing_get_bonus.c parsing_utils_bonus.c events_bonus.c parsing_split_bonus.c events_level_bonus.c loading_bonus.c events_portals_bonus.c
 
 OBJS			:= $(SRCS:.c=.o)
 

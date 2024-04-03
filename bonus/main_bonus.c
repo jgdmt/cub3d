@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 20:24:17 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:30:31 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ t_map	init_map(void)
 	return (map);
 }
 
+void	init_portal(t_portal *portal)
+{
+	int	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		portal[i].status = 0;
+		portal[i].pos.x = 0;
+		portal[i].pos.y = 0;
+		portal[i].dir.x = 0;
+		portal[i].dir.y = 0;
+		i++;
+	}
+}
+
 t_player	init_player(void)
 {
 	t_player	player;
@@ -41,6 +57,7 @@ t_player	init_player(void)
 	player.plane.x = 0;
 	player.plane.y = 1;
 	player.pitch = 0;
+	init_portal(player.portal);
 	return (player);
 }
 
@@ -104,6 +121,7 @@ int	main(int argc, char **argv)
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);
 	mlx_set_cursor_mode(mlx, MLX_MOUSE_DISABLED);
+	mlx_mouse_hook(mlx, &portals, &data);
 	mlx_loop(mlx);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 21:03:46 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:27:52 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 
 # define RSPEED 0.2
 # define MSPEED 0.1
+
+# define BLUE 0
+# define ORANGE 1
 
 # define ERR_MLX "Mlx crash."
 # define ERR_MUTEX "Mutex crash."
@@ -59,11 +62,19 @@ typedef struct s_int_vector
 	int	y;
 }	t_int_vector;
 
+typedef struct s_portal
+{
+	int				status;
+	t_int_vector	pos;
+	t_int_vector	dir;
+}	t_portal;
+
 typedef struct s_player
 {
 	t_vector	pos;
 	t_vector	plane;
 	t_vector	dir;
+	t_portal	portal[2];
 	int			nb;
 	int			pitch;
 }	t_player;
@@ -100,16 +111,10 @@ typedef struct s_map
 	int			fc[2];
 }	t_map;
 
-typedef struct s_portal
-{
-
-}	t_portal;
-
 typedef struct s_data
 {
 	t_map			*map;
 	t_player		*player;
-	t_portal		portal[2];
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*loading;
@@ -130,6 +135,9 @@ void	ft_usleep(size_t msec);
 size_t	get_time(void);
 void	loading_screen(t_data *data);
 void	resize_render(t_data *data);
+void	init_ray_param(int width, t_raycast *rc);
+void	step_init(t_raycast *rc);
+void	dda(t_data *data, t_raycast *rc);
 
 int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);
@@ -142,5 +150,6 @@ void	resize_window(int32_t width, int32_t height, void *gdata);
 void	hook(void *data);
 void	change_map(t_data *data);
 void	menu(t_data *data);
+void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt);
 
 #endif // CUB3D_BONUS_H
