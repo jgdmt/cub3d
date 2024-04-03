@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 11:49:32 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:32:36 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_data
 	mlx_image_t		*loading;
 	size_t			time;
 	char			**argv;
-	char			*buff;
+	uint32_t		*buff;
 	int				width;
 	int				height;
 	int				exit;
@@ -123,7 +123,7 @@ typedef struct s_data
 
 void	raycast(t_data *data);
 void	*raycast_threader(void *data);
-void	my_mlx_put_pixel(t_data *data, int x, int y, int color);
+void	my_mlx_put_pixel(t_data *data, int x, int y, uint32_t color);
 void	put_to_screen(t_data *data);
 void	ft_usleep(size_t msec);
 size_t	get_time(void);

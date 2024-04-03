@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/01 15:28:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:53:38 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static u_int32_t	check_color(char *l, char t, t_data *data)
 				free_all(ERR_OUFLOW, 2, data), 1);
 	}
 	split_free(col, -1);
-	return (255 << 24 | rgb[2] << 16 | rgb[1] << 8 | rgb[0]);
+	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
 }
 
 static int	get_map(int fd, char *line, t_map *map)
