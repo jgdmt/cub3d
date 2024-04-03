@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 13:38:39 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:45:23 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 {
 	t_data	data;
 	mlx_texture_t *loading;
+	mlx_texture_t *icon;
 
 	data.player = player;
 	data.map = map;
@@ -62,6 +63,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	loading = mlx_load_png("./bonus/assets/loading.png");
 	if (!loading)
 		free_all(ERR_MLX, 2, &data);
+	icon = mlx_load_png("./bonus/assets/icon.png");
 	data.loading = mlx_texture_to_image(data.mlx, loading);
 	mlx_delete_texture(loading);
 	if (!data.loading)

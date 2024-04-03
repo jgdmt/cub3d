@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 16:53:58 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:36:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void	resize_render(t_data *data);
 void	draw_wall_floor(t_data *data);
 void	init_ray_param(int width, t_raycast *rc);
 void	step_init(t_raycast *rc);
@@ -92,7 +91,6 @@ void	raycast(t_data *data)
 	if (data->exit)
 		return ;
 	rc.player = *(data->player);
-	resize_render(data);
 	rc.x = 0;
 	while (rc.x < data->width)
 	{

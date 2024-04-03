@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 13:51:34 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:33:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	resize_render(t_data *data)
 
 	if (width != data->width || height != data->height)
 	{
+		printf("%p, %p\n", data->mlx, data->img);
 		mlx_delete_image(data->mlx, data->img);
 		free(data->buff);
 		data->img = mlx_new_image(data->mlx, data->width, data->height);

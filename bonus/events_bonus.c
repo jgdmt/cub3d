@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/03 12:20:23 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:44:31 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,5 @@ void	resize_window(int32_t width, int32_t height, void *gdata)
 	data = gdata;
 	data->width = width;
 	data->height = height;
+	resize_render(data);
 }
