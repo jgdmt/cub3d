@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:23:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 17:16:27 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:46:11 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	loading_screen(t_data *data)
 	{
 		data->loading->enabled = true;
 		data->img->enabled = false;
-		// printf("activate\n");
 		exit = 2;
 	}
 	else if (data->exit != 2 && exit == 2)
@@ -28,6 +27,5 @@ void	loading_screen(t_data *data)
 		exit = 0;
 		data->loading->enabled = false;
 		data->img->enabled = true;
-		// printf("disable\n");
 	}
 }

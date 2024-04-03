@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/03 17:44:31 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 21:02:02 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	move(t_data *data, double sp, t_vector v)
 	t_vector	pos;
 	char		**map;
 
-	// pthread_mutex_lock(&(data->lock));
 	sign = 0;
 	map = data->map->map;
 	pos = data->player->pos;
@@ -48,8 +47,6 @@ void	move(t_data *data, double sp, t_vector v)
 	if (map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x + sign * 0.1)] == '0'
 		&& map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x - sign * 0.1)] == '0')
 		data->player->pos.y += v.y * sp;
-	// pthread_mutex_unlock(&(data->lock));
-	// raycast(data);
 }
 
 
@@ -73,14 +70,18 @@ void	mouse_move(void *gdata)
 		rotate(RSPEED, data);
 	else if (x > old_x)
 		rotate(-RSPEED, data);
+	if(y < old_y && data->player->pitch < 500)
+		data->player->pitch += 40;
+	if(y > old_y && data->player->pitch > -500)
+		data->player->pitch -= 40;
 	old_x = x;
 	old_y = y;
 }
 
 void	hook(void *gdata)
 {
-	t_data 		*data;
-	static int	i = 0;
+	t_data			*data;
+	static int		i = 0;
 	static size_t	last_time = 0;
 
 	data = gdata;
@@ -94,10 +95,10 @@ void	hook(void *gdata)
 		return ;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		menu(data);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_Q) && data->exit == 1)
+		free_all("Game quit", 1, data);
 	if (data->exit)
 		return ;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_Q))
-		free_all("Game quit", 1, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 		rotate(RSPEED, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))

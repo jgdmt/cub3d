@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/03 17:13:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:00:18 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,16 @@ void	menu(t_data *data)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
 		data->exit = 1;
+		data->img->enabled = false;
+		ft_usleep(250);
 		paused = 1;
 	}
 	else
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
 		data->exit = 0;
+		data->img->enabled = true;
+		ft_usleep(250);
 		paused = 0;
 	}
 }

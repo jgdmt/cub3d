@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 17:36:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:55:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 
 	y = 0;
 	step = 1.0 * data->map->no->height / rc->line_height;
-	tex_pos = (rc->draw_start - data->height / 2 + rc->line_height / 2) * step;
+	tex_pos = (rc->draw_start - rc->player.pitch - data->height / 2 + rc->line_height / 2) * step;
 	while (y <= rc->draw_start)
 		my_mlx_put_pixel(data, rc->x, y++, data->map->ceiling_color);
-	while (y <= rc->draw_end)
+	y = rc->draw_start;
+	while (y < rc->draw_end)
 	{
 		rc->tex.y = (int)tex_pos & (data->map->no->height - 1);
 		tex_pos += step;
@@ -58,10 +59,10 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 static void	get_screen_coord(t_data *data, t_raycast *rc)
 {
 	rc->line_height = (int)(data->height / rc->perp_wall_dist);
-	rc->draw_start = -rc->line_height / 2 + data->height / 2;
+	rc->draw_start = (-rc->line_height / 2 + data->height / 2) + rc->player.pitch;
 	if (rc->draw_start < 0)
 		rc->draw_start = 0;
-	rc->draw_end = rc->line_height / 2 + data->height / 2;
+	rc->draw_end = (rc->line_height / 2 + data->height / 2) + rc->player.pitch;
 	if (rc->draw_end >= data->height)
 		rc->draw_end = data->height - 1;
 }

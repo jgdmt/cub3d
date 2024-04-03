@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 17:36:53 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/03 21:03:46 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_player
 	t_vector	plane;
 	t_vector	dir;
 	int			nb;
+	int			pitch;
 }	t_player;
 
 typedef struct s_raycast
