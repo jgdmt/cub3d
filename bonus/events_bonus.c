@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/02 21:13:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:20:23 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	hook(void *gdata)
 		mlx_set_mouse_pos(data->mlx, WIDTH / 2, HEIGHT / 2);
 		i++;
 	}
-	if (42 > get_time() - last_time)
+	if (13 > get_time() - last_time)
 		return ;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		menu(data);
@@ -132,5 +132,4 @@ void	resize_window(int32_t width, int32_t height, void *gdata)
 	data = gdata;
 	data->width = width;
 	data->height = height;
-	raycast(data);
 }

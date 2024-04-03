@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 21:04:06 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:38:39 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,29 @@ t_player	init_player(void)
 t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 {
 	t_data	data;
+	mlx_texture_t *loading;
 
 	data.player = player;
 	data.map = map;
 	data.mlx = mlx;
-	if (pthread_mutex_init(&data.lock, NULL) != 0)
-		free_all(ERR_MUTEX, 2, &data);
 	data.width = WIDTH;
 	data.height = HEIGHT;
 	data.img = 0;
 	data.exit = 0;
+	data.loading = 0;
 	data.argv = argv;
+	if (pthread_mutex_init(&data.lock, NULL) != 0)
+		free_all(ERR_MUTEX, 2, &data);
+	loading = mlx_load_png("./bonus/assets/loading.png");
+	if (!loading)
+		free_all(ERR_MLX, 2, &data);
+	data.loading = mlx_texture_to_image(data.mlx, loading);
+	mlx_delete_texture(loading);
+	if (!data.loading)
+		free_all(ERR_MLX, 2, &data);
+	if (mlx_image_to_window(data.mlx, data.loading, 704, 284) == -1)
+		free_all(ERR_MLX, 2, &data);
+	data.loading->enabled = false;
 	return (data);
 }
 

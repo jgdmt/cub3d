@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 21:29:08 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/03 11:49:32 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_data
 	t_portal		portal[2];
 	mlx_t			*mlx;
 	mlx_image_t		*img;
+	mlx_image_t		*loading;
 	size_t			time;
 	char			**argv;
 	char			*buff;
@@ -126,6 +127,7 @@ void	my_mlx_put_pixel(t_data *data, int x, int y, int color);
 void	put_to_screen(t_data *data);
 void	ft_usleep(size_t msec);
 size_t	get_time(void);
+void	loading_screen(t_data *data);
 
 int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);

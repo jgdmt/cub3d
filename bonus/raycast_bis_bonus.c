@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 21:02:02 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:51:34 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	resize_render(t_data *data)
 		mlx_delete_image(data->mlx, data->img);
 		free(data->buff);
 		data->img = mlx_new_image(data->mlx, data->width, data->height);
-		data->buff = malloc(WIDTH * HEIGHT * sizeof(int));
+		data->buff = malloc(data->width * data->height * sizeof(int));
 		if (!data->img || !data->buff)
 			free_all(ERR_MALLOC, 2, data);
 		if (mlx_image_to_window(data->mlx, data->img, 0, 0) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cardinal_handler_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:27:43 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/02 21:02:18 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:42:27 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

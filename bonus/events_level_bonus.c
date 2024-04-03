@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_level_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/02 21:19:54 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:00:08 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	change_map(t_data *data)
 	static int	i = 2;
 	t_map		*map;
 
-	data->exit = 1;
+	data->exit = 2;
 	ft_usleep(250);
 	map = data->map;
 	reinit_data(data);
