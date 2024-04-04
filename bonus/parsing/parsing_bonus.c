@@ -6,13 +6,15 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/03 15:02:26 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:40:31 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "../cub3d_bonus.h"
 
 void	fill_player_infos(t_data *data, double dir[2], double plane[2]);
+void	fill_door_infos(t_data *data, int x, int y);
+void	fill_enemy_infos(t_data *data, int x, int y);
 char	*fill_line(t_data *data, char *str);
 
 static void	check_name(char *map_name)
@@ -46,6 +48,10 @@ static void	check_char(t_data *data, char c, int y, int x)
 		else if (c == 'W')
 			fill_player_infos(data, (double []){1, 0}, (double []){0, -1});
 	}
+	else if (c == '2')
+		fill_door_infos(data, x, y);
+	else if (c == '3')
+		fill_enemy_infos(data, x, y);
 	else if (c != '0' && c != '1' && c != ' ')
 		free_all(ERR_FORBIDDENCHAR, 2, data);
 }
@@ -83,6 +89,7 @@ static void	check_map(t_data *data, t_map *map)
 		map->map[i] = ft_strrev(map->map[i]);
 		i++;
 	}
+	map->maxy = i;
 	i = 0;
 	while (map->map[i])
 	{

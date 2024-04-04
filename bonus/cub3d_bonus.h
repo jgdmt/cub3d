@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 18:52:30 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:32:40 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@
 # define ERR_FORBIDDENCHAR "Forbidden character detected. Are you even trying?"
 # define ERR_NOPLAYER "404 Player not found."
 # define ERR_MANYPLAYERS "This is not a multiplayer game."
+# define ERR_DOORS "You can't be so bad that you need more than one exit door."
+# define ERR_ENCLOSE "For you own security, do not put enemy too close to you."
+# define ERR_ENEMIES "Too many enemies. Do not bite more than you can chew."
 # define ERR_FILENAME "File name invalid."
 # define ERR_FILEEXTENSION "File extension invalid."
 
@@ -68,6 +71,12 @@ typedef struct s_portal
 	t_int_vector	pos;
 	t_int_vector	dir;
 }	t_portal;
+
+typedef struct s_object
+{
+	t_vector	pos;
+	int			status;
+}	t_object;
 
 typedef struct s_player
 {
@@ -108,8 +117,11 @@ typedef struct s_map
 	mlx_image_t	*ea;
 	mlx_image_t	*floor_color;
 	mlx_image_t	*ceiling_color;
+	t_object	*enemies;
+	t_object	door;
+	int			nb_enemy;
 	size_t		max;
-	int			fc[2];
+	size_t		maxy;
 }	t_map;
 
 typedef struct s_data
@@ -119,9 +131,9 @@ typedef struct s_data
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*loading;
+	uint32_t		*buff;
 	size_t			time;
 	char			**argv;
-	uint32_t		*buff;
 	int				inv;
 	int				width;
 	int				height;

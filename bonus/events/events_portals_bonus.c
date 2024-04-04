@@ -6,11 +6,20 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 17:13:03 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 20:18:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "../cub3d_bonus.h"
+
+void	get_ray(t_data *data, t_raycast *rc)
+{
+	rc->player = *(data->player);
+	rc->x = data->width / 2;
+	init_ray_param(data->width, rc);
+	step_init(rc);
+	dda(data, rc);
+}
 
 void	shoot_portal(t_data *data, int type)
 {
@@ -18,12 +27,8 @@ void	shoot_portal(t_data *data, int type)
 	double		x;
 	double		y;
 
-	rc.player = *(data->player);
-	rc.x = data->width / 2;
-	init_ray_param(data->width, &rc);
-	step_init(&rc);
-	dda(data, &rc);
-	if (data->player->portal[0].status && data->player->portal[0].pos.x == rc.ipos.x 
+	get_ray(data, &rc);
+	if (data->player->portal[0].status && data->player->portal[0].pos.x == rc.ipos.x
 		&& data->player->portal[0].pos.y == rc.ipos.y)
 		return ;
 	if (data->player->portal[1].status && data->player->portal[1].pos.x == rc.ipos.x 
@@ -47,50 +52,44 @@ void	shoot_portal(t_data *data, int type)
 	data->player->portal[type].dir.x, data->player->portal[type].dir.y);
 }
 
-void	debug(t_data *data)
+void	tp(t_data *data, int to)
 {
-	printf("player pos %f %f, dir %f %f\n", data->player->pos.x, data->player->pos.y,
-	data->player->dir.x, data->player->dir.y);
-	printf("portal blue pos %d %d, dir %d %d\n", data->player->portal[BLUE].pos.x, data->player->portal[BLUE].pos.y,
-	data->player->portal[BLUE].dir.x, data->player->portal[BLUE].dir.y);
-	printf("portal orange pos %d %d, dir %d %d\n", data->player->portal[ORANGE].pos.x, data->player->portal[ORANGE].pos.y,
-	data->player->portal[ORANGE].dir.x, data->player->portal[ORANGE].dir.y);
+	int	sign;
+
+	data->exit = 2;
+	ft_usleep(250);
+	data->player->pos.x = data->player->portal[to].pos.x + data->player->portal[to].dir.x;
+	data->player->pos.y = data->player->portal[to].pos.y + data->player->portal[to].dir.y;
+	data->player->dir.x = data->player->portal[to].dir.x;
+	data->player->dir.y = data->player->portal[to].dir.y;
+	sign = -1;
+	if (data->player->portal[to].dir.x == 0)
+		sign = 1;
+	data->player->plane.x = sign * data->player->portal[to].dir.y;
+	data->player->plane.y = sign * data->player->portal[to].dir.x;
+	data->exit = 0;
 }
 
-void	shoot(t_data *data)
+int	check_portal(t_data *data, int x, int y)
 {
-	(void) data;
-}
+	t_portal	*port;
+	int			i;
 
-void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt)
-{
-	t_data	*data;
-
-	(void) mod;
-	data = dt;
-	if (data->exit)
-		return ;
-	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS && data->inv == 0)
-		shoot_portal(data, BLUE);
-	if (button == MLX_MOUSE_BUTTON_RIGHT && act == MLX_PRESS && data->inv == 0)
-		shoot_portal(data, ORANGE);
-	if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS && data->inv == 0)
-		debug(data);
-	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS && data->inv == 1)
-		shoot(data);
-}
-
-void	scroll(double xdelta, double ydelta, void *gdata)
-{
-	t_data	*data;
-
-	data = gdata;
-	(void) xdelta;
-	if (ydelta < 0)
-		data->inv = (data->inv + 1) % 2;
-	if (ydelta > 0)
-		data->inv = data->inv - 1;
-	if (data->inv < 0)
-		data->inv = 1;
-	printf("inventory slot: %i\n", data->inv);
+	port = data->player->portal;
+	i = 0;
+	printf("Going to %i %i\n", x, y);
+	while (i < 2)
+	{
+		if (port[i].status && ((port[i].pos.y == y && (port[i].pos.x == x + 1
+						|| port[i].pos.x == x - 1)) || (port[i].pos.x == x
+					&& (port[i].pos.y == y + 1 || port[i].pos.y == y - 1))))
+		{
+			if (i == BLUE && port[ORANGE].status)
+				return (tp(data, ORANGE), 1);
+			if (i == ORANGE && port[BLUE].status)
+				return (tp(data, BLUE), 1);
+		}
+		i++;
+	}
+	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:01:24 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/01 12:19:39 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:47:07 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "../cub3d_bonus.h"
 
 static int	split_is_sep(char c, char *sep)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 19:04:09 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:47:14 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "../cub3d_bonus.h"
 
 void	resize_render(t_data *data)
 {

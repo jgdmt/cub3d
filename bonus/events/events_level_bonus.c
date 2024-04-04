@@ -6,11 +6,11 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 14:25:48 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:39:40 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "../cub3d_bonus.h"
 
 void	reinit_data(t_data *data)
 {
@@ -21,9 +21,7 @@ void	reinit_data(t_data *data)
 	data->map->ea = 0;
 	data->map->floor_color = 0;
 	data->map->ceiling_color = 0;
-	data->map->fc[0] = 0;
 	data->map->max = 0;
-	data->map->fc[1] = 0;
 	data->player->nb = 0;
 	data->player->portal[0].status = 0;
 	data->player->portal[1].status = 0;

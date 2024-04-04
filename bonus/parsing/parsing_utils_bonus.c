@@ -6,11 +6,11 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/01 12:19:44 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:06:56 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "../cub3d_bonus.h"
 
 void	fill_player_infos(t_data *data, double dir[2], double plane[2])
 {
@@ -18,14 +18,6 @@ void	fill_player_infos(t_data *data, double dir[2], double plane[2])
 	data->player->dir.y = dir[1];
 	data->player->plane.x = plane[0];
 	data->player->plane.y = plane[1];
-}
-
-void	add_color(char t, t_data *data)
-{
-	if (t == 'C')
-		data->map->fc[1]++;
-	else if (t == 'F')
-		data->map->fc[0]++;
 }
 
 char	*strdup_to(char *line, int start)
@@ -59,7 +51,7 @@ char	*fill_line(t_data *data, char *str)
 		s[i] = str[i];
 		if (s[i] == '\n')
 			s[i] = ' ';
-		i++; 
+		i++;
 	}
 	while (i < data->map->max)
 		s[i++] = ' ';

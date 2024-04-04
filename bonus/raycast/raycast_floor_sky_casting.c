@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_floor_sky_casting.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:50:40 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 19:17:29 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:47:20 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "../cub3d_bonus.h"
 
 static void	get_floor_coord(t_data *data, t_raycast *rc)
 {

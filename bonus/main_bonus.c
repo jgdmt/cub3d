@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 14:20:11 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:39:24 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ t_map	init_map(void)
 	map.ea = 0;
 	map.floor_color = 0;
 	map.ceiling_color = 0;
-	map.fc[0] = 0;
 	map.max = 0;
-	map.fc[1] = 0;
+	map.maxy = 0;
+	map.enemies = 0;
+	map.door.pos.x = 0;
+	map.door.pos.y = 0;
+	map.door.status = -1;
 	return (map);
 }
 

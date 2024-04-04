@@ -6,11 +6,11 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 13:55:31 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:47:04 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "../cub3d_bonus.h"
 
 char	*strdup_to(char *line, int start);
 void	add_color(char t, t_data *data);
