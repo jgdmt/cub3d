@@ -5,9 +5,9 @@ SO       ./maps/pics/mossy.png
 WE ./maps/pics/wood.png
 
 EA                 ./maps/pics/redbrick.png
-F 255 , 142,4
+F ./maps/pics/barrel.png
 
-C 118,148,255
+C ./maps/pics/barrel.png
 111111111111111111111111111111111111111
 10001S10000000000000000000001111 110001
 100010100000000000000000000011111111111

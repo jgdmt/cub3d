@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 22:30:31 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:20:11 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_map	init_map(void)
 	map.so = 0;
 	map.we = 0;
 	map.ea = 0;
-	map.floor_color = -1;
-	map.ceiling_color = -1;
+	map.floor_color = 0;
+	map.ceiling_color = 0;
 	map.fc[0] = 0;
 	map.max = 0;
 	map.fc[1] = 0;
@@ -63,8 +63,8 @@ t_player	init_player(void)
 
 t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 {
-	t_data	data;
-	mlx_texture_t *loading;
+	t_data			data;
+	mlx_texture_t	*loading;
 
 	data.player = player;
 	data.map = map;
@@ -73,6 +73,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.height = HEIGHT;
 	data.img = 0;
 	data.exit = 0;
+	data.inv = 0;
 	data.loading = 0;
 	data.argv = argv;
 	if (pthread_mutex_init(&data.lock, NULL) != 0)
@@ -122,6 +123,7 @@ int	main(int argc, char **argv)
 	mlx_close_hook(mlx, &close_window, &data);
 	mlx_set_cursor_mode(mlx, MLX_MOUSE_DISABLED);
 	mlx_mouse_hook(mlx, &portals, &data);
+	mlx_scroll_hook(mlx, &scroll, &data);
 	mlx_loop(mlx);
 	return (0);
 }

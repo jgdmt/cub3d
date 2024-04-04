@@ -5,8 +5,8 @@ SO       ./maps/pics/greystone.png
 WE ./maps/pics/bluestone.png
 
 EA ./maps/pics/purplestone.png
-F  255,31,192
-C 0,0,255
+F  ./maps/pics/barrel.png
+C ./maps/pics/barrel.png
 
 1111111111111111111111
 1000000000100000000001

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/03 16:53:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 13:55:31 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,31 @@ static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 	return (img);
 }
 
-static u_int32_t	check_color(char *l, char t, t_data *data)
-{
-	int		rgb[3];
-	char	**col;
-	int		i;
+// static u_int32_t	check_color(char *l, char t, t_data *data)
+// {
+// 	int		rgb[3];
+// 	char	**col;
+// 	int		i;
 
-	add_color(t, data);
-	col = ft_modif_split(l, " ,\n");
-	if (!col)
-		return (free(l), free_all(ERR_MALLOC, 2, data), 1);
-	if (ft_strslen(col) == 1)
-		return (split_free(col, -1), free(l), free_all(ERR_NORGB, 2, data), 1);
-	if (ft_strslen(col) != 4)
-		return (split_free(col, -1), free(l), free_all(ERR_RGB, 2, data), 1);
-	i = -1;
-	while (++i < 3)
-	{
-		rgb[i] = ft_atoi(col[i + 1]);
-		if (ft_strlen(col[i + 1]) > 3 || rgb[i] > 255 || rgb[i] < 0)
-			return (split_free(col, -1), free(l),
-				free_all(ERR_OUFLOW, 2, data), 1);
-	}
-	split_free(col, -1);
-	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
-}
+// 	add_color(t, data);
+// 	col = ft_modif_split(l, " ,\n");
+// 	if (!col)
+// 		return (free(l), free_all(ERR_MALLOC, 2, data), 1);
+// 	if (ft_strslen(col) == 1)
+// 		return (split_free(col, -1), free(l), free_all(ERR_NORGB, 2, data), 1);
+// 	if (ft_strslen(col) != 4)
+// 		return (split_free(col, -1), free(l), free_all(ERR_RGB, 2, data), 1);
+// 	i = -1;
+// 	while (++i < 3)
+// 	{
+// 		rgb[i] = ft_atoi(col[i + 1]);
+// 		if (ft_strlen(col[i + 1]) > 3 || rgb[i] > 255 || rgb[i] < 0)
+// 			return (split_free(col, -1), free(l),
+// 				free_all(ERR_OUFLOW, 2, data), 1);
+// 	}
+// 	split_free(col, -1);
+// 	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
+// }
 
 static int	get_map(int fd, char *line, t_map *map)
 {
@@ -105,14 +105,14 @@ static int	get_elements(char *line, t_data *data, t_map *map, int infos)
 	else if (!ft_strncmp(line, "EA ", 3))
 		map->ea = check_texture(line, 3, data);
 	else if (!ft_strncmp(line, "F ", 2))
-		map->floor_color = check_color(line, 'F', data);
+		map->floor_color = check_texture(line, 2, data);
 	else if (!ft_strncmp(line, "C ", 2))
-		map->ceiling_color = check_color(line, 'C', data);
+		map->ceiling_color = check_texture(line, 2, data);
 	else
 		return (-1);
 	if (infos + 1 == 6 && (!map->no || !map->so
-			|| !map->we || !map->ea || map->fc[0] != 1
-			|| map->fc[1] != 1))
+			|| !map->we || !map->ea || !map->ceiling_color
+			|| !map->floor_color))
 		return (-2);
 	return (infos + 1);
 }

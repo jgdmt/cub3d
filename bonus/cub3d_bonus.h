@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 11:25:00 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:21:54 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ typedef struct s_map
 	mlx_image_t	*so;
 	mlx_image_t	*we;
 	mlx_image_t	*ea;
-	u_int32_t	floor_color;
-	u_int32_t	ceiling_color;
+	mlx_image_t	*floor_color;
+	mlx_image_t	*ceiling_color;
 	size_t		max;
 	int			fc[2];
 }	t_map;
@@ -122,6 +122,7 @@ typedef struct s_data
 	size_t			time;
 	char			**argv;
 	uint32_t		*buff;
+	int				inv;
 	int				width;
 	int				height;
 	int				exit;
@@ -153,5 +154,6 @@ void	hook(void *data);
 void	change_map(t_data *data);
 void	menu(t_data *data);
 void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt);
+void	scroll(double xdelta, double ydelta, void *gdata);
 
 #endif // CUB3D_BONUS_H

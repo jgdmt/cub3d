@@ -5,12 +5,12 @@ SO       ./maps/pics/bluestone.png
 WE ./maps/pics/bluestone.png
 
 EA ./maps/pics/bluestone.png
-F 255,255,255
+F ./maps/pics/barrel.png
 
 
 
 
-C 255,255,255
+C ./maps/pics/barrel.png
 
 111
 1N1

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/03 22:21:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:13:03 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ void	debug(t_data *data)
 	data->player->portal[ORANGE].dir.x, data->player->portal[ORANGE].dir.y);
 }
 
+void	shoot(t_data *data)
+{
+	(void) data;
+}
+
 void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt)
 {
 	t_data	*data;
@@ -65,10 +70,27 @@ void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt)
 	data = dt;
 	if (data->exit)
 		return ;
-	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS)
+	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS && data->inv == 0)
 		shoot_portal(data, BLUE);
-	if (button == MLX_MOUSE_BUTTON_RIGHT && act == MLX_PRESS)
+	if (button == MLX_MOUSE_BUTTON_RIGHT && act == MLX_PRESS && data->inv == 0)
 		shoot_portal(data, ORANGE);
-	if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS)
+	if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS && data->inv == 0)
 		debug(data);
+	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS && data->inv == 1)
+		shoot(data);
+}
+
+void	scroll(double xdelta, double ydelta, void *gdata)
+{
+	t_data	*data;
+
+	data = gdata;
+	(void) xdelta;
+	if (ydelta < 0)
+		data->inv = (data->inv + 1) % 2;
+	if (ydelta > 0)
+		data->inv = data->inv - 1;
+	if (data->inv < 0)
+		data->inv = 1;
+	printf("inventory slot: %i\n", data->inv);
 }

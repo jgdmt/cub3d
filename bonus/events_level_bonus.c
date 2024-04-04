@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_level_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/03 20:00:18 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:25:48 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ void	reinit_data(t_data *data)
 	data->map->so = 0;
 	data->map->we = 0;
 	data->map->ea = 0;
-	data->map->floor_color = -1;
-	data->map->ceiling_color = -1;
+	data->map->floor_color = 0;
+	data->map->ceiling_color = 0;
 	data->map->fc[0] = 0;
 	data->map->max = 0;
 	data->map->fc[1] = 0;
 	data->player->nb = 0;
+	data->player->portal[0].status = 0;
+	data->player->portal[1].status = 0;
 }
 
 void	change_map(t_data *data)
