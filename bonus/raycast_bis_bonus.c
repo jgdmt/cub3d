@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 19:24:22 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:04:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,6 @@ void	resize_render(t_data *data)
 			free_all(ERR_MLX, 2, data);
 		width = data->width;
 		height = data->height;
-	}
-}
-
-void	draw_wall_floor(t_data *data)
-{
-	u_int32_t	*buff;
-	int			size_buff;
-	int			i;
-
-	i = 0;
-	size_buff = (data->img->width * data->img->height);
-	buff = (u_int32_t *)data->img->pixels;
-	while (i < size_buff / 2)
-	{
-		buff[i] = data->map->ceiling_color;
-		i++;
-	}
-	while (i < size_buff)
-	{
-		buff[i] = data->map->floor_color;
-		i++;
 	}
 }
 
@@ -117,6 +96,8 @@ void	dda(t_data *data, t_raycast *rc)
 			rc->ipos.y += rc->step.y;
 			rc->side = 1;
 		}
+		// if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x)
+		// 	portal(data, rc);
 		if (data->map->map[rc->ipos.y][rc->ipos.x] == '1')
 			return ;
 	}

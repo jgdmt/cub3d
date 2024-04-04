@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 14:21:54 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:52:30 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ void	init_ray_param(int width, t_raycast *rc);
 void	step_init(t_raycast *rc);
 void	dda(t_data *data, t_raycast *rc);
 void	portal(t_data *data, t_raycast *rc);
+void	floor_cast(t_data *data);
+int		correct_color(u_int8_t *pixel);
 
 int		parsing(char *map_name, t_data *data);
 void	get_infos(int fd, t_data *data);
