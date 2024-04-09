@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/09 19:44:34 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:21:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define ERR_NOPLAYER "404 Player not found."
 # define ERR_MANYPLAYERS "This is not a multiplayer game."
 # define ERR_DOORS "You can't be so bad that you need more than one exit door."
-# define ERR_ENCLOSE "For you own security, do not put enemy too close to you."
+# define ERR_ENCLOSE "For your own security, do not put enemy too close to you."
 # define ERR_ENEMIES "Too many enemies. Do not bite more than you can chew."
 # define ERR_FILENAME "File name invalid."
 # define ERR_FILEEXTENSION "File extension invalid."
