@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 21:40:31 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:17:46 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ static void	check_char(t_data *data, char c, int y, int x)
 	{
 		data->player->pos.x = x + 0.5f;
 		data->player->pos.y = y + 0.5f;
+		check_enemy(data);
 		data->player->nb++;
+		if (data->player->nb > 1)
+			free_all(ERR_MANYPLAYERS, 2, data);
 		data->map->map[y][x] = '0';
 		if (c == 'N')
 			fill_player_infos(data, (double []){0, -1}, (double []){-1, 0});
@@ -90,6 +93,12 @@ static void	check_map(t_data *data, t_map *map)
 		i++;
 	}
 	map->maxy = i;
+	map->enemies = malloc((map->nb_enemy + 1) * sizeof(t_enemy *));
+	if (!map->enemies)
+		free_all(ERR_MALLOC, 2, data);
+	i = -1;
+	while (++i <= map->nb_enemy)
+		map->enemies[i] = NULL;
 	i = 0;
 	while (map->map[i])
 	{
@@ -98,8 +107,6 @@ static void	check_map(t_data *data, t_map *map)
 	}
 	if (data->player->nb == 0)
 		free_all(ERR_NOPLAYER, 2, data);
-	if (data->player->nb > 1)
-		free_all(ERR_MANYPLAYERS, 2, data);
 }
 
 int	parsing(char *map_name, t_data *data)

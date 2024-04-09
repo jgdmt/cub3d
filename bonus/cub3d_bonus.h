@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/09 16:09:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:44:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ERR_MLX "Mlx crash."
 # define ERR_MUTEX "Mutex crash."
 # define ERR_ARGV "Wrong number of arguments."
-# define ERR_MALLOC "Malloc error."
+# define ERR_MALLOC "Malloc error. Congratulations for your failure!"
 # define ERR_OUFLOW "Can't you count? RGB E [0, 255]"
 # define ERR_RGB "RGB is 3 values, are you really a dev?"
 # define ERR_NORGB "Void is not a color."
@@ -72,11 +72,17 @@ typedef struct s_portal
 	t_int_vector	dir;
 }	t_portal;
 
-typedef struct s_object
+typedef struct s_enemy
 {
 	t_vector	pos;
 	int			status;
-}	t_object;
+}	t_enemy;
+
+typedef struct s_door // struct or static ??
+{
+	t_vector	pos;
+	int			status;
+}	t_door;
 
 typedef struct s_player
 {
@@ -118,8 +124,8 @@ typedef struct s_map
 	mlx_image_t	*ea;
 	mlx_image_t	*floor_color;
 	mlx_image_t	*ceiling_color;
-	t_object	*enemies;
-	t_object	door;
+	t_enemy		**enemies;
+	t_door		door;
 	int			nb_enemy;
 	size_t		max;
 	size_t		maxy;
@@ -158,6 +164,7 @@ void	floor_cast(t_data *data, t_player player);
 int		correct_color(u_int8_t *pixel);
 
 int		parsing(char *map_name, t_data *data);
+void	check_enemy(t_data *data);
 void	get_infos(int fd, t_data *data);
 
 void	free_all(char *str, int out, t_data *data);

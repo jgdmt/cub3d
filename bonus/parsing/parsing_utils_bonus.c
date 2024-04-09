@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 21:06:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:31:47 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*fill_line(t_data *data, char *str)
 	while (str[i])
 	{
 		s[i] = str[i];
+		if (s[i] == '3')
+			data->map->nb_enemy++;
 		if (s[i] == '\n')
 			s[i] = ' ';
 		i++;

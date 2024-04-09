@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/09 13:58:34 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:11:54 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_map	init_map(void)
 	map.max = 0;
 	map.maxy = 0;
 	map.enemies = 0;
+	map.nb_enemy = 0;
 	map.door.pos.x = 0;
 	map.door.pos.y = 0;
 	map.door.status = -1;
@@ -122,6 +123,7 @@ int	main(int argc, char **argv)
 	if (mlx_image_to_window(data.mlx, data.img, 0, 0) == -1)
 		free_all(ERR_MLX, 2, &data);
 	// mlx_key_hook(mlx, &keypress, &data);
+	mlx_put_string(mlx, "+", WIDTH / 2, HEIGHT / 2); // TEMPORAIRE
 	mlx_loop_hook(mlx, &hook, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);

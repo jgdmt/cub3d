@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 21:37:46 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:08:59 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	free_smap(mlx_t *mlx, t_map *map)
 		while (map->map[i])
 			free(map->map[i++]);
 	free(map->map);
-	// i = 0;
-	// if (map->enemies)
-	// 	while (i < map->nb_enemy)
-	// 		free(map->enemies[i++]);
-	// free(map->enemies);
+	i = 0;
+	if (map->enemies)
+		while (map->enemies[i])
+			free(map->enemies[i++]);
+	free(map->enemies);
 	if (map->no)
 		mlx_delete_image(mlx, map->no);
 	if (map->so)
