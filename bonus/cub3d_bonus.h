@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 21:32:40 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:09:24 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_player
 	t_vector	dir;
 	t_portal	portal[2];
 	int			nb;
+	int			posz;
 	int			pitch;
 }	t_player;
 
@@ -152,8 +153,8 @@ void	resize_render(t_data *data);
 void	init_ray_param(int width, t_raycast *rc);
 void	step_init(t_raycast *rc);
 void	dda(t_data *data, t_raycast *rc);
-void	portal(t_data *data, t_raycast *rc);
-void	floor_cast(t_data *data);
+void	portal_0(t_data *data, t_raycast *rc);
+void	floor_cast(t_data *data, t_player player);
 int		correct_color(u_int8_t *pixel);
 
 int		parsing(char *map_name, t_data *data);

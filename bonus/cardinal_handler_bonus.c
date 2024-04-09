@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cardinal_handler_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:27:43 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/03 16:33:24 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:29:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_usleep(size_t msec)
 
 void	my_mlx_put_pixel(t_data *data, int x, int y, uint32_t color)
 {
-	if (y < data->height && x < data->width)
+	if (y < data->height && x < data->width && x >= 0 && y >= 0)
 		data->buff[(y * data->width) + x] = color;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 20:19:07 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:58:28 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	hook(void *gdata)
 		move(data, MSPEED, data->player->plane);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
 		change_map(data);
-	// mouse_move(gdata);
+	mouse_move(gdata);
 	last_time = get_time();
 }
 

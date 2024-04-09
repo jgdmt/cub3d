@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 19:47:14 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:47:39 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void	dda(t_data *data, t_raycast *rc)
 			rc->ipos.y += rc->step.y;
 			rc->side = 1;
 		}
-		// if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x)
-		// 	portal(data, rc);
+		if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x)
+			portal(data, rc);
 		if (data->map->map[rc->ipos.y][rc->ipos.x] == '1')
 			return ;
 	}

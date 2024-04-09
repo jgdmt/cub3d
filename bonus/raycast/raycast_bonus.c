@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 19:47:17 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:46:12 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 	y = 0;
 	step = 1.0 * data->map->no->height / rc->line_height;
 	tex_pos = (rc->draw_start - rc->player.pitch - data->height / 2 + rc->line_height / 2) * step;
-	// while (y <= rc->draw_start)
-	// 	my_mlx_put_pixel(data, rc->x, y++, data->map->ceiling_color);
 	y = rc->draw_start;
 	while (y < rc->draw_end)
 	{
@@ -49,8 +47,6 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 		my_mlx_put_pixel(data, rc->x, y, color);
 		y++;
 	}
-	// while (y <= data->height)
-	// 	my_mlx_put_pixel(data, rc->x, y++, data->map->floor_color);
 }
 
 static void	get_screen_coord(t_data *data, t_raycast *rc)
@@ -89,10 +85,10 @@ void	raycast(t_data *data)
 		return ;
 	rc.player = *(data->player);
 	rc.x = 0;
-	rc.portal_first_ray = 0;
-	floor_cast(data);
+	floor_cast(data, rc.player);
 	while (rc.x < data->width)
 	{
+		rc.portal_first_ray = 0;
 		init_ray_param(data->width, &rc);
 		step_init(&rc);
 		dda(data, &rc);

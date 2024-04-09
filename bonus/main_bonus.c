@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/04 21:39:24 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:58:34 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_player	init_player(void)
 
 	player.pos.x = 0;
 	player.pos.y = 0;
+	player.posz = 0;
 	player.nb = 0;
 	player.dir.x = -1;
 	player.dir.y = 0;
