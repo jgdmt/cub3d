@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 21:39:40 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 19:20:03 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	reinit_data(t_data *data)
 	data->map->ea = 0;
 	data->map->floor_color = 0;
 	data->map->ceiling_color = 0;
+	data->map->en_sprites = 0;
+	data->map->enemies = 0;
 	data->map->max = 0;
 	data->player->nb = 0;
 	data->player->portal[0].status = 0;

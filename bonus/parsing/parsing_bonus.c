@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/10 18:35:25 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 19:18:18 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ static void	check_map(t_data *data, t_map *map)
 
 int	parsing(char *map_name, t_data *data)
 {
-	int	fd;
+	int			fd;
+	static int	i = 0;
 
 	check_name(map_name);
 	fd = open(map_name, O_RDONLY);
@@ -119,8 +120,16 @@ int	parsing(char *map_name, t_data *data)
 	get_infos(fd, data);
 	close(fd);
 	check_map(data, data->map);
-	printf("I should congratulate you for the finally flawless parsing.\n");
-	printf("'Congratulations for achieving such a simple task!'\n");
-	printf("I heard humans were happy with meaningless words.\n");
+	if (i++ == 0)
+	{
+		printf("I should praise you for the finally flawless parsing.\n");
+		printf("'Congratulations for achieving such a simple task!'\n");
+		printf("I heard humans were happy with meaningless words.\n");
+	}
+	else if (i == 2)
+	{
+		printf("What, were you expecting more? Get over yourself.");
+		printf(" It's just parsing.\n");
+	}
 	return (0);
 }

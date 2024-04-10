@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/10 18:11:26 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 19:17:04 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 	mlx_texture_t	*texture;
 	mlx_image_t		*img;
 
-	printf("line %s\n", line);
 	if (ft_strlen(line) - start == 1)
 		return (free(line), free_all(ERR_EMPTYPATH, 2, data), NULL);
 	text = strdup_to(line, start);
