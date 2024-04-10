@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 20:14:46 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:37:48 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,6 @@ void	mouse_move(void *gdata)
 		data->player->pitch -= 40;
 	old_x = x;
 	old_y = y;
-}
-
-void	shoot(t_data *data)
-{
-	t_raycast	rc;
-
-	get_ray(data, &rc);
 }
 
 void	debug(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/09 20:21:55 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:38:11 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void	hook(void *data);
 void	change_map(t_data *data);
 void	menu(t_data *data);
 void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt);
+void	shoot(t_data *data);
 void	scroll(double xdelta, double ydelta, void *gdata);
 
 #endif // CUB3D_BONUS_H
