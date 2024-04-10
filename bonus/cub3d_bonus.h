@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/10 16:38:11 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:48:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define ERR_NORGB "Void is not a color."
 # define ERR_EMPTYPATH "Where is the path? >:("
 # define ERR_NOMAP "The map is a lie."
-# define ERR_UNKNOWNID "NO,SO,WE,EA,F or C only. It's not that hard, is it?"
+# define ERR_UNKNOWNID "NO,SO,WE,EA,F,E or C only. It's not that hard, is it?"
 # define ERR_PARSING "Parsing error. And you call yourself a student."
 # define ERR_MAPNOTCLOSED "Do you need glasses? Close your map."
 # define ERR_FORBIDDENCHAR "Forbidden character detected. Are you even trying?"
@@ -48,6 +48,7 @@
 # define ERR_DOORS "You can't be so bad that you need more than one exit door."
 # define ERR_ENCLOSE "For your own security, do not put enemy too close to you."
 # define ERR_ENEMIES "Too many enemies. Do not bite more than you can chew."
+# define ERR_ENTEX "No enemies sprites. Your carelessness is disappointing."
 # define ERR_FILENAME "File name invalid."
 # define ERR_FILEEXTENSION "File extension invalid."
 
@@ -124,6 +125,7 @@ typedef struct s_map
 	mlx_image_t	*ea;
 	mlx_image_t	*floor_color;
 	mlx_image_t	*ceiling_color;
+	mlx_image_t	**en_sprites;
 	t_enemy		**enemies;
 	t_door		door;
 	int			nb_enemy;

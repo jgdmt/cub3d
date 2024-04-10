@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:06:01 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/09 20:07:45 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:43:12 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	fill_enemy_infos(t_data *data, int x, int y)
 	static int	i = 0;
 
 	map = data->map;
-	(void)x;
-	(void)y;
 	// printf("player %f %f\nenemy %d %d\n %f %f\n", data->player->pos.x - 0.5f, data->player->pos.y - 0.5f, x, y, fabs(data->player->pos.x - 0.5f - x), fabs(data->player->pos.y - 0.5f - y));
 	if (fabs(data->player->pos.x - 0.5f - x) < 2
 		&& fabs(data->player->pos.y - 0.5f - y) < 2)

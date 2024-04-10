@@ -6,26 +6,34 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/09 20:08:59 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 18:23:29 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void	free_smap(mlx_t *mlx, t_map *map)
+void	free_array(void **array)
 {
 	int	i;
 
 	i = 0;
-	if (map->map)
-		while (map->map[i])
-			free(map->map[i++]);
-	free(map->map);
+	if (!array)
+		return ;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+}
+
+void	free_smap(mlx_t *mlx, t_map *map)
+{
+	int	i;
+
+	free_array((void **) map->map);
+	free_array((void **) map->enemies);
 	i = 0;
-	if (map->enemies)
-		while (map->enemies[i])
-			free(map->enemies[i++]);
-	free(map->enemies);
+	while (map->en_sprites && map->en_sprites[i])
+		mlx_delete_image(mlx, map->en_sprites[i++]);
+	free(map->en_sprites);
 	if (map->no)
 		mlx_delete_image(mlx, map->no);
 	if (map->so)

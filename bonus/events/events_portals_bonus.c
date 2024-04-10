@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 20:18:55 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:01:38 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	shoot_portal(t_data *data, int type)
 	double		y;
 
 	get_ray(data, &rc);
+	printf("%i %i\n", rc.ipos.x, rc.ipos.y);
 	if (data->player->portal[0].status && data->player->portal[0].pos.x == rc.ipos.x
 		&& data->player->portal[0].pos.y == rc.ipos.y)
 		return ;

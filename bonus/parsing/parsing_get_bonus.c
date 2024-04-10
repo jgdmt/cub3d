@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 19:47:04 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 18:11:26 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*strdup_to(char *line, int start);
 void	add_color(char t, t_data *data);
 char	**ft_modif_split(char *str, char *sep);
 void	split_free(char **array, int len);
+void	free_ex(t_data *data, char **strs, int ex);
 
 static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 {
@@ -23,17 +24,18 @@ static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 	mlx_texture_t	*texture;
 	mlx_image_t		*img;
 
+	printf("line %s\n", line);
 	if (ft_strlen(line) - start == 1)
 		return (free(line), free_all(ERR_EMPTYPATH, 2, data), NULL);
 	text = strdup_to(line, start);
 	texture = mlx_load_png(text);
 	free(text);
 	if (!texture)
-		return (free(line), free_all(ERR_MLX, 2, data), NULL);
+		return (NULL);
 	img = mlx_texture_to_image(data->mlx, texture);
 	mlx_delete_texture(texture);
 	if (!img)
-		return (free(line), free_all(ERR_MLX, 2, data), NULL);
+		return (NULL);
 	return (img);
 }
 
@@ -92,6 +94,32 @@ static int	get_map(int fd, char *line, t_map *map)
 	return (0);
 }
 
+void	get_sprite(char *line, int start, t_data *data, t_map *map)
+{
+	char	**text;
+	int		i;
+
+	while (start-- > 0 || *line == ' ')
+		line++;
+	if (!ft_strncmp(line, "NONE", 4))
+		return ;
+	text = ft_modif_split(line, ",");
+	if (!text)
+		free_all(ERR_MALLOC, 2, data);
+	map->en_sprites = ft_calloc(ft_strslen(text) + 1, sizeof(mlx_image_t));
+	if (!map->en_sprites)
+		free_ex(data, text, 1);
+	i = 0;
+	while (text[i])
+	{
+		map->en_sprites[i] = check_texture(text[i], 0, data);
+		if (!map->en_sprites[i])
+			free_ex(data, text, 1);
+		i++;
+	}
+	free_ex(data, text, 0);
+}
+
 static int	get_elements(char *line, t_data *data, t_map *map, int infos)
 {
 	if (line[0] == '\n')
@@ -108,9 +136,11 @@ static int	get_elements(char *line, t_data *data, t_map *map, int infos)
 		map->floor_color = check_texture(line, 2, data);
 	else if (!ft_strncmp(line, "C ", 2))
 		map->ceiling_color = check_texture(line, 2, data);
+	else if (!ft_strncmp(line, "E ", 2))
+		get_sprite(line, 2, data, map);
 	else
 		return (-1);
-	if (infos + 1 == 6 && (!map->no || !map->so
+	if (infos + 1 == 7 && (!map->no || !map->so
 			|| !map->we || !map->ea || !map->ceiling_color
 			|| !map->floor_color))
 		return (-2);
@@ -124,7 +154,7 @@ void	get_infos(int fd, t_data *data)
 
 	infos = 0;
 	line = get_next_line(fd);
-	while (line && infos != 6 && infos >= 0)
+	while (line && infos != 7 && infos >= 0)
 	{
 		infos = get_elements(line, data, data->map, infos);
 		free(line);

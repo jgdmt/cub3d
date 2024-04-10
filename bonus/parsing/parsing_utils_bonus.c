@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/09 19:31:47 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 18:10:43 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,19 @@ char	*fill_line(t_data *data, char *str)
 	s[i] = 0;
 	free(str);
 	return (s);
+}
+
+void	free_ex(t_data *data, char **strs, int ex)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
+	if (ex)
+		free_all(ERR_MALLOC, 2, data);
 }

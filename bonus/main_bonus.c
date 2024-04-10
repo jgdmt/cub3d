@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/09 19:11:54 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:06:59 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_map	init_map(void)
 	map.ea = 0;
 	map.floor_color = 0;
 	map.ceiling_color = 0;
+	map.en_sprites = 0;
 	map.max = 0;
 	map.maxy = 0;
 	map.enemies = 0;
