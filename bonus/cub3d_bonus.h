@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/10 17:48:55 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:48:01 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,12 @@ void	resize_render(t_data *data);
 void	init_ray_param(int width, t_raycast *rc);
 void	step_init(t_raycast *rc);
 void	dda(t_data *data, t_raycast *rc);
-void	portal_0(t_data *data, t_raycast *rc);
+void	portal(t_data *data, t_raycast *rc, int from, int to);
 void	floor_cast(t_data *data, t_player player);
 int		correct_color(u_int8_t *pixel);
+void	get_tex_ptr(t_data *data, t_raycast *rc);
+void	init(t_raycast *rc);
+void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
 
 int		parsing(char *map_name, t_data *data);
 void	check_enemy(t_data *data);

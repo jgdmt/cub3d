@@ -1,0 +1,20 @@
+NO ./maps/pics/eagle.png
+SO       ./maps/pics/mossy.png
+
+
+WE ./maps/pics/wood.png
+
+EA                 ./maps/pics/redbrick.png
+F ./maps/pics/barrel.png
+E NONE
+
+C ./maps/pics/barrel.png
+
+11111111111
+10000000001
+11000000001
+10000000001
+10000000001
+10000000001
+10000N00001
+11111111111

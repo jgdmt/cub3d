@@ -6,14 +6,11 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/09 15:46:12 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:11:27 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
-
-void	draw_wall_floor(t_data *data);
-void	get_tex_ptr(t_data *data, t_raycast *rc);
 
 int	correct_color(u_int8_t *pixel)
 {
@@ -97,7 +94,7 @@ void	raycast(t_data *data)
 		else
 			rc.perp_wall_dist = (rc.side_dist.y - rc.delta_dist.y) + rc.portal_first_ray;
 		get_screen_coord(data, &rc);
-		get_tex_ptr(data, &rc);
+		// get_tex_ptr(data, &rc);
 		get_tex_coord(&rc);
 		ray_to_img(data, &rc);
 		rc.x += 1;

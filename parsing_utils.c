@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/03/15 11:27:39 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/12 11:16:25 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*fill_line(t_data *data, char *str)
 		s[i] = str[i];
 		if (s[i] == '\n')
 			s[i] = ' ';
-		i++; 
+		i++;
 	}
 	while (i < data->map->max)
 		s[i++] = ' ';

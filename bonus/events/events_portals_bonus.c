@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/10 17:01:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:18:16 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,13 @@ void	shoot_portal(t_data *data, int type)
 
 void	tp(t_data *data, int to)
 {
-	int	sign;
 
 	data->exit = 2;
 	ft_usleep(250);
 	data->player->pos.x = data->player->portal[to].pos.x + data->player->portal[to].dir.x;
 	data->player->pos.y = data->player->portal[to].pos.y + data->player->portal[to].dir.y;
-	data->player->dir.x = data->player->portal[to].dir.x;
-	data->player->dir.y = data->player->portal[to].dir.y;
-	sign = -1;
-	if (data->player->portal[to].dir.x == 0)
-		sign = 1;
-	data->player->plane.x = sign * data->player->portal[to].dir.y;
-	data->player->plane.y = sign * data->player->portal[to].dir.x;
+	rotate_vector(&data->player->dir, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
+	rotate_vector(&data->player->plane, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 	data->exit = 0;
 }
 
