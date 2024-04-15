@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/15 19:18:16 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:19:31 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,16 @@ int	check_portal(t_data *data, int x, int y)
 	port = data->player->portal;
 	i = 0;
 	printf("Going to %i %i\n", x, y);
+	if (data->map->door_stat == 1 && ((data->map->door_pos.y == y
+		&& (fabs(data->map->door_pos.x - x) == 1)) || (data->map->door_pos.x == x
+		&& (fabs(data->map->door_pos.y - y) == 1))))
+		return (change_map(data), 1);
 	while (i < 2)
 	{
-		if (port[i].status && ((port[i].pos.y == y && (port[i].pos.x == x + 1
-						|| port[i].pos.x == x - 1)) || (port[i].pos.x == x
-					&& (port[i].pos.y == y + 1 || port[i].pos.y == y - 1))))
-		{
-			if (i == BLUE && port[ORANGE].status)
-				return (tp(data, ORANGE), 1);
-			if (i == ORANGE && port[BLUE].status)
-				return (tp(data, BLUE), 1);
-		}
+		if (port[i].status && ((port[i].pos.y == y && (abs(port[i].pos.x - x) == 1))
+			|| (port[i].pos.x == x && (abs(port[i].pos.y - y) == 1))))
+			if (port[(i + 1) % 2].status)
+				return (tp(data, (i + 1) % 2), 1);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:06:01 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/10 17:43:12 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:02:30 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	fill_door_infos(t_data *data, int x, int y)
 {
-	if (data->map->door.status != -1)
+	if (data->map->door_stat != -1)
 		free_all(ERR_DOORS, 2, data);
-	data->map->door.status = 0;
-	data->map->door.pos.x = x;
-	data->map->door.pos.y = y;
+	data->map->door_stat = 0;
+	data->map->door_pos.x = x;
+	data->map->door_pos.y = y;
 }
 
 void	fill_enemy_infos(t_data *data, int x, int y)
@@ -40,6 +40,7 @@ void	fill_enemy_infos(t_data *data, int x, int y)
 	map->enemies[i]->pos.x = x;
 	map->enemies[i]->pos.y = y;
 	map->enemies[i]->status = 0;
+	map->enemies[i]->life = 3;
 	data->map->map[y][x] = '0';
 	i++;
 }

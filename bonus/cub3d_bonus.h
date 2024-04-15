@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 18:48:01 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:16:36 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,8 @@ typedef struct s_enemy
 {
 	t_vector	pos;
 	int			status;
+	int			life;
 }	t_enemy;
-
-typedef struct s_door // struct or static ??
-{
-	t_vector	pos;
-	int			status;
-}	t_door;
 
 typedef struct s_player
 {
@@ -127,7 +122,8 @@ typedef struct s_map
 	mlx_image_t	*ceiling_color;
 	mlx_image_t	**en_sprites;
 	t_enemy		**enemies;
-	t_door		door;
+	int			door_stat;
+	t_vector	door_pos;
 	int			nb_enemy;
 	size_t		max;
 	size_t		maxy;
@@ -140,6 +136,7 @@ typedef struct s_data
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*loading;
+	mlx_image_t		*cursor[4];
 	uint32_t		*buff;
 	size_t			time;
 	char			**argv;
@@ -157,6 +154,7 @@ void	put_to_screen(t_data *data);
 void	ft_usleep(size_t msec);
 size_t	get_time(void);
 void	loading_screen(t_data *data);
+void	cursor_screen(t_data *data);
 void	resize_render(t_data *data);
 void	init_ray_param(int width, t_raycast *rc);
 void	step_init(t_raycast *rc);

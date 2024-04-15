@@ -6,11 +6,12 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/10 19:20:03 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:08:05 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
+
 
 void	reinit_data(t_data *data)
 {
@@ -24,6 +25,7 @@ void	reinit_data(t_data *data)
 	data->map->en_sprites = 0;
 	data->map->enemies = 0;
 	data->map->max = 0;
+	data->map->door_stat = -1;
 	data->player->nb = 0;
 	data->player->portal[0].status = 0;
 	data->player->portal[1].status = 0;
