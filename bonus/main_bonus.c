@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 20:03:57 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/15 21:27:57 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ void	init_data_text(t_data *data, mlx_t *mlx)
 	int				i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
-		printf("%i\n", i);
 		if (i == 0)
 			cur = mlx_load_png("./bonus/assets/empty.png");
 		else if (i == 1)
@@ -85,17 +84,19 @@ void	init_data_text(t_data *data, mlx_t *mlx)
 			cur = mlx_load_png("./bonus/assets/blue.png");
 		else if (i == 3)
 			cur = mlx_load_png("./bonus/assets/orange.png");
+		else if (i == 4)
+			cur = mlx_load_png("./bonus/assets/aim.png");
 		if (!cur)
 			free_all(ERR_MLX, 2, data);
 		tmp = cur;
 		data->cursor[i] = mlx_texture_to_image(mlx, cur);
-		// mlx_delete_texture(tmp);
 		if (!data->cursor[i])
 			free_all(ERR_MLX, 2, data);
 		if (mlx_image_to_window(mlx, data->cursor[i], data->width / 2 - data->cursor[i]->width / 2, data->height / 2 - data->cursor[i]->height / 2) == -1)
 			free_all(ERR_MLX, 2, data);
-		data->cursor[i]->instances->z = 6;
+		data->cursor[i]->instances->z = 7;
 		data->cursor[i]->enabled = false;
+		mlx_delete_texture(tmp);
 		i++;
 	}
 }
@@ -119,6 +120,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.cursor[1] = 0;
 	data.cursor[2] = 0;
 	data.cursor[3] = 0;
+	data.cursor[4] = 0;
 	if (pthread_mutex_init(&data.lock, NULL) != 0)
 		free_all(ERR_MUTEX, 2, &data);
 	loading = mlx_load_png("./bonus/assets/icon.png");

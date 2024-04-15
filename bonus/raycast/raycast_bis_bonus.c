@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 19:18:53 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:35:02 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	resize_render(t_data *data)
 {
 	static int	width = WIDTH;
 	static int	height = HEIGHT;
+	int			i;
 
 	if (width != data->width || height != data->height)
 	{
@@ -28,6 +29,10 @@ void	resize_render(t_data *data)
 			free_all(ERR_MALLOC, 2, data);
 		if (mlx_image_to_window(data->mlx, data->img, 0, 0) == -1)
 			free_all(ERR_MLX, 2, data);
+		i = -1;
+		while (++i < 4)
+			if (mlx_image_to_window(data->mlx, data->cursor[i], data->width / 2 - data->cursor[i]->width / 2, data->height / 2 - data->cursor[i]->height / 2) == -1)
+				free_all(ERR_MLX, 2, data);
 		width = data->width;
 		height = data->height;
 	}

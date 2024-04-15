@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:23:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 20:10:04 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/15 21:26:39 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	cursor_screen(t_data *data)
 		data->cursor[i]->enabled = false;
 		return ;
 	}
-	if (!data->player->portal[0].status && !data->player->portal[1].status)
+	if (data->inv == 1)
+		curr = 4;
+	else if (!data->player->portal[0].status && !data->player->portal[1].status)
 		curr = 0;
 	else if (data->player->portal[0].status && data->player->portal[1].status)
 		curr = 1;
@@ -50,6 +52,7 @@ void	cursor_screen(t_data *data)
 		curr = 2;
 	else
 		curr = 3;
+	// printf("cursor %i %i %i %i %i %i\n", curr, data->cursor[0]->enabled, data->cursor[1]->enabled, data->cursor[2]->enabled, data->cursor[3]->enabled, data->cursor[4]->enabled);
 	data->cursor[i]->enabled = false;
 	data->cursor[curr]->enabled = true;
 	i = curr;

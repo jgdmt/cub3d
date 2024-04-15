@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 20:16:36 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:53:25 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ typedef struct s_data
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*loading;
-	mlx_image_t		*cursor[4];
+	mlx_image_t		*cursor[5];
 	uint32_t		*buff;
 	size_t			time;
 	char			**argv;
