@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_portal_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:10:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/17 18:21:09 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:34:01 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	portal(t_data *data, t_raycast *rc, int from, int to)
 	test.player.dir = test.ray_dir;
 	test.player.plane.x = 1;
 	test.player.plane.y = 1;
-	printf("perpendicular : %s\n", (test.player.portal[to].dir.x * test.player.plane.x) + (test.player.portal[to].dir.y * test.player.plane.y)? "no": "ok" );
-	printf("dir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", test.player.dir.x, test.player.dir.y, test.player.plane.x, test.player.plane.y, test.player.pos.x, test.player.pos.y);
+	// printf("perpendicular : %s\n", (test.player.portal[to].dir.x * test.player.plane.x) + (test.player.portal[to].dir.y * test.player.plane.y)? "no": "ok" );
+	// printf("dir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", test.player.dir.x, test.player.dir.y, test.player.plane.x, test.player.plane.y, test.player.pos.x, test.player.pos.y);
 	init_ray_param(data->width, &test);
 	step_init(&test);
 	dda(data, &test);

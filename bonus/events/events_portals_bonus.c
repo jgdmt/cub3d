@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/17 10:33:16 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:35:56 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,20 @@ int	check_portal(t_data *data, int x, int y)
 		i++;
 	}
 	return (0);
+}
+
+void	reset_portal(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		data->player->portal[i].status = 0;
+		data->player->portal[i].pos.y = 0;
+		data->player->portal[i].pos.x = 0;
+		data->player->portal[i].dir.x = 0;
+		data->player->portal[i].dir.y = 0;
+		i++;
+	}
 }

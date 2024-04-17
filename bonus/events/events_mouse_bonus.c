@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/10 16:37:48 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:27:27 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt)
 		shoot_portal(data, BLUE);
 	if (button == MLX_MOUSE_BUTTON_RIGHT && act == MLX_PRESS && data->inv == 0)
 		shoot_portal(data, ORANGE);
-	if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS && data->inv == 0)
+	if (button == MLX_MOUSE_BUTTON_MIDDLE && mod == MLX_SHIFT && act == MLX_PRESS && data->inv == 0)
 		debug(data);
+	if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS && data->inv == 0)
+		reset_portal(data);
 	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS && data->inv == 1)
 		shoot(data);
 }
