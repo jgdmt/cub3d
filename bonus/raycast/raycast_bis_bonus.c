@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/16 17:19:55 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:24:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,7 @@ void	resize_render(t_data *data)
 		height = data->height;
 	}
 }
-void	init(t_raycast *rc)
-{
-	rc->ray_dir.x = rc->player.dir.x + rc->player.plane.x;
-	rc->ray_dir.y = rc->player.dir.y + rc->player.plane.y;
-	rc->ipos.x = (int)rc->player.pos.x;
-	rc->ipos.y = (int)rc->player.pos.y;
-	if (rc->ray_dir.x == 0)
-		rc->delta_dist.x = 1e30;
-	else
-		rc->delta_dist.x = fabs(1 / rc->ray_dir.x);
-	if (rc->ray_dir.y == 0)
-		rc->delta_dist.y = 1e30;
-	else
-		rc->delta_dist.y = fabs(1 / rc->ray_dir.y);
-}
+
 
 void	init_ray_param(int width, t_raycast *rc)
 {

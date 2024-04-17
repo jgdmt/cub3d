@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 21:27:57 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:18:24 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ t_player	init_player(void)
 	player.plane.x = 0;
 	player.plane.y = 1;
 	player.pitch = 0;
+	player.vx = 0;
+	player.vy = 0;
 	init_portal(player.portal);
 	return (player);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/15 16:01:50 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:48:24 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,63 @@ void	rotate(double speed, t_data *data)
 	data->player->plane.y = old_x * sin(speed) + old_y * cos(speed);
 }
 
-void	move(t_data *data, double sp, t_vector v)
+// find the angle between two vectors
+float	angle(double ux, double uy, double vx, double vy)
+{
+	float	ps;
+	float	u_norm;
+	float	v_norm;
+
+	ps = ux * vx + uy * vy;
+	u_norm = sqrt(pow(ux, 2) + pow(uy, 2));
+	v_norm = sqrt(pow(ux, 2) + pow(uy, 2));
+	if (ux > 0)
+		return (acos(ps / (u_norm * v_norm)));
+	else
+		return (-acos(ps / (u_norm * v_norm)));
+}
+
+void	move(t_data *data)
 {
 	int			sign;
 	t_vector	pos;
 	char		**map;
+	t_vector	v;
+	float		theta;
 
 	sign = 0;
+	if (data->player->vx < 10e-7 && data->player->vx > -10e-7 && data->player->vy < 10e-7 && data->player->vy > -10e-7)
+		return ;
+	theta = angle(data->player->dir.x, data->player->dir.y, 0, -1);
+	v.x = data->player->vx * cos(theta) + data->player->vy * - sin(theta);
+	v.y = data->player->vx * sin(theta) + data->player->vy * cos(theta);
 	map = data->map->map;
 	pos = data->player->pos;
+	// printf("%f\n", theta);
 	if (fabs(v.x) == 1)
 		sign = v.x;
-	if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + v.x * sp * 2)] == '0'
-		&& map[(int)(pos.y - sign * 0.1)][(int)(pos.x + v.x * sp * 2)] == '0')
-		data->player->pos.x += v.x * sp;
+	if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + v.x * 2)] == '0'
+		&& map[(int)(pos.y - sign * 0.1)][(int)(pos.x + v.x * 2)] == '0')
+		data->player->pos.x += v.x;
 	else
-		if (check_portal(data, pos.x + v.x * sp, data->player->pos.y))
+	{
+		if (check_portal(data, pos.x + v.x, data->player->pos.y))
 			return ;
+		else
+			data->player->vx = 0;
+	}
 	if (fabs(v.y) == 1)
 		sign = v.y;
-	if (map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x + sign * 0.1)] == '0'
-		&& map[(int)(pos.y + v.y * sp * 2)][(int)(pos.x - sign * 0.1)] == '0')
-		data->player->pos.y += v.y * sp;
+	if (map[(int)(pos.y + v.y * 2)][(int)(pos.x + sign * 0.1)] == '0'
+		&& map[(int)(pos.y + v.y * 2)][(int)(pos.x - sign * 0.1)] == '0')
+		data->player->pos.y += v.y;
 	else
-		if (check_portal(data, pos.x, data->player->pos.y + v.y * sp))
+	{
+		if (check_portal(data, pos.x, data->player->pos.y + v.y))
 			return ;
+		else
+			data->player->vy = 0;
+	}
 }
 
 void	hook(void *gdata)
@@ -82,14 +114,14 @@ void	hook(void *gdata)
 		rotate(RSPEED, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 		rotate(-RSPEED, data);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-		move(data, MSPEED, data->player->dir);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-		move(data, -MSPEED, data->player->dir);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-		move(data, -MSPEED, data->player->plane);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-		move(data, MSPEED, data->player->plane);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W) && data->player->vy > -0.1f)
+		data->player->vy -= ACCELERATION;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S) && data->player->vy < 0.1f)
+		data->player->vy += ACCELERATION;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A) && data->player->vx < 0.1f)
+		data->player->vx += ACCELERATION;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D) && data->player->vx > -0.1f)
+		data->player->vx -= ACCELERATION;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
 		change_map(data);
 	mouse_move(gdata);

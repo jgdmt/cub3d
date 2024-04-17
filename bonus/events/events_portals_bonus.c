@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/16 11:17:33 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:33:16 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	shoot_portal(t_data *data, int type)
 void	tp(t_data *data, int to)
 {
 
-	data->player->pos.x = data->player->portal[to].pos.x + data->player->portal[to].dir.x;
-	data->player->pos.y = data->player->portal[to].pos.y + data->player->portal[to].dir.y;
+	data->player->pos.x = (data->player->pos.x - data->player->portal[(to + 1) % 2].pos.x) + data->player->portal[to].pos.x + data->player->portal[to].dir.x;
+	data->player->pos.y = (data->player->pos.y - data->player->portal[(to + 1) % 2].pos.y) + data->player->portal[to].pos.y + data->player->portal[to].dir.y;
 	rotate_vector(&data->player->dir, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 	rotate_vector(&data->player->plane, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 }

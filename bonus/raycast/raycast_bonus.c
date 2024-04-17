@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/16 16:51:26 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:07:57 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,27 @@ static void	get_tex_coord(t_raycast *rc)
 		rc->tex.x = rc->t->width - rc->tex.x - 1;
 }
 
+void	update_inertia(t_data *data)
+{
+	// printf("x %lf, y %lf\n", data->player->vx, data->player->vy);
+	if (data->player->vx > 10e-8)
+		data->player->vx -= INERTIA;
+	else if (data->player->vx < -10e-8)
+		data->player->vx += INERTIA;
+	if (data->player->vy > 10e-8)
+		data->player->vy -= INERTIA;
+	else if (data->player->vy < -10e-8)
+		data->player->vy += INERTIA;
+}
+
+void updatePosition(t_data *data) {
+	printf("x %i, y %i\n", (int)round(data->player->pos.x + data->player->vx), (int)round(data->player->pos.y + data->player->vy));
+	if(data->map->map[(int)round(data->player->pos.y)][(int)round(data->player->pos.x + data->player->vx * 2)] == '0')
+		data->player->pos.x += data->player->vx;
+	if(data->map->map[(int)round(data->player->pos.y + data->player->vy * 2)][(int)round(data->player->pos.x)] == '0')
+    data->player->pos.y += data->player->vy;
+}
+
 void	raycast(t_data *data)
 {
 	t_raycast	rc;
@@ -82,6 +103,9 @@ void	raycast(t_data *data)
 	loading_screen(data);
 	if (data->exit)
 		return ;
+	// updatePosition(data);
+	move(data);
+	update_inertia(data);
 	rc.x = 0;
 	temp = *(data->player);
 	rc.player = temp;

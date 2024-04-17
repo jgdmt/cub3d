@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/16 16:09:08 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:34:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ typedef struct s_player
 	t_vector	pos;
 	t_vector	plane;
 	t_vector	dir;
-	t_vector	mdir;
-	double			v;
 	int			nb;
 }	t_player;
 

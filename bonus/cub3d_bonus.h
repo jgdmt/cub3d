@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 20:53:25 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:08:51 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 # include <pthread.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
+# include <stdatomic.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
 
 # define RSPEED 0.2
-# define MSPEED 0.1
+# define ACCELERATION 0.05
+# define INERTIA 0.005
 
 # define BLUE 0
 # define ORANGE 1
@@ -82,13 +84,16 @@ typedef struct s_enemy
 
 typedef struct s_player
 {
-	t_vector	pos;
-	t_vector	plane;
-	t_vector	dir;
-	t_portal	portal[2];
-	int			nb;
-	int			posz;
-	int			pitch;
+	t_vector				pos;
+	t_vector				plane;
+	t_vector				dir;
+	t_vector				mdir;
+	t_portal				portal[2];
+	int						nb;
+	int						posz;
+	int						pitch;
+	_Atomic double			vx;
+	_Atomic double			vy;
 }	t_player;
 
 typedef struct s_raycast
@@ -181,5 +186,6 @@ void	menu(t_data *data);
 void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt);
 void	shoot(t_data *data);
 void	scroll(double xdelta, double ydelta, void *gdata);
+void	move(t_data *data);
 
 #endif // CUB3D_BONUS_H
