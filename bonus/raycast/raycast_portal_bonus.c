@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:10:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 19:17:55 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:00:30 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2)
 {
 	t_vector	temp;
 
-	if (p1->x == -p2->x || p1->y == -p2->y)
-		return ;
-	else if (p1->x == p2->x && p1->y == p2->y)
+	// if (p1->x == -p2->x || p1->y == -p2->y)
+	// 	return ;
+	if (p1->x == p2->x && p1->y == p2->y)
 	{
 		v1->x = -v1->x;
 		v1->y = -v1->y;
@@ -26,14 +26,14 @@ void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2)
 	else if (p2->x == p1->y && p2->y == -p1->x)
 	{
 		temp = *v1;
-		v1->x = temp.y;
-		v1->y = -temp.x;
+		v1->x = -temp.y;
+		v1->y = temp.x;
 	}
 	else if (p2->x == -p1->y && p2->y == p1->x)
 	{
 		temp = *v1;
-		v1->x = -temp.y;
-		v1->y = temp.x;
+		v1->x = temp.y;
+		v1->y = -temp.x;
 	}
 }
 
@@ -54,29 +54,26 @@ void	portal(t_data *data, t_raycast *rc, int from, int to)
 	if (!rc->player.portal[to].dir.x)
 	{
 		test.player.pos.x = rc->player.portal[to].pos.x + portal;
-		test.player.pos.y = rc->player.portal[to].pos.y;
+		test.player.pos.y = rc->player.portal[to].pos.y + rc->player.portal[to].dir.y;
 	}
 	else
 	{
-		test.player.pos.x = rc->player.portal[to].pos.x;
+		test.player.pos.x = rc->player.portal[to].pos.x + rc->player.portal[to].dir.x;
 		test.player.pos.y = rc->player.portal[to].pos.y + portal;
 	}
-	rotate_vector(&test.player.dir, &rc->player.portal[from].dir, &rc->player.portal[to].dir);
+	rotate_vector(&test.ray_dir, &rc->player.portal[from].dir, &rc->player.portal[to].dir);
 	rotate_vector(&test.player.plane, &rc->player.portal[from].dir, &rc->player.portal[to].dir);
 	test.portal_first_ray = 0;
-	test.player.dir.x = -test.player.dir.x;
-	test.player.dir.y = -test.player.dir.y;
+	test.player.dir = test.ray_dir;
+	test.player.plane.x = 0;
+	test.player.plane.y = 0;
+	printf("perpendicular : %s\n", (test.player.portal[to].dir.x * test.player.plane.x) + (test.player.portal[to].dir.y * test.player.plane.y)? "no": "ok" );
 	printf("dir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", test.player.dir.x, test.player.dir.y, test.player.plane.x, test.player.plane.y, test.player.pos.x, test.player.pos.y);
 	init_ray_param(data->width, &test);
 	step_init(&test);
 	dda(data, &test);
 	get_tex_ptr(data, &test);
-	
-	rc->t = test.t;
-	rc->portal_first_ray += test.portal_first_ray;
-	rc->ipos = test.ipos;
-	rc->side_dist = test.side_dist;
-	rc->delta_dist = test.delta_dist;
-	rc->side = test.side;
-	rc->ray_dir = test.ray_dir;
+	// test.player = rc->player;
+	test.portal_first_ray += rc->portal_first_ray;
+	*rc = test;
 }

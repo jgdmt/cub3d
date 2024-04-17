@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 21:03:41 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:51:26 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 	int			y;
 
 	y = 0;
-	step = 1.0 * data->map->no->height / rc->line_height;
+	step = 1.0 * rc->t->height / rc->line_height;
 	tex_pos = (rc->draw_start - rc->player.pitch - data->height / 2 + rc->line_height / 2) * step;
 	y = rc->draw_start;
 	while (y < rc->draw_end)
 	{
-		rc->tex.y = (int)tex_pos & (data->map->no->height - 1);
+		rc->tex.y = (int)tex_pos & (rc->t->height - 1);
 		tex_pos += step;
 		color = correct_color((u_int8_t *)&((u_int32_t *)rc->t->pixels)
 			[rc->t->width * rc->tex.y + (rc->t->width - rc->tex.x - 1)]);
@@ -62,9 +62,9 @@ static void	get_tex_coord(t_raycast *rc)
 	double	wall_x;
 
 	if (rc->side == 0)
-		wall_x = rc->player.pos.y + rc->perp_wall_dist * rc->ray_dir.y;
+		wall_x = rc->player.pos.y + (rc->perp_wall_dist - rc->portal_first_ray)* rc->ray_dir.y;
 	else
-		wall_x = rc->player.pos.x + rc->perp_wall_dist * rc->ray_dir.x;
+		wall_x = rc->player.pos.x + (rc->perp_wall_dist - rc->portal_first_ray) * rc->ray_dir.x;
 	wall_x -= floor((wall_x));
 	rc->tex.x = (int)(wall_x * (double)(rc->t->width));
 	if (rc->side == 0 && rc->ray_dir.x > 0)
@@ -76,16 +76,19 @@ static void	get_tex_coord(t_raycast *rc)
 void	raycast(t_data *data)
 {
 	t_raycast	rc;
+	t_player	temp;
 
 	cursor_screen(data);
 	loading_screen(data);
 	if (data->exit)
 		return ;
-	rc.player = *(data->player);
 	rc.x = 0;
+	temp = *(data->player);
+	rc.player = temp;
 	floor_cast(data, rc.player);
 	while (rc.x < data->width)
 	{
+		rc.player = temp;
 		rc.portal_first_ray = 0;
 		init_ray_param(data->width, &rc);
 		step_init(&rc);
@@ -95,7 +98,6 @@ void	raycast(t_data *data)
 		else
 			rc.perp_wall_dist = (rc.side_dist.y - rc.delta_dist.y) + rc.portal_first_ray;
 		get_screen_coord(data, &rc);
-		// get_tex_ptr(data, &rc);
 		get_tex_coord(&rc);
 		ray_to_img(data, &rc);
 		rc.x += 1;

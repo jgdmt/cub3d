@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 20:35:02 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:19:55 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	dda(t_data *data, t_raycast *rc)
 			rc->ipos.y += rc->step.y;
 			rc->side = 1;
 		}
-		if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x && rc->player.portal[1].status == 1)
+		if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x && rc->player.portal[1].status == 1) // && (rc->player.dir.x * rc->player.portal[0].dir.x) <= 0 && (rc->player.dir.y * rc->player.portal[0].dir.y) <= 0 
 		{
 			portal(data, rc, 0, 1);
 			return ;
@@ -125,10 +125,10 @@ void	dda(t_data *data, t_raycast *rc)
 			portal(data, rc, 1, 0);
 			return ;
 		}
-		else if (data->map->map[rc->ipos.y][rc->ipos.x] == '1')
+		 if (data->map->map[rc->ipos.y][rc->ipos.x] == '1')
 		{
 			get_tex_ptr(data, rc);
-			return;
-		}	
+			return ;
+		}
 	}
 }
