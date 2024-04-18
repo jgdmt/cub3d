@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/17 18:29:10 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:14:35 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 
-# define RSPEED 0.2
+# define RSPEED 0.1
 # define ACCELERATION 0.05
 # define INERTIA 0.005
 
@@ -56,32 +56,59 @@
 
 # define MSG_END "You reached the end. Congratulations, your cake is waiting."
 
+/**
+ * @brief Simple 2D vector structure that uses doubles.
+ * 
+ */
 typedef struct s_vector
 {
 	double	x;
 	double	y;
 }	t_vector;
 
+/**
+ * @brief Dimple 2D vector structure that uses integers.
+ * 
+ */
 typedef struct s_int_vector
 {
 	int	x;
 	int	y;
 }	t_int_vector;
 
+/**
+ * @brief Minimum set of informations per portal.
+ * @param pos coordonates in t_data::map::map
+ * @param dir directional vector (can only represent the four cardinal direction)
+ * @param status simple on/off bool
+ */
 typedef struct s_portal
 {
-	int				status;
+	bool			status;
 	t_int_vector	pos;
 	t_int_vector	dir;
 }	t_portal;
 
+/**
+ * @brief Minimum set of informations per enemy.
+ * @param pos coordonates in t_data::map::map
+ * @param status simple on/off bool
+ * @param life a HP score that start at 3
+ */
 typedef struct s_enemy
 {
 	t_vector	pos;
-	int			status;
+	bool		status;
 	int			life;
 }	t_enemy;
 
+/**
+ * @brief Represent all the data for a raycast camera.
+ * @param pos exact coordonates in t_data::map::map
+ * @param dir direction of the camera
+ * @param plane represent a plane that is used to calculate ray length, anti phis
+ * 
+ */
 typedef struct s_player
 {
 	t_vector				pos;
@@ -96,6 +123,26 @@ typedef struct s_player
 	_Atomic double			vy;
 }	t_player;
 
+/**
+ * @brief 
+ * @param draw_start minimum y to print a wall column on the screen
+ * @param draw_end maximum y to print a wall column on the screen
+ * @param line_height length of a wall column on the screen
+ * @param tex uses for calculate coordonate of a pixel inside texture buff
+ * @param ipos represent rasterized coordonate hit by a ray
+ * @param step directional increment for ipos
+ * @param side represents if the wall hit in ipos is "horizontal or vertical"
+ * @param x coordonate in the screen
+ * @param y coordonate in the screen
+ * @param ray_dir direction of each ray
+ * @param delta_dist 
+ * @param side_dist
+ * @param player a copy of t_data::player for avoiding data races
+ * @param perp_wall_dist length of the ray relative to the plan + eventual portal ray length
+ * @param portal_first_ray length of each portal ray
+ * @param t pointer to the correct(cardinal oriented texture) texture of wall
+ * 
+ */
 typedef struct s_raycast
 {
 	int				draw_start;
