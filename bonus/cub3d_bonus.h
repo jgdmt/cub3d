@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 12:14:35 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:45:20 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,13 @@ typedef struct s_enemy
  * @param pos exact coordonates in t_data::map::map
  * @param dir direction of the camera
  * @param plane represent a plane that is used to calculate ray length, anti phis
- * 
+ * @param mdir
+ * @param portal structure with informations about the portals
+ * @param nb
+ * @param posz
+ * @param pitch
+ * @param vx
+ * @param vy
  */
 typedef struct s_player
 {
@@ -163,6 +169,23 @@ typedef struct s_raycast
 	mlx_image_t		*t;
 }	t_raycast;
 
+/**
+ * @brief 
+ * @param map array containing the map itself
+ * @param no texture the north
+ * @param so texture the south
+ * @param we texture of the west
+ * @param ea texture of the east
+ * @param floor_color texture of the floor
+ * @param ceiling_color texture of the ceiling
+ * @param en_sprites texture of the enemies
+ * @param enemies array of enemies
+ * @param door_stat status of the door
+ * @param door_pos position of the door
+ * @param nb_enemy number of enemies
+ * @param max length maximal of the map in x
+ * @param maxy length maximal of the map in y
+ */
 typedef struct s_map
 {
 	char		**map;
@@ -181,6 +204,22 @@ typedef struct s_map
 	size_t		maxy;
 }	t_map;
 
+/**
+ * @brief 
+ * @param map structure with informations about the map
+ * @param player structure with informations about the player
+ * @param mlx mlx pointer
+ * @param img
+ * @param loading
+ * @param cursor
+ * @param buff
+ * @param time
+ * @param argv
+ * @param inv
+ * @param width width of the window
+ * @param height height of the window
+ * @param exit exit flag to freeze the game
+ */
 typedef struct s_data
 {
 	t_map			*map;
