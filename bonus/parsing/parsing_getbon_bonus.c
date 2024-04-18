@@ -6,12 +6,19 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:06:01 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/15 16:02:30 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:17:15 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
+/**
+ * @brief Fills the informations linked to the eventual door.
+ * 
+ * @param data structure with all program data
+ * @param x coordonate x of the door
+ * @param y coordonate y of the door
+ */
 void	fill_door_infos(t_data *data, int x, int y)
 {
 	if (data->map->door_stat != -1)
@@ -21,6 +28,13 @@ void	fill_door_infos(t_data *data, int x, int y)
 	data->map->door_pos.y = y;
 }
 
+/**
+ * @brief Fills the informations linked to the eventual enemies.
+ * 
+ * @param data structure with all program data
+ * @param x coordonate x of the enemy
+ * @param y coordonate y of the enemy
+ */
 void	fill_enemy_infos(t_data *data, int x, int y)
 {
 	t_map		*map;
@@ -45,6 +59,11 @@ void	fill_enemy_infos(t_data *data, int x, int y)
 	i++;
 }
 
+/**
+ * @brief Checks if the enemy is not too close to the player.
+ * 
+ * @param data structure with all program data
+ */
 void	check_enemy(t_data *data)
 {
 	int		i;

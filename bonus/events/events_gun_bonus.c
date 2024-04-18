@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:36:49 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/12 15:43:01 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:26:46 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 void	get_ray(t_data *data, t_raycast *rc);
 
+/**
+ * @brief Unfinished function.
+ * 
+ * @param map 
+ * @param rc 
+ * @return int 
+ */
 int	is_enemy(t_map *map, t_raycast *rc)
 {
 	int	i;
@@ -29,6 +36,11 @@ int	is_enemy(t_map *map, t_raycast *rc)
 	return (-1);
 }
 
+/**
+ * @brief Unfinished function.
+ * 
+ * @param data 
+ */
 void	shoot(t_data *data)
 {
 	t_raycast	rc;

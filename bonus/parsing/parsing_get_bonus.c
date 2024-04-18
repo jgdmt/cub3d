@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/10 19:17:04 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:11:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ char	**ft_modif_split(char *str, char *sep);
 void	split_free(char **array, int len);
 void	free_ex(t_data *data, char **strs, int ex);
 
+/**
+ * @brief Checks if the given texture exists and turns
+ * it into an image.
+ * 
+ * @param line line with the path of the texture
+ * @param start start of the path in the line
+ * @param data structure with all program data
+ * @return mlx_image_t* 
+ */
 static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 {
 	char			*text;
@@ -64,6 +73,14 @@ static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 // 	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
 // }
 
+/**
+ * @brief Gets the (char **) data::map::map object.
+ * 
+ * @param fd file descriptor of the map file
+ * @param line starting line of the parsing of the (char **) map
+ * @param map structure with all data about the map
+ * @return int 
+ */
 static int	get_map(int fd, char *line, t_map *map)
 {
 	char	**temp;
@@ -93,6 +110,14 @@ static int	get_map(int fd, char *line, t_map *map)
 	return (0);
 }
 
+/**
+ * @brief Get the sprites of the enemies.
+ * 
+ * @param line contains the paths of the different sprites
+ * @param start start of the paths
+ * @param data structure with all program data
+ * @param map structure with all data about the map
+ */
 void	get_sprite(char *line, int start, t_data *data, t_map *map)
 {
 	char	**text;
@@ -119,6 +144,15 @@ void	get_sprite(char *line, int start, t_data *data, t_map *map)
 	free_ex(data, text, 0);
 }
 
+/**
+ * @brief Gets informations related to the textures of the game.
+ * 
+ * @param line line to be checked
+ * @param data structure with all program data
+ * @param map structure with all data about the map
+ * @param infos number of informations already got
+ * @return int
+ */
 static int	get_elements(char *line, t_data *data, t_map *map, int infos)
 {
 	if (line[0] == '\n')
@@ -146,6 +180,13 @@ static int	get_elements(char *line, t_data *data, t_map *map, int infos)
 	return (infos + 1);
 }
 
+/**
+ * @brief Gets the informations for the structure data::map
+ * by calling other functions.
+ * 
+ * @param fd file descriptor of the map file
+ * @param data structure with all program data
+ */
 void	get_infos(int fd, t_data *data)
 {
 	char	*line;

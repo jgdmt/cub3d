@@ -6,13 +6,17 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/15 20:08:05 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:29:04 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-
+/**
+ * @brief Reinitializes the values of the data structure.
+ * 
+ * @param data structure with all program data
+ */
 void	reinit_data(t_data *data)
 {
 	data->map->map = 0;
@@ -31,6 +35,11 @@ void	reinit_data(t_data *data)
 	data->player->portal[1].status = 0;
 }
 
+/**
+ * @brief Changes the (char **) data::map::map with the next, if it exists.
+ * 
+ * @param data structure with all program data
+ */
 void	change_map(t_data *data)
 {
 	static int	i = 2;
@@ -51,6 +60,11 @@ void	change_map(t_data *data)
 	data->exit = 0;
 }
 
+/**
+ * @brief Handles the menu.
+ * 
+ * @param data structure with all program data
+ */
 void	menu(t_data *data)
 {
 	static int	paused = 0;

@@ -6,12 +6,18 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/17 18:35:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:36:51 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
+/**
+ * @brief Get the ray object
+ * 
+ * @param data structure with all program data
+ * @param rc ray
+ */
 void	get_ray(t_data *data, t_raycast *rc)
 {
 	rc->player = *(data->player);
@@ -21,6 +27,12 @@ void	get_ray(t_data *data, t_raycast *rc)
 	dda(data, rc);
 }
 
+/**
+ * @brief Creates the portal when shot.
+ * 
+ * @param data structure with all program data
+ * @param type portal blue or portal orange
+ */
 void	shoot_portal(t_data *data, int type)
 {
 	t_raycast	rc;
@@ -53,6 +65,12 @@ void	shoot_portal(t_data *data, int type)
 	data->player->portal[type].dir.x, data->player->portal[type].dir.y);
 }
 
+/**
+ * @brief Used when the player goes through a portal.
+ * 
+ * @param data structure with all program data
+ * @param to destination portal
+ */
 void	tp(t_data *data, int to)
 {
 
@@ -62,6 +80,14 @@ void	tp(t_data *data, int to)
 	rotate_vector(&data->player->plane, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 }
 
+/**
+ * @brief Checks if the player goes through a portal or through the door.
+ * 
+ * @param data structure with all program data
+ * @param x coordonate x of the future player position
+ * @param y coordonate y of the future player position
+ * @return int 
+ */
 int	check_portal(t_data *data, int x, int y)
 {
 	t_portal	*port;
@@ -85,6 +111,11 @@ int	check_portal(t_data *data, int x, int y)
 	return (0);
 }
 
+/**
+ * @brief Resets the portals.
+ * 
+ * @param data structure with all program data
+ */
 void	reset_portal(t_data *data)
 {
 	int	i;

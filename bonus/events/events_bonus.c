@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/17 17:48:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:26:00 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 void	mouse_move(void *gdata);
 int		check_portal(t_data *data, int x, int y);
 
+/**
+ * @brief Allows the player to rotate.
+ * 
+ * @param speed speed of the rotation
+ * @param data structure with all program data
+ */
 void	rotate(double speed, t_data *data)
 {
 	double	old_x;
@@ -30,7 +36,16 @@ void	rotate(double speed, t_data *data)
 	data->player->plane.y = old_x * sin(speed) + old_y * cos(speed);
 }
 
-// find the angle between two vectors
+/**
+ * @brief Finds the angle between two vectors. The angle is always the same
+ * and might not be the smallest.
+ * 
+ * @param ux value x of the vector u
+ * @param uy value y of the vector u
+ * @param vx value x of the vector v
+ * @param vy value y of the vector v
+ * @return float 
+ */
 float	angle(double ux, double uy, double vx, double vy)
 {
 	float	ps;
@@ -46,6 +61,11 @@ float	angle(double ux, double uy, double vx, double vy)
 		return (-acos(ps / (u_norm * v_norm)));
 }
 
+/**
+ * @brief Allows the player to move.
+ * 
+ * @param data structure with all program data
+ */
 void	move(t_data *data)
 {
 	int			sign;
@@ -89,6 +109,11 @@ void	move(t_data *data)
 	}
 }
 
+/**
+ * @brief Handles the possible inputs.
+ * 
+ * @param gdata structure with all program data
+ */
 void	hook(void *gdata)
 {
 	t_data			*data;
@@ -128,6 +153,11 @@ void	hook(void *gdata)
 	last_time = get_time();
 }
 
+/**
+ * @brief Handles the closing of the window.
+ * 
+ * @param gdata structure with all program data
+ */
 void	close_window(void *gdata)
 {
 	t_data	*data;
@@ -136,6 +166,13 @@ void	close_window(void *gdata)
 	free_all("Game closed", 1, data);
 }
 
+/**
+ * @brief Handles the resize of the window.
+ * 
+ * @param width new width of the window
+ * @param height new height of the window
+ * @param gdata structure with all program data
+ */
 void	resize_window(int32_t width, int32_t height, void *gdata)
 {
 	t_data	*data;

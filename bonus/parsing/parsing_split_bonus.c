@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:01:24 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/04 19:47:07 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:13:32 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ void	split_free(char **array, int len)
 	free(array);
 }
 
+/**
+ * @brief Splits a string according to a separator.
+ * 
+ * @param str the string to be split
+ * @param sep the separator
+ * @return char** 
+ */
 char	**ft_modif_split(char *str, char *sep)
 {
 	char	**array;

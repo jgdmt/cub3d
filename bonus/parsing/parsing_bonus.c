@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/10 19:18:18 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:56:28 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	fill_door_infos(t_data *data, int x, int y);
 void	fill_enemy_infos(t_data *data, int x, int y);
 char	*fill_line(t_data *data, char *str);
 
+/**
+ * @brief Checks if the file given in entry has the right extension.
+ * 
+ * @param map_name name of the file containing the map informations
+ */
 static void	check_name(char *map_name)
 {
 	if (ft_strlen(map_name) < 4)
@@ -31,6 +36,15 @@ static void	check_name(char *map_name)
 	}
 }
 
+/**
+ * @brief Checks the type of the case in the (char **) data::map::map 
+ * and calls the relative functions.
+ * 
+ * @param data structure with all program data
+ * @param c character in the case
+ * @param y coordinate y of the case
+ * @param x coordinate x of the case
+ */
 static void	check_char(t_data *data, char c, int y, int x)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
@@ -59,6 +73,15 @@ static void	check_char(t_data *data, char c, int y, int x)
 		free_all(ERR_FORBIDDENCHAR, 2, data);
 }
 
+/**
+ * @brief Checks for a line of the (char **) data::map::map if the map is closed
+ * and calls the function check_char() on each case.
+ * 
+ * @param line line of the map
+ * @param data structure with all program data
+ * @param map structure with all data about the map
+ * @param i number of the line
+ */
 static void	check_line(char *line, t_data *data, t_map *map, int i)
 {
 	size_t	j;
@@ -81,6 +104,14 @@ static void	check_line(char *line, t_data *data, t_map *map, int i)
 	}
 }
 
+/**
+ * @brief Fills the (char **) data::map::map with spaces to turn it into a square
+ * and reverse it. Check if the map fulfills the conditions by calling
+ * the function check_line().
+ * 
+ * @param data structure with all program data
+ * @param map structure with all data about the map
+ */
 static void	check_map(t_data *data, t_map *map)
 {
 	int		i;
@@ -108,6 +139,13 @@ static void	check_map(t_data *data, t_map *map)
 		free_all(ERR_NOPLAYER, 2, data);
 }
 
+/**
+ * @brief Does the parsing by calling the right functions.
+ * 
+ * @param map_name name of the file containing the map informations.
+ * @param data structure with all program data
+ * @return int 0 for successful parsing, 1 for failure
+ */
 int	parsing(char *map_name, t_data *data)
 {
 	int			fd;
@@ -122,6 +160,7 @@ int	parsing(char *map_name, t_data *data)
 	check_map(data, data->map);
 	if (i++ == 0)
 	{
+		// printf("%s%s%s\n", );
 		printf("I should praise you for the finally flawless parsing.\n");
 		printf("'Congratulations for achieving such a simple task!'\n");
 		printf("I heard humans were happy with meaningless words.\n");

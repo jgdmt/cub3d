@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/17 18:27:27 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:32:09 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ void	shoot_portal(t_data *data, int type);
 void	rotate(double speed, t_data *data);
 void	get_ray(t_data *data, t_raycast *rc);
 
+/**
+ * @brief Handles the scrolling and the inventory.
+ * 
+ * @param xdelta scrolling in x
+ * @param ydelta scrolling in y
+ * @param gdata structure with all program data
+ */
 void	scroll(double xdelta, double ydelta, void *gdata)
 {
 	t_data	*data;
@@ -31,6 +38,11 @@ void	scroll(double xdelta, double ydelta, void *gdata)
 	printf("inventory slot: %i\n", data->inv);
 }
 
+/**
+ * @brief Handles the player's rotation with the mouse.
+ * 
+ * @param gdata structure with all program data
+ */
 void	mouse_move(void *gdata)
 {
 	static int32_t	old_x = WIDTH / 2;
@@ -69,6 +81,14 @@ void	debug(t_data *data)
 	data->player->portal[ORANGE].dir.x, data->player->portal[ORANGE].dir.y);
 }
 
+/**
+ * @brief Handles the actions with the mouse.
+ * 
+ * @param button button of the mouse used
+ * @param act key action
+ * @param mod key modifiers
+ * @param dt structure with all program data
+ */
 void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt)
 {
 	t_data	*data;
