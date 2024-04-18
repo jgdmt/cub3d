@@ -6,12 +6,18 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/17 10:24:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:30:30 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
-
+/**
+ * @brief Detect a change in width and height from struct data in comparaison
+ * with last call a recreate the data->img(mlx_image_t *).
+ * If this function encounter a problem they stop the programm with free_all().
+ * 
+ * @param data structure with all program data
+ */
 void	resize_render(t_data *data)
 {
 	static int	width = WIDTH;
@@ -38,7 +44,12 @@ void	resize_render(t_data *data)
 	}
 }
 
-
+/**
+ * @brief Init all ray parameters inside the rc structure.
+ * 
+ * @param width of the raycast render image
+ * @param rc structure that store all raycast parameters
+ */
 void	init_ray_param(int width, t_raycast *rc)
 {
 	double		camera_x;
@@ -85,6 +96,14 @@ void	step_init( t_raycast *rc)
 	}
 }
 
+/**
+ * @brief This is the Digital differential analyzer algorithm 
+ * that rasterize the ray parcour until it hit a wall or a portal.
+ * The (t_int_vector)rc::ipos can be use to know where the DDA stop.
+ * 
+ * @param data structure with all program data
+ * @param rc structure that store all raycast parameters
+ */
 void	dda(t_data *data, t_raycast *rc)
 {
 	while (1)

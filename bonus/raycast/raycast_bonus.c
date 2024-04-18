@@ -6,12 +6,18 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/17 17:07:57 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:14:12 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
+/**
+ * @brief The pixels buffer from the the mlx's images use ABGR but the mlx_pixel_put() function uses RGBA.
+ * 
+ * @param pixel a pointer at the beginning of a pixel inside the mlx_image_t::pixels
+ * @return int that represent RGBA value
+ */
 int	correct_color(u_int8_t *pixel)
 {
 	int	rgba;
@@ -24,6 +30,12 @@ int	correct_color(u_int8_t *pixel)
 	return (rgba);
 }
 
+/**
+ * @brief Needs to be called at the end of raycasting. The x wall's column is put inside the t_data::buff.
+ * 
+ * @param data structure with all program data
+ * @param rc structure that store all raycast parameters
+ */
 static void	ray_to_img(t_data *data, t_raycast *rc)
 {
 	double		step;
@@ -46,6 +58,12 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 	}
 }
 
+/**
+ * @brief Gets the screen start and end of a wall column.
+ * 
+ * @param data structure with all program data
+ * @param rc structure that store all raycast parameters
+ */
 static void	get_screen_coord(t_data *data, t_raycast *rc)
 {
 	rc->line_height = (int)(data->height / rc->perp_wall_dist);
@@ -57,6 +75,11 @@ static void	get_screen_coord(t_data *data, t_raycast *rc)
 		rc->draw_end = data->height - 1;
 }
 
+/**
+ * @brief Gets the texture image start and end for a wall column.
+ * 
+ * @param rc structure that store all raycast parameters
+ */
 static void	get_tex_coord(t_raycast *rc)
 {
 	double	wall_x;
@@ -73,6 +96,11 @@ static void	get_tex_coord(t_raycast *rc)
 		rc->tex.x = rc->t->width - rc->tex.x - 1;
 }
 
+/**
+ * @brief Slow the player by tends data::player::vx and data::player::vy towards 0.
+ * 
+ * @param data structure with all program data
+ */
 void	update_inertia(t_data *data)
 {
 	// printf("x %lf, y %lf\n", data->player->vx, data->player->vy);
@@ -86,14 +114,12 @@ void	update_inertia(t_data *data)
 		data->player->vy += INERTIA;
 }
 
-void updatePosition(t_data *data) {
-	printf("x %i, y %i\n", (int)round(data->player->pos.x + data->player->vx), (int)round(data->player->pos.y + data->player->vy));
-	if(data->map->map[(int)round(data->player->pos.y)][(int)round(data->player->pos.x + data->player->vx * 2)] == '0')
-		data->player->pos.x += data->player->vx;
-	if(data->map->map[(int)round(data->player->pos.y + data->player->vy * 2)][(int)round(data->player->pos.x)] == '0')
-    data->player->pos.y += data->player->vy;
-}
-
+/**
+ * @brief the complete raycast algoritm that generates a frame based on t_data::map and t_data::player informations.
+ * 
+ * Can be interrupted by setting data::exit to any positive value.
+ * @param data structure with all program data
+ */
 void	raycast(t_data *data)
 {
 	t_raycast	rc;

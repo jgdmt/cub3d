@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 14:32:09 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:42:45 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	mouse_move(void *gdata)
 	else if (x > old_x)
 		rotate(-RSPEED, data);
 	if (y < old_y && data->player->pitch < 500)
-		data->player->pitch += 40;
+		data->player->pitch += 25;
 	if (y > old_y && data->player->pitch > -500)
-		data->player->pitch -= 40;
+		data->player->pitch -= 25;
 	old_x = x;
 	old_y = y;
 }

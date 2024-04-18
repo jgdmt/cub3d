@@ -6,12 +6,19 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:50:40 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/09 15:42:43 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:27:14 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
+/**
+ * @brief Gets the information about the floor ray
+ * 
+ * @param data structure with all program data
+ * @param rc structure that store all raycast parameters
+ * @param is_floor to check if we are in floor or ceilling in function of pitch
+ */
 static void	get_floor_coord(t_data *data, t_raycast *rc, bool is_floor)
 {
 	t_vector	ray_dir[2];
@@ -35,6 +42,14 @@ static void	get_floor_coord(t_data *data, t_raycast *rc, bool is_floor)
 	rc->ray_dir.y = rc->player.pos.y + row_distance * ray_dir[0].y;
 }
 
+/**
+ * @brief Puts the texture line into t_data::buff.
+ * 
+ * @param data structure with all program data
+ * @param rc structure that store all raycast parameters
+ * @param y the y coordonate on the screen
+ * @param tex mlx_image_t * to the desired texture
+ */
 static void	put_texture(t_data *data, t_raycast *rc, int y, mlx_image_t *tex)
 {
 	rc->tex.x = (int)(tex->width * (rc->ray_dir.x - rc->ipos.x)) \
@@ -47,6 +62,13 @@ static void	put_texture(t_data *data, t_raycast *rc, int y, mlx_image_t *tex)
 		&(tex->pixels[((tex->width * rc->tex.y) + rc->tex.x) * 4])));
 }
 
+/**
+ * @brief Raycast algorithm for the floor and the ceilling.
+ * Reads datafrom t_data::maps.
+ * 
+ * @param data structure with all program data
+ * @param player camera information for raycasting
+ */
 void	floor_cast(t_data *data, t_player player)
 {
 	t_raycast	rc;

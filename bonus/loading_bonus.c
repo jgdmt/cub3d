@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   loading_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:23:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/15 21:26:39 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:06:29 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
+/**
+ * @brief Enable and disable display of loading screen 
+ * in function of t_data::exit value.
+ * 
+ * @param data structure with all program data
+ */
 void	loading_screen(t_data *data)
 {
 	static int	exit = 0;
-	int	i;
+	int			i;
 
 	if (data->exit == 2 && exit != 2)
 	{

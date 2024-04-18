@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/15 21:10:30 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:10:54 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	free_all(char *str, int out, t_data *data)
 	int	i;
 
 	i = 0;
-	// pthread_mutex_lock(&data->lock);
 	data->exit = 1;
 	if (out == 2)
 		ft_printf(out, "Error\n");
@@ -64,8 +63,6 @@ void	free_all(char *str, int out, t_data *data)
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
 	mlx_terminate(data->mlx);
-	// pthread_mutex_unlock(&data->lock);
-	pthread_mutex_destroy(&data->lock);
 	while (i < 5)
 		mlx_delete_image(data->mlx, data->cursor[i++]);
 	exit (0);

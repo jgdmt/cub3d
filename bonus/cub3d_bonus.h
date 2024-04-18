@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 14:45:20 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:49:30 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,12 +210,12 @@ typedef struct s_map
  * @param player structure with informations about the player
  * @param mlx mlx pointer
  * @param img
- * @param loading
- * @param cursor
- * @param buff
- * @param time
+ * @param loading texture of the loading screen
+ * @param cursor textures of the cursors
+ * @param buff copy buffer of the t_data::img 
+ * @param time 
  * @param argv
- * @param inv
+ * @param inv inventory slot in current usage
  * @param width width of the window
  * @param height height of the window
  * @param exit exit flag to freeze the game
@@ -235,7 +235,6 @@ typedef struct s_data
 	int				width;
 	int				height;
 	int				exit;
-	pthread_mutex_t	lock;
 }	t_data;
 
 void	raycast(t_data *data);

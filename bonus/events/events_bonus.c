@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 14:26:00 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:38:51 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,17 +118,13 @@ void	hook(void *gdata)
 {
 	t_data			*data;
 	static int		i = 0;
-	static size_t	last_time = 0;
 
 	data = gdata;
 	if (i < 2)
 	{
-		last_time = get_time();
 		mlx_set_mouse_pos(data->mlx, WIDTH / 2, HEIGHT / 2);
 		i++;
 	}
-	if (13 > get_time() - last_time)
-		return ;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		menu(data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_Q) && data->exit == 1)
@@ -150,7 +146,6 @@ void	hook(void *gdata)
 	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
 		change_map(data);
 	mouse_move(gdata);
-	last_time = get_time();
 }
 
 /**

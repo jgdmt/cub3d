@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/17 18:18:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:10:00 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	init_portal(t_portal *portal)
 	}
 }
 
+/**
+ * @brief create a default config player.
+ * 
+ * @return t_player Initialized t_player
+ */
 t_player	init_player(void)
 {
 	t_player	player;
@@ -123,8 +128,6 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.cursor[2] = 0;
 	data.cursor[3] = 0;
 	data.cursor[4] = 0;
-	if (pthread_mutex_init(&data.lock, NULL) != 0)
-		free_all(ERR_MUTEX, 2, &data);
 	loading = mlx_load_png("./bonus/assets/icon.png");
 	if (!loading)
 		free_all(ERR_MLX, 2, &data);
@@ -162,12 +165,8 @@ int	main(int argc, char **argv)
 		free_all(ERR_MALLOC, 2, &data);
 	if (pthread_create(&thread, NULL, raycast_threader, &data))
 		free_all(ERR_MUTEX, 2, &data);
-	// raycast(&data);
 	if (mlx_image_to_window(data.mlx, data.img, 0, 0) == -1)
 		free_all(ERR_MLX, 2, &data);
-	// mlx_key_hook(mlx, &keypress, &data);
-	//  mlx_put_string(mlx, "+", WIDTH / 2, HEIGHT / 2); // TEMPORAIRE
-	
 	mlx_loop_hook(mlx, &hook, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);
