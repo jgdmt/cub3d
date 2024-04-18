@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_portal_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:10:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 18:20:26 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 20:12:33 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,24 @@ void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2)
 	}
 }
 
+int	find_sign1(t_portal to, t_portal from)
+{
+	if (to.dir.y == from.dir.x)
+		return (1);
+	if (to.dir.y == -from.dir.y)
+		return (1);
+	return (-1);
+}
+
+int	find_sign2(t_portal to, t_portal from)
+{
+	if (to.dir.x == from.dir.y)
+		return (1);
+	if (to.dir.x == -from.dir.x)
+		return (1);
+	return (-1);
+}
+
 /**
  * @brief Calculate recursively raypath of a ray from the outgoing portal.
  * Could it recursively a portal inside of a portal.
@@ -62,19 +80,19 @@ void	portal(t_data *data, t_raycast *rc, int from, int to)
 	else
 		rc->portal_first_ray = (rc->side_dist.y - rc->delta_dist.y);
 	if (rc->side == 0)
-		portal = (rc->player.pos.y + rc->portal_first_ray * rc->ray_dir.y) - rc->player.portal[from].pos.y;
+		portal = rc->player.pos.y + rc->portal_first_ray * rc->ray_dir.y - rc->player.portal[from].pos.y;
 	else
-		portal = (rc->player.pos.x + rc->portal_first_ray * rc->ray_dir.x) - rc->player.portal[from].pos.x;
+		portal = rc->player.pos.x + rc->portal_first_ray * rc->ray_dir.x - rc->player.portal[from].pos.x;
 	test = *rc;
 	if (!rc->player.portal[to].dir.x)
 	{
-		test.player.pos.x = rc->player.portal[to].pos.x + portal;
+		test.player.pos.x = rc->player.portal[to].pos.x + portal * find_sign1(rc->player.portal[to], rc->player.portal[from]);
 		test.player.pos.y = rc->player.portal[to].pos.y + rc->player.portal[to].dir.y;
 	}
 	else
 	{
 		test.player.pos.x = rc->player.portal[to].pos.x + rc->player.portal[to].dir.x;
-		test.player.pos.y = rc->player.portal[to].pos.y + portal;
+		test.player.pos.y = rc->player.portal[to].pos.y + portal * find_sign2(rc->player.portal[to], rc->player.portal[from]);
 	}
 	rotate_vector(&test.ray_dir, &rc->player.portal[from].dir, &rc->player.portal[to].dir);
 	// rotate_vector(&test.player.plane, &rc->player.portal[from].dir, &rc->player.portal[to].dir);
@@ -82,9 +100,8 @@ void	portal(t_data *data, t_raycast *rc, int from, int to)
 	test.player.dir = test.ray_dir;
 	test.player.plane.x = 0;
 	test.player.plane.y = 0;
-	// printf("perpendicular : %s\n", (test.player.portal[to].dir.x * test.player.plane.x) + (test.player.portal[to].dir.y * test.player.plane.y)? "no": "ok" );
-	printf("olddir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", rc->ray_dir.x, rc->ray_dir.y, rc->player.plane.x, rc->player.plane.y, rc->player.pos.x, rc->player.pos.y);
-	printf("dir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", test.player.dir.x, test.player.dir.y, test.player.plane.x, test.player.plane.y, test.player.pos.x, test.player.pos.y);
+	// printf("olddir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", rc->ray_dir.x, rc->ray_dir.y, rc->player.plane.x, rc->player.plane.y, rc->player.pos.x, rc->player.pos.y);
+	// printf("dir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", test.player.dir.x, test.player.dir.y, test.player.plane.x, test.player.plane.y, test.player.pos.x, test.player.pos.y);
 	init_ray_param(data->width, &test);
 	step_init(&test);
 	dda(data, &test);

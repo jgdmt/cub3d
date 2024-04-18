@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 16:39:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 20:26:36 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void	hook(void *gdata)
 		data->player->vx += ACCELERATION;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D) && data->player->vx > -0.1f)
 		data->player->vx -= ACCELERATION;
+	// if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
 	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
 		change_map(data);
 	mouse_move(gdata);

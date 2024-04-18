@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 14:49:30 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 20:45:42 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@
 # define ERR_FILEEXTENSION "File extension invalid."
 
 # define MSG_END "You reached the end. Congratulations, your cake is waiting."
+# define MSG_NEXT1_1 "I should praise you for the finally flawless parsing.\n"
+# define MSG_NEXT1_2 "'Congratulations for achieving such a simple task!'\n"
+# define MSG_NEXT1_3 "I heard humans were happy with meaningless words.\n"
+# define MSG_NEXT2_1 "What, were you expecting more? Get over yourself."
+# define MSG_NEXT2_2 " It's just parsing.\n"
+# define MSG_DMGDONE "Hey, I can shoot you but you can't, it's called consent you dork!\n"
 
 /**
  * @brief Simple 2D vector structure that uses doubles.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 11:30:30 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 20:23:53 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ void	resize_render(t_data *data)
 		while (++i < 4)
 			if (mlx_image_to_window(data->mlx, data->cursor[i], data->width / 2 - data->cursor[i]->width / 2, data->height / 2 - data->cursor[i]->height / 2) == -1)
 				free_all(ERR_MLX, 2, data);
+		// while (++i < 4)
+		// {
+		// 	// mlx_image_to_window(data->mlx, data->cursor[i], data->width / 2 - data->cursor[i]->width / 2, data->height / 2 - data->cursor[i]->height / 2);
+		// 	data->cursor[i]->instances->x = data->width / 2 - data->cursor[i]->width / 2;
+		// 	data->cursor[i]->instances->y = data->height / 2 - data->cursor[i]->height / 2;
+		// 	data->cursor[i]->instances->z = 8;
+		// 	printf("x y z %i %i %i\n", data->cursor[i]->instances->x, data->cursor[i]->instances->y, data->cursor[i]->instances->z);
+		// }
 		width = data->width;
 		height = data->height;
 	}
