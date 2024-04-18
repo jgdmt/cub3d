@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:10:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 14:56:17 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:20:26 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	portal(t_data *data, t_raycast *rc, int from, int to)
 	if (rc->side == 0)
 		portal = (rc->player.pos.y + rc->portal_first_ray * rc->ray_dir.y) - rc->player.portal[from].pos.y;
 	else
-		portal = ((rc->player.pos.x + rc->portal_first_ray * rc->ray_dir.x)) - rc->player.portal[from].pos.x;
+		portal = (rc->player.pos.x + rc->portal_first_ray * rc->ray_dir.x) - rc->player.portal[from].pos.x;
 	test = *rc;
 	if (!rc->player.portal[to].dir.x)
 	{
@@ -83,7 +83,8 @@ void	portal(t_data *data, t_raycast *rc, int from, int to)
 	test.player.plane.x = 0;
 	test.player.plane.y = 0;
 	// printf("perpendicular : %s\n", (test.player.portal[to].dir.x * test.player.plane.x) + (test.player.portal[to].dir.y * test.player.plane.y)? "no": "ok" );
-	// printf("dir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", test.player.dir.x, test.player.dir.y, test.player.plane.x, test.player.plane.y, test.player.pos.x, test.player.pos.y);
+	printf("olddir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", rc->ray_dir.x, rc->ray_dir.y, rc->player.plane.x, rc->player.plane.y, rc->player.pos.x, rc->player.pos.y);
+	printf("dir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", test.player.dir.x, test.player.dir.y, test.player.plane.x, test.player.plane.y, test.player.pos.x, test.player.pos.y);
 	init_ray_param(data->width, &test);
 	step_init(&test);
 	dda(data, &test);
