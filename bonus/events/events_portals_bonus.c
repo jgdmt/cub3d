@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/19 15:51:14 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:26:22 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ void	get_ray(t_data *data, t_raycast *rc)
 	dda(data, rc, 40);
 }
 
+// void	find_xy(t_data *data, t_raycast rc, int *x, int *y)
+// {
+// 	if (rc.side == 0)
+// 	{
+// 		if (rc.x < data->player->pos.x)
+// 			x = 1;
+// 		else
+// 			x = -1;
+// 	}
+// 	if (rc.side == 1)
+// 	{
+// 		y = -data->player->dir.y / fabs(data->player->dir.y);
+// 	}
+// 	return (0);
+// }
+
 /**
  * @brief Creates the portal when shot.
  * 
@@ -38,27 +54,31 @@ void	get_ray(t_data *data, t_raycast *rc)
 void	shoot_portal(t_data *data, int type)
 {
 	t_raycast	rc;
-	double		x;
-	double		y;
+	int		x;
+	int		y;
 
 	get_ray(data, &rc);
-	printf("%i %i\n", rc.ipos.x, rc.ipos.y);
-	if (data->player->portal[0].status && data->player->portal[0].pos.x == rc.ipos.x
-		&& data->player->portal[0].pos.y == rc.ipos.y)
-		return ;
-	if (data->player->portal[1].status && data->player->portal[1].pos.x == rc.ipos.x 
-		&& data->player->portal[1].pos.y == rc.ipos.y)
-		return ;
+	printf("side posx posy %i %i %i\n", rc.side, rc.ipos.x, rc.ipos.y);
+	// if (data->player->portal[0].status && data->player->portal[0].pos.x == rc.ipos.x
+	// 	&& data->player->portal[0].pos.y == rc.ipos.y)
+	// 	return ;
+	// if (data->player->portal[1].status && data->player->portal[1].pos.x == rc.ipos.x 
+	// 	&& data->player->portal[1].pos.y == rc.ipos.y)
+	// 	return ;
 	x = 0;
 	y = 0;
-	if (fabs(data->player->dir.x) < fabs(data->player->dir.y))
-		y = data->player->dir.y / fabs(data->player->dir.y);
+	if (rc.side == 0)
+	{
+		x = 1;
+		if (rc.ipos.x > data->player->pos.x)
+			x = -1;
+	}
 	else
-		x = data->player->dir.x / fabs(data->player->dir.x);
+		y = -data->player->dir.y / fabs(data->player->dir.y);
 	data->player->portal[type].pos.x = rc.ipos.x;
 	data->player->portal[type].pos.y = rc.ipos.y;
-	data->player->portal[type].dir.x = -x;
-	data->player->portal[type].dir.y = -y;
+	data->player->portal[type].dir.x = x;
+	data->player->portal[type].dir.y = y;
 	if (data->player->portal[type].status == 0)
 		data->player->portal[type].status = 1;
 	printf("player pos %f %f, dir %f %f\n", data->player->pos.x, data->player->pos.y,
