@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_portal_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:10:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 20:12:33 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:50:39 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	find_sign2(t_portal to, t_portal from)
  * @param from array value of incoming portal
  * @param to array value of outgoing portal
  */
-void	portal(t_data *data, t_raycast *rc, int from, int to)
+void	portal(t_data *data, t_raycast *rc, int from, int to, int deep)
 {
 	t_raycast	test;
 	double		portal;
@@ -104,7 +104,7 @@ void	portal(t_data *data, t_raycast *rc, int from, int to)
 	// printf("dir : (%lf, %lf), plane : (%lf, %lf), pos : (%lf, %lf)\n", test.player.dir.x, test.player.dir.y, test.player.plane.x, test.player.plane.y, test.player.pos.x, test.player.pos.y);
 	init_ray_param(data->width, &test);
 	step_init(&test);
-	dda(data, &test);
+	dda(data, &test, deep);
 	get_tex_ptr(data, &test);
 	// test.player = rc->player;
 	test.portal_first_ray += rc->portal_first_ray;

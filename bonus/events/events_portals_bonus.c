@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 14:36:51 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:51:14 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ void	get_ray(t_data *data, t_raycast *rc)
 {
 	rc->player = *(data->player);
 	rc->x = data->width / 2;
+	rc->player.plane.x = 0;
+	rc->player.plane.y = 0;
 	init_ray_param(data->width, rc);
 	step_init(rc);
-	dda(data, rc);
+	dda(data, rc, 40);
 }
 
 /**
@@ -73,9 +75,24 @@ void	shoot_portal(t_data *data, int type)
  */
 void	tp(t_data *data, int to)
 {
+	int			from;
+	t_vector	test;
 
-	data->player->pos.x = (data->player->pos.x - data->player->portal[(to + 1) % 2].pos.x) + data->player->portal[to].pos.x + data->player->portal[to].dir.x;
-	data->player->pos.y = (data->player->pos.y - data->player->portal[(to + 1) % 2].pos.y) + data->player->portal[to].pos.y + data->player->portal[to].dir.y;
+	from = (to + 1) % 2;
+
+	test.x = (data->player->pos.x - data->player->portal[(to + 1) % 2].pos.x);
+	test.y = (data->player->pos.y - data->player->portal[(to + 1) % 2].pos.y);
+// 	rotate_vector(&test, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
+	if (abs(data->player->portal[to].dir.x) != abs(data->player->portal[from].dir.x))
+	{
+		data->player->pos.x = test.y + data->player->portal[to].pos.x + (data->player->portal[to].dir.x / 10);
+		data->player->pos.y = test.x + data->player->portal[to].pos.y + (data->player->portal[to].dir.y / 10);	
+	}
+	else
+	{
+		data->player->pos.x = test.x + data->player->portal[to].pos.x + (data->player->portal[to].dir.x / 10);
+		data->player->pos.y = test.y + data->player->portal[to].pos.y + (data->player->portal[to].dir.y / 10);
+	}
 	rotate_vector(&data->player->dir, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 	rotate_vector(&data->player->plane, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 }
@@ -105,7 +122,8 @@ int	check_portal(t_data *data, int x, int y)
 		if (port[i].status && ((port[i].pos.y == y && (abs(port[i].pos.x - x) == 1))
 			|| (port[i].pos.x == x && (abs(port[i].pos.y - y) == 1))))
 			if (port[(i + 1) % 2].status)
-				return (tp(data, (i + 1) % 2), 1);
+				// if ((port[i].dir.x && port[1].dir.x * data->player->dir.x < 0) || (port[i].dir.y && port[i].dir.y * data->player->dir.y < 0))
+					return (tp(data, (i + 1) % 2), 1);
 		i++;
 	}
 	return (0);

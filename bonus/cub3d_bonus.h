@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 20:45:42 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:25:07 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,8 +254,8 @@ void	cursor_screen(t_data *data);
 void	resize_render(t_data *data);
 void	init_ray_param(int width, t_raycast *rc);
 void	step_init(t_raycast *rc);
-void	dda(t_data *data, t_raycast *rc);
-void	portal(t_data *data, t_raycast *rc, int from, int to);
+void	dda(t_data *data, t_raycast *rc, int deep);
+void	portal(t_data *data, t_raycast *rc, int from, int to, int deep);
 void	floor_cast(t_data *data, t_player player);
 int		correct_color(u_int8_t *pixel);
 void	get_tex_ptr(t_data *data, t_raycast *rc);

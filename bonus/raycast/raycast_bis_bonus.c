@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 20:23:53 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:00:40 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,24 @@
  */
 void	resize_render(t_data *data)
 {
-	static int	width = WIDTH;
-	static int	height = HEIGHT;
 	int			i;
+	mlx_image_t	**cursor;
 
-	if (width != data->width || height != data->height)
+	cursor = data->cursor;
+	mlx_delete_image(data->mlx, data->img);
+	free(data->buff);
+	data->img = mlx_new_image(data->mlx, data->width, data->height);
+	data->buff = malloc(data->width * data->height * sizeof(int));
+	if (!data->img || !data->buff)
+		free_all(ERR_MALLOC, 2, data);
+	if (mlx_image_to_window(data->mlx, data->img, 0, 0) == -1)
+		free_all(ERR_MLX, 2, data);
+	i = -1;
+	data->img->instances[0].z = 1;
+	while (++i < 5)
 	{
-		printf("%p, %p\n", data->mlx, data->img);
-		mlx_delete_image(data->mlx, data->img);
-		free(data->buff);
-		data->img = mlx_new_image(data->mlx, data->width, data->height);
-		data->buff = malloc(data->width * data->height * sizeof(int));
-		if (!data->img || !data->buff)
-			free_all(ERR_MALLOC, 2, data);
-		if (mlx_image_to_window(data->mlx, data->img, 0, 0) == -1)
-			free_all(ERR_MLX, 2, data);
-		i = -1;
-		while (++i < 4)
-			if (mlx_image_to_window(data->mlx, data->cursor[i], data->width / 2 - data->cursor[i]->width / 2, data->height / 2 - data->cursor[i]->height / 2) == -1)
-				free_all(ERR_MLX, 2, data);
-		// while (++i < 4)
-		// {
-		// 	// mlx_image_to_window(data->mlx, data->cursor[i], data->width / 2 - data->cursor[i]->width / 2, data->height / 2 - data->cursor[i]->height / 2);
-		// 	data->cursor[i]->instances->x = data->width / 2 - data->cursor[i]->width / 2;
-		// 	data->cursor[i]->instances->y = data->height / 2 - data->cursor[i]->height / 2;
-		// 	data->cursor[i]->instances->z = 8;
-		// 	printf("x y z %i %i %i\n", data->cursor[i]->instances->x, data->cursor[i]->instances->y, data->cursor[i]->instances->z);
-		// }
-		width = data->width;
-		height = data->height;
+		cursor[i]->instances[0].x = data->width / 2 - cursor[i]->width / 2;
+		cursor[i]->instances[0].y = data->height / 2 - cursor[i]->height / 2;
 	}
 }
 
@@ -112,7 +101,7 @@ void	step_init( t_raycast *rc)
  * @param data structure with all program data
  * @param rc structure that store all raycast parameters
  */
-void	dda(t_data *data, t_raycast *rc)
+void	dda(t_data *data, t_raycast *rc, int deep)
 {
 	while (1)
 	{
@@ -128,15 +117,21 @@ void	dda(t_data *data, t_raycast *rc)
 			rc->ipos.y += rc->step.y;
 			rc->side = 1;
 		}
-		if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x && rc->player.portal[1].status == 1) // && (rc->player.dir.x * rc->player.portal[0].dir.x) <= 0 && (rc->player.dir.y * rc->player.portal[0].dir.y) <= 0 
+		if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x && rc->player.portal[1].status == 1 && deep < 40) // && (rc->player.dir.x * rc->player.portal[0].dir.x) <= 0 && (rc->player.dir.y * rc->player.portal[0].dir.y) <= 0 
 		{
-			portal(data, rc, 0, 1);
+			if ((rc->player.portal[0].dir.x && rc->player.portal[0].dir.x * rc->ray_dir.x < 0 && rc->side == 0) || (rc->player.portal[0].dir.y && rc->player.portal[0].dir.y * rc->ray_dir.y < 0 && rc->side == 1))
+			{
+			portal(data, rc, 0, 1, ++deep);
 			return ;
+			}
 		}
-		else if (rc->ipos.y == rc->player.portal[1].pos.y && rc->ipos.x == rc->player.portal[1].pos.x && rc->player.portal[0].status == 1)
+		else if (rc->ipos.y == rc->player.portal[1].pos.y && rc->ipos.x == rc->player.portal[1].pos.x && rc->player.portal[0].status == 1 && deep < 40)
 		{
-			portal(data, rc, 1, 0);
+			if ((rc->player.portal[1].dir.x && rc->player.portal[1].dir.x * rc->ray_dir.x < 0 && rc->side == 0) || (rc->player.portal[1].dir.y && rc->player.portal[1].dir.y * rc->ray_dir.y < 0 && rc->side == 1))
+			{
+			portal(data, rc, 1, 0, ++deep);
 			return ;
+			}
 		}
 		 if (data->map->map[rc->ipos.y][rc->ipos.x] == '1')
 		{

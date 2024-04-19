@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 16:45:40 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:57:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void	raycast(t_data *data)
 	loading_screen(data);
 	if (data->exit)
 		return ;
-	// updatePosition(data);
 	move(data);
 	update_inertia(data);
 	rc.x = 0;
@@ -142,7 +141,7 @@ void	raycast(t_data *data)
 		rc.portal_first_ray = 0;
 		init_ray_param(data->width, &rc);
 		step_init(&rc);
-		dda(data, &rc);
+		dda(data, &rc, 0);
 		if (rc.side == 0)
 			rc.perp_wall_dist = (rc.side_dist.x - rc.delta_dist.x) + rc.portal_first_ray;
 		else

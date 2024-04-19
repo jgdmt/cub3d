@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 14:42:45 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:37:23 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt)
 		shoot_portal(data, ORANGE);
 	if (button == MLX_MOUSE_BUTTON_MIDDLE && mod == MLX_SHIFT && act == MLX_PRESS && data->inv == 0)
 		debug(data);
-	if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS && data->inv == 0)
+	else if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS && data->inv == 0)
 		reset_portal(data);
 	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS && data->inv == 1)
 		shoot(data);
