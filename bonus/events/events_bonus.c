@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/22 18:32:27 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:27:21 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 
 void	mouse_move(void *gdata);
 int		check_portal(t_data *data, int x, int y);
+
+void	door_event(t_data *data)
+{
+	printf("%f %f %f %f\n", data->map->door_pos.x, data->map->door_pos.y, data->player->pos.x, data->player->pos.y);
+	// if (fabs(data->player->pos.x - data->map->door_pos.x) < 2.5
+	// 	&& fabs(data->player->pos.y - data->map->door_pos.y) < 2.5)
+	// {
+	// 	printf("Hey\n");
+	// 	if (data->map->door_stat)
+	// 		data->map->door_stat = 0;
+	// 	else
+	// 		data->map->door_stat = 1;
+	// }
+}
 
 /**
  * @brief Allows the player to rotate.
@@ -125,12 +139,16 @@ void	hook(void *gdata)
 		mlx_set_mouse_pos(data->mlx, WIDTH / 2, HEIGHT / 2);
 		i++;
 	}
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-		menu(data);
+	// if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+	// 	menu(data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_Q) && data->exit == 1)
 		free_all("Game quit", 1, data);
+	// if (data->exit == 1)
+	// 	menu_events(data);
 	if (data->exit)
 		return ;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_E))
+		door_event(data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 		rotate(RSPEED, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
@@ -145,7 +163,9 @@ void	hook(void *gdata)
 		data->player->vx -= ACCELERATION;
 	// if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
 	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
-		change_map(data);
+		change_map(data, 1);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_P))
+		change_map(data, -1);
 	mouse_move(gdata);
 }
 

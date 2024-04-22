@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/22 18:42:04 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:25:53 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int	check_portal(t_data *data, int x, int y)
 	if (data->map->door_stat == 1 && ((data->map->door_pos.y == y
 		&& (fabs(data->map->door_pos.x - x) == 1)) || (data->map->door_pos.x == x
 		&& (fabs(data->map->door_pos.y - y) == 1))))
-		return (change_map(data), 1);
+		return (change_map(data, 1), 1);
 	while (i < 2)
 	{
 		if (port[i].status && ((port[i].pos.y == y && (abs(port[i].pos.x - x) == 1))

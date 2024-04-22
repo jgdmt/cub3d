@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 14:29:04 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:00:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	reinit_data(t_data *data)
  * 
  * @param data structure with all program data
  */
-void	change_map(t_data *data)
+void	change_map(t_data *data, int np)
 {
-	static int	i = 2;
+	static int	i = 1;
 	t_map		*map;
 
 	data->exit = 2;
@@ -50,13 +50,12 @@ void	change_map(t_data *data)
 	map = data->map;
 	reinit_data(data);
 	free_smap(data->mlx, map);
-	if (data->argv[i])
-	{
+	i = i + np;
+	if (data->argv[i] && i > 0)
 		parsing(data->argv[i], data);
-		i++;
-	}
 	else
 		free_all(MSG_END, 1, data);
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
 	data->exit = 0;
 }
 

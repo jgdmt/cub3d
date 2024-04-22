@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/22 14:34:13 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:59:09 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void	scroll(double xdelta, double ydelta, void *gdata)
 	t_data	*data;
 
 	data = gdata;
+	if (data->exit)
+		return ;
 	(void) xdelta;
 	if (ydelta < 0)
 		data->inv = (data->inv + 1) % 2;
 	if (ydelta > 0)
-		data->inv = data->inv - 1;
-	if (data->inv < 0)
-		data->inv = 1;
+		data->inv = (2 + data->inv - 1) % 2;
 	printf("inventory slot: %i\n", data->inv);
 }
 

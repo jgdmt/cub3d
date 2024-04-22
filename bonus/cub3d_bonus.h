@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/22 17:15:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 20:50:57 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define ERR_FILEEXTENSION "File extension invalid."
 
 # define MSG_END "You reached the end. Congratulations, your cake is waiting."
+# define MSG_GAMEQUIT "You've already ragequit? Not surprising coming from you."
 # define MSG_NEXT1_1 "I should praise you for the finally flawless parsing.\n"
 # define MSG_NEXT1_2 "'Congratulations for achieving such a simple task!'\n"
 # define MSG_NEXT1_3 "I heard humans were happy with meaningless words.\n"
@@ -277,8 +278,10 @@ void	free_smap(mlx_t *mlx, t_map *map);
 void	close_window(void *gdata);
 void	resize_window(int32_t width, int32_t height, void *gdata);
 void	hook(void *data);
-void	change_map(t_data *data);
+void	change_map(t_data *data, int np);
 void	menu(t_data *data);
+void	menu_events(mlx_key_data_t key, void *gdata);
+// void	menu_events(t_data *data);
 void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt);
 void	reset_portal(t_data *data);
 void	shoot(t_data *data);
