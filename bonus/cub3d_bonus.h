@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/19 10:25:07 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:15:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@
 # define HEIGHT 1080
 
 # define RSPEED 0.1
-# define ACCELERATION 0.05
-# define INERTIA 0.005
+# define ACCELERATION 0.01
+# define MAXV	0.03
+# define INERTIA 0.0015 //0.0005
 
 # define BLUE 0
 # define ORANGE 1
@@ -261,6 +262,10 @@ int		correct_color(u_int8_t *pixel);
 void	get_tex_ptr(t_data *data, t_raycast *rc);
 void	init(t_raycast *rc);
 void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
+void	*update_inertia(void *gdata);
+
+double	find_sign1(t_portal to, t_portal from, double portal);
+double	find_sign2(t_portal to, t_portal from, double portal);
 
 int		parsing(char *map_name, t_data *data);
 void	check_enemy(t_data *data);

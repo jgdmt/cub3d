@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/19 15:37:23 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:34:13 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,21 @@ void	debug(t_data *data)
 	data->player->portal[BLUE].dir.x, data->player->portal[BLUE].dir.y);
 	printf("portal orange pos %d %d, dir %d %d\n", data->player->portal[ORANGE].pos.x, data->player->portal[ORANGE].pos.y,
 	data->player->portal[ORANGE].dir.x, data->player->portal[ORANGE].dir.y);
+	int i = 0;
+	while (data->map->map[i])
+	{
+	int j = 0;
+		while (data->map->map[i][j])
+		{
+			if (i == floor(data->player->pos.y) && j == floor(data->player->pos.x))
+				printf("\e[0;32mP\e[0;37m");
+			else
+				printf("%c", data->map->map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
 }
 
 /**

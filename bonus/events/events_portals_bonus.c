@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/19 17:26:22 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:42:04 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,48 @@ void	tp(t_data *data, int to)
 {
 	int			from;
 	t_vector	test;
+	double		test_a;
 
 	from = (to + 1) % 2;
 
-	test.x = (data->player->pos.x - data->player->portal[(to + 1) % 2].pos.x);
-	test.y = (data->player->pos.y - data->player->portal[(to + 1) % 2].pos.y);
+	test.x = 0;
+	test.y = 0;
+	if (data->player->portal[from].dir.y)
+		test.x = data->player->pos.x - data->player->portal[from].pos.x;
+	if (data->player->portal[from].dir.x)
+		test.y = data->player->pos.y - data->player->portal[from].pos.y;
+	if ((data->player->portal[from].dir.x == data->player->portal[to].dir.x && data->player->portal[from].dir.y == data->player->portal[to].dir.y)
+	|| (data->player->portal[from].dir.x == - data->player->portal[to].dir.y && data->player->portal[from].dir.y == - data->player->portal[to].dir.x))
+	{
+		if (test.x)
+			test.x = 1 - test.x;
+		if (test.y)
+			test.y = 1 - test.y;
+	}
+	if (!((test.x < 0.9 && test.x > 0.1) || (test.y < 0.9 && test.y > 0.1)))
+		return ;
+	printf("%lf %lf\n", test.x, test.y);
+	// test.x = find_sign1(data->player->portal[to], data->player->portal[from], (data->player->pos.x - data->player->portal[(to + 1) % 2].pos.x));
+	// test.y = find_sign2(data->player->portal[to], data->player->portal[from], (data->player->pos.y - data->player->portal[(to + 1) % 2].pos.y));
 // 	rotate_vector(&test, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 	if (abs(data->player->portal[to].dir.x) != abs(data->player->portal[from].dir.x))
 	{
-		data->player->pos.x = test.y + data->player->portal[to].pos.x + (data->player->portal[to].dir.x / 10);
-		data->player->pos.y = test.x + data->player->portal[to].pos.y + (data->player->portal[to].dir.y / 10);	
+		if (data->player->portal[to].dir.x < 0 || data->player->portal[to].dir.y < 0)
+			test_a = 0.1;
+		else
+			test_a = 1;
+			data->player->pos.x = test.y + data->player->portal[to].pos.x + data->player->portal[to].dir.x * test_a;
+			data->player->pos.y = test.x + data->player->portal[to].pos.y + data->player->portal[to].dir.y * test_a;
 	}
 	else
 	{
-		data->player->pos.x = test.x + data->player->portal[to].pos.x + (data->player->portal[to].dir.x / 10);
-		data->player->pos.y = test.y + data->player->portal[to].pos.y + (data->player->portal[to].dir.y / 10);
+		if (data->player->portal[to].dir.x < 0 || data->player->portal[to].dir.y < 0)
+			test_a = 0.1;
+		else
+			test_a = 1;
+		data->player->pos.x = test.x + data->player->portal[to].pos.x + test_a * data->player->portal[to].dir.x;
+		data->player->pos.y = test.y + data->player->portal[to].pos.y + test_a * data->player->portal[to].dir.y;
+		printf("pos is now %lf %lf\n", data->player->pos.x, data->player->pos.y);
 	}
 	rotate_vector(&data->player->dir, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 	rotate_vector(&data->player->plane, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);

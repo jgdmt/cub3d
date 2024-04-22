@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:50:40 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/19 11:03:32 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:10:53 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,14 @@ void	floor_cast(t_data *data, t_player player)
 {
 	t_raycast	rc;
 	bool		is_floor;
+	mlx_image_t	*floor;
+	mlx_image_t	*ceiling;
 
 	rc.player = player;
-	rc.y = 0;
-	while (rc.y < data->height)
+	rc.y = -1;
+	floor = data->map->floor_color;
+	ceiling = data->map->ceiling_color;
+	while (++(rc.y) < data->height)
 	{
 		is_floor = rc.y > data->height / 2 + rc.player.pitch;
 		get_floor_coord(data, &rc, is_floor);
@@ -86,11 +90,10 @@ void	floor_cast(t_data *data, t_player player)
 			rc.ipos.x = (int)(rc.ray_dir.x);
 			rc.ipos.y = (int)(rc.ray_dir.y);
 			if (is_floor)
-				put_texture(data, &rc, rc.y, data->map->floor_color);
+				put_texture(data, &rc, rc.y, floor);
 			else
-				put_texture(data, &rc, rc.y, data->map->ceiling_color);
+				put_texture(data, &rc, rc.y, ceiling);
 			rc.x++;
 		}
-		rc.y++;
 	}
 }

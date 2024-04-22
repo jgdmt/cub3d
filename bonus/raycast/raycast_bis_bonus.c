@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/19 15:00:40 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:05:04 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,20 @@ void	resize_render(t_data *data)
 {
 	int			i;
 	mlx_image_t	**cursor;
+	bool		check;
 
 	cursor = data->cursor;
-	mlx_delete_image(data->mlx, data->img);
 	free(data->buff);
-	data->img = mlx_new_image(data->mlx, data->width, data->height);
+	check = mlx_resize_image(data->img, data->width, data->height);
 	data->buff = malloc(data->width * data->height * sizeof(int));
-	if (!data->img || !data->buff)
+	if (!check || !data->buff)
 		free_all(ERR_MALLOC, 2, data);
-	if (mlx_image_to_window(data->mlx, data->img, 0, 0) == -1)
-		free_all(ERR_MLX, 2, data);
-	i = -1;
-	data->img->instances[0].z = 1;
-	while (++i < 5)
+	i = 0;
+	while (i < 5)
 	{
 		cursor[i]->instances[0].x = data->width / 2 - cursor[i]->width / 2;
 		cursor[i]->instances[0].y = data->height / 2 - cursor[i]->height / 2;
+		i++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:10:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/19 14:50:39 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:10:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,22 @@ void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2)
 	}
 }
 
-int	find_sign1(t_portal to, t_portal from)
+double	find_sign1(t_portal to, t_portal from, double portal)
 {
 	if (to.dir.y == from.dir.x)
-		return (1);
+		return (portal);
 	if (to.dir.y == -from.dir.y)
-		return (1);
-	return (-1);
+		return (portal);
+	return (1 - portal);
 }
 
-int	find_sign2(t_portal to, t_portal from)
+double	find_sign2(t_portal to, t_portal from, double portal)
 {
 	if (to.dir.x == from.dir.y)
-		return (1);
+		return (portal);
 	if (to.dir.x == -from.dir.x)
-		return (1);
-	return (-1);
+		return (portal);
+	return (1 - portal);
 }
 
 /**
@@ -86,16 +86,22 @@ void	portal(t_data *data, t_raycast *rc, int from, int to, int deep)
 	test = *rc;
 	if (!rc->player.portal[to].dir.x)
 	{
-		test.player.pos.x = rc->player.portal[to].pos.x + portal * find_sign1(rc->player.portal[to], rc->player.portal[from]);
-		test.player.pos.y = rc->player.portal[to].pos.y + rc->player.portal[to].dir.y;
+		test.player.pos.x = rc->player.portal[to].pos.x + find_sign1(rc->player.portal[to], rc->player.portal[from], portal);
+		if (rc->player.portal[to].dir.y < 0)
+			test.player.pos.y = rc->player.portal[to].pos.y + rc->player.portal[to].dir.y * 0.1;
+		else
+			test.player.pos.y = rc->player.portal[to].pos.y + rc->player.portal[to].dir.y;
+	// printf("x : %lf, y : %lf\n", test.player.pos.x, test.player.pos.y);
 	}
 	else
 	{
-		test.player.pos.x = rc->player.portal[to].pos.x + rc->player.portal[to].dir.x;
-		test.player.pos.y = rc->player.portal[to].pos.y + portal * find_sign2(rc->player.portal[to], rc->player.portal[from]);
+		if (rc->player.portal[to].dir.x < 0)
+			test.player.pos.x = rc->player.portal[to].pos.x + rc->player.portal[to].dir.x * 0.1;
+		else
+			test.player.pos.x = rc->player.portal[to].pos.x + rc->player.portal[to].dir.x;
+		test.player.pos.y = rc->player.portal[to].pos.y + find_sign2(rc->player.portal[to], rc->player.portal[from], portal);
 	}
 	rotate_vector(&test.ray_dir, &rc->player.portal[from].dir, &rc->player.portal[to].dir);
-	// rotate_vector(&test.player.plane, &rc->player.portal[from].dir, &rc->player.portal[to].dir);
 	test.portal_first_ray = 0;
 	test.player.dir = test.ray_dir;
 	test.player.plane.x = 0;

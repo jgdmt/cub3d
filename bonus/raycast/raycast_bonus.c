@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/19 11:57:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:39:35 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 	step = 1.0 * rc->t->height / rc->line_height;
 	tex_pos = (rc->draw_start - rc->player.pitch - data->height / 2 + rc->line_height / 2) * step;
 	y = rc->draw_start;
-	while (y < rc->draw_end)
+	while (y <= rc->draw_end)
 	{
 		rc->tex.y = (int)tex_pos & (rc->t->height - 1);
 		tex_pos += step;
@@ -101,18 +101,35 @@ static void	get_tex_coord(t_raycast *rc)
  * 
  * @param data structure with all program data
  */
-void	update_inertia(t_data *data)
+void	*update_inertia(void *gdata)
 {
-	// printf("x %lf, y %lf\n", data->player->vx, data->player->vy);
-	if (data->player->vx > 10e-8)
-		data->player->vx -= INERTIA;
-	else if (data->player->vx < -10e-8)
-		data->player->vx += INERTIA;
-	if (data->player->vy > 10e-8)
-		data->player->vy -= INERTIA;
-	else if (data->player->vy < -10e-8)
-		data->player->vy += INERTIA;
+	t_data	*data;
+	size_t	last_time;
+	size_t	time;
+
+	data = gdata;
+	last_time = get_time();
+	while (1)
+	{
+		if (!data->exit)
+		{
+			move(data);
+			if (data->player->vx > 10e-8)
+				data->player->vx -= INERTIA;
+			else if (data->player->vx < -10e-8)
+				data->player->vx += INERTIA;
+			if (data->player->vy > 10e-8)
+				data->player->vy -= INERTIA;
+			else if (data->player->vy < -10e-8)
+				data->player->vy += INERTIA;
+		}
+		time = get_time();
+		if (time - last_time < 13)
+			ft_usleep(13 - (time - last_time));
+		last_time = time;
+	}
 }
+
 
 /**
  * @brief the complete raycast algoritm that generates a frame based on t_data::map and t_data::player informations.
@@ -129,8 +146,6 @@ void	raycast(t_data *data)
 	loading_screen(data);
 	if (data->exit)
 		return ;
-	move(data);
-	update_inertia(data);
 	rc.x = 0;
 	temp = *(data->player);
 	rc.player = temp;

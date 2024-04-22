@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 20:26:36 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:32:27 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	move(t_data *data)
 		data->player->pos.x += v.x;
 	else
 	{
-		if (check_portal(data, pos.x + v.x, data->player->pos.y))
+		if (check_portal(data, floor(pos.x + v.x), floor(data->player->pos.y)))
 			return ;
 		else
 			data->player->vx = 0;
@@ -102,7 +102,7 @@ void	move(t_data *data)
 		data->player->pos.y += v.y;
 	else
 	{
-		if (check_portal(data, pos.x, data->player->pos.y + v.y))
+		if (check_portal(data, floor(pos.x), floor(data->player->pos.y + v.y)))
 			return ;
 		else
 			data->player->vy = 0;
@@ -135,13 +135,13 @@ void	hook(void *gdata)
 		rotate(RSPEED, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 		rotate(-RSPEED, data);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_W) && data->player->vy > -0.1f)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W) && data->player->vy > -MAXV)
 		data->player->vy -= ACCELERATION;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_S) && data->player->vy < 0.1f)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S) && data->player->vy < MAXV)
 		data->player->vy += ACCELERATION;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_A) && data->player->vx < 0.1f)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A) && data->player->vx < MAXV)
 		data->player->vx += ACCELERATION;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_D) && data->player->vx > -0.1f)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D) && data->player->vx > -MAXV)
 		data->player->vx -= ACCELERATION;
 	// if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
 	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
