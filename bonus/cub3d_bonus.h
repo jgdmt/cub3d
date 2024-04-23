@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/22 20:50:57 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:12:53 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define RSPEED 0.1
 # define ACCELERATION 0.01
 # define MAXV	0.03
-# define INERTIA 0.0015 //0.0005
+# define INERTIA 0.0005
 
 # define BLUE 0
 # define ORANGE 1
@@ -204,6 +204,8 @@ typedef struct s_map
 	mlx_image_t	*floor_color;
 	mlx_image_t	*ceiling_color;
 	mlx_image_t	**en_sprites;
+	mlx_image_t *door_open;
+	mlx_image_t *door_close;
 	t_enemy		**enemies;
 	int			door_stat;
 	t_vector	door_pos;

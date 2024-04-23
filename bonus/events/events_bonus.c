@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/22 22:27:21 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/23 11:18:53 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
 void	mouse_move(void *gdata);
-int		check_portal(t_data *data, int x, int y);
+int		check_portal(t_data *data, int x, int y, t_vector v);
 
 void	door_event(t_data *data)
 {
@@ -104,7 +104,7 @@ void	move(t_data *data)
 		data->player->pos.x += v.x;
 	else
 	{
-		if (check_portal(data, floor(pos.x + v.x), floor(data->player->pos.y)))
+		if (check_portal(data, floor(pos.x + v.x), floor(data->player->pos.y), v))
 			return ;
 		else
 			data->player->vx = 0;
@@ -116,7 +116,7 @@ void	move(t_data *data)
 		data->player->pos.y += v.y;
 	else
 	{
-		if (check_portal(data, floor(pos.x), floor(data->player->pos.y + v.y)))
+		if (check_portal(data, floor(pos.x), floor(data->player->pos.y + v.y), v))
 			return ;
 		else
 			data->player->vy = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/22 21:25:53 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/23 11:18:32 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,6 @@ void	tp(t_data *data, int to)
 	if (!((test.x < 0.9 && test.x > 0.1) || (test.y < 0.9 && test.y > 0.1)))
 		return ;
 	printf("%lf %lf\n", test.x, test.y);
-	// test.x = find_sign1(data->player->portal[to], data->player->portal[from], (data->player->pos.x - data->player->portal[(to + 1) % 2].pos.x));
-	// test.y = find_sign2(data->player->portal[to], data->player->portal[from], (data->player->pos.y - data->player->portal[(to + 1) % 2].pos.y));
-// 	rotate_vector(&test, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 	if (abs(data->player->portal[to].dir.x) != abs(data->player->portal[from].dir.x))
 	{
 		if (data->player->portal[to].dir.x < 0 || data->player->portal[to].dir.y < 0)
@@ -152,7 +149,7 @@ void	tp(t_data *data, int to)
  * @param y coordonate y of the future player position
  * @return int 
  */
-int	check_portal(t_data *data, int x, int y)
+int	check_portal(t_data *data, int x, int y, t_vector v)
 {
 	t_portal	*port;
 	int			i;
@@ -169,7 +166,7 @@ int	check_portal(t_data *data, int x, int y)
 		if (port[i].status && ((port[i].pos.y == y && (abs(port[i].pos.x - x) == 1))
 			|| (port[i].pos.x == x && (abs(port[i].pos.y - y) == 1))))
 			if (port[(i + 1) % 2].status)
-				// if ((port[i].dir.x && port[1].dir.x * data->player->dir.x < 0) || (port[i].dir.y && port[i].dir.y * data->player->dir.y < 0))
+				if ((port[i].dir.x && port[i].dir.x * v.x < 0) || (port[i].dir.y && port[i].dir.y * v.y < 0))
 					return (tp(data, (i + 1) % 2), 1);
 		i++;
 	}

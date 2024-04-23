@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/22 12:05:04 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:09:57 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	dda(t_data *data, t_raycast *rc, int deep)
 			return ;
 			}
 		}
-		 if (data->map->map[rc->ipos.y][rc->ipos.x] == '1')
+		 if (data->map->map[rc->ipos.y][rc->ipos.x] == '1' || data->map->map[rc->ipos.y][rc->ipos.x] == '2')
 		{
 			get_tex_ptr(data, rc);
 			return ;

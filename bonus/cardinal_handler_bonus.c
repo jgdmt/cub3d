@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:27:43 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/22 12:00:47 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:15:19 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ void	get_tex_ptr(t_data *data, t_raycast *rc)
 	if (rc->ipos.y < rc->player.pos.y && rc->side == 1)
 	{
 		rc->t = data->map->so;
+	}
+	if (data->map->map[rc->ipos.y][rc->ipos.x] == '2')
+	{
+		if (data->map->door_stat == 0)
+			rc->t = data->map->door_open;
+		else
+			rc->t = data->map->door_close;
 	}
 }
 
