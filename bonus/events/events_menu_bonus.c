@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 19:19:34 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/22 21:23:12 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:30:06 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,25 @@ void	change_menu_text(t_data *data, int i)
 {
 	(void) data;
 	(void)i;
+}
+
+void	change_hud(t_data *data)
+{
+	static int	hidden = 0;
+
+	printf("img, hud %i %i\n", data->img->instances[0].z, data->hud->instances[0].z);
+	if (!hidden)
+	{
+		data->img->instances[0].z = 7;
+		data->hud->instances[0].z = 10;
+		hidden = 1;
+	}
+	else
+	{
+		data->img->instances[0].z = 6;
+		data->hud->instances[0].z = 7;
+		hidden = 0;
+	}
 }
 
 void	menu_events(mlx_key_data_t key, void *gdata)
@@ -34,9 +53,9 @@ void	menu_events(mlx_key_data_t key, void *gdata)
 	if (data->exit != 1)
 		return ;
 	if (key.key == MLX_KEY_DOWN && key.action == MLX_PRESS) //mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
-		i = (i + 1) % 4; // 5 si stats
+		i = (i + 1) % 5; // 6 si stats
 	else if (key.key == MLX_KEY_UP && key.action == MLX_PRESS)//mlx_is_key_down(data->mlx, MLX_KEY_UP))
-		i = (4 + i - 1) % 4; // 5 si stats
+		i = (5 + i - 1) % 5; // 6 si stats
 	else if (key.key == MLX_KEY_ENTER && key.action == MLX_PRESS) // mlx_is_key_down(data->mlx, MLX_KEY_ENTER)
 	{
 		if (i == 0)
@@ -46,8 +65,11 @@ void	menu_events(mlx_key_data_t key, void *gdata)
 		else if (i == 2)
 			change_map(data, 0);
 		else if (i == 3)
+			change_hud(data);
+		else if (i == 4)
 			free_all(MSG_GAMEQUIT, 1, data);
-		i = 0;
+		if (i != 3)
+			i = 0;
 	}
 	// else
 	// 	return ;
@@ -62,6 +84,8 @@ void	menu_events(mlx_key_data_t key, void *gdata)
 		else if (i == 2)
 			printf("(reset map)\n");
 		else if (i == 3)
+			printf("(hide/show hud)\n");
+		else if (i == 4)
 			printf("(exit game)\n");
 	}
 	debug = i;

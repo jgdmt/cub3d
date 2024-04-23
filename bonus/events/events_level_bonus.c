@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/22 21:00:34 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:41:02 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,22 @@ void	change_map(t_data *data, int np)
  */
 void	menu(t_data *data)
 {
-	static int	paused = 0;
+	// static int	paused = 0;
 
-	if (!paused)
+	if (!data->exit)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
 		data->exit = 1;
 		data->img->enabled = false;
 		ft_usleep(250);
-		paused = 1;
+		// paused = 1;
 	}
-	else
+	else if (data->exit == 1)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
 		data->exit = 0;
 		data->img->enabled = true;
 		ft_usleep(250);
-		paused = 0;
+		// paused = 0;
 	}
 }

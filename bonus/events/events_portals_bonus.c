@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/23 11:18:32 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:16:06 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,14 @@ void	get_ray(t_data *data, t_raycast *rc)
 void	shoot_portal(t_data *data, int type)
 {
 	t_raycast	rc;
+	int		other;
 	int		x;
 	int		y;
 
 	get_ray(data, &rc);
-	printf("side posx posy %i %i %i\n", rc.side, rc.ipos.x, rc.ipos.y);
-	// if (data->player->portal[0].status && data->player->portal[0].pos.x == rc.ipos.x
-	// 	&& data->player->portal[0].pos.y == rc.ipos.y)
-	// 	return ;
-	// if (data->player->portal[1].status && data->player->portal[1].pos.x == rc.ipos.x 
-	// 	&& data->player->portal[1].pos.y == rc.ipos.y)
-	// 	return ;
 	x = 0;
 	y = 0;
+	other = (type + 1) % 2;
 	if (rc.side == 0)
 	{
 		x = 1;
@@ -79,8 +74,14 @@ void	shoot_portal(t_data *data, int type)
 	data->player->portal[type].pos.y = rc.ipos.y;
 	data->player->portal[type].dir.x = x;
 	data->player->portal[type].dir.y = y;
+	if (data->player->portal[other].status && data->player->portal[other].dir.x == data->player->portal[type].dir.x
+		&& data->player->portal[other].dir.y == data->player->portal[type].dir.y
+		&& data->player->portal[other].pos.x == data->player->portal[type].pos.x
+		&& data->player->portal[other].pos.y == data->player->portal[type].pos.y)
+		return ;
 	if (data->player->portal[type].status == 0)
 		data->player->portal[type].status = 1;
+
 	printf("player pos %f %f, dir %f %f\n", data->player->pos.x, data->player->pos.y,
 	data->player->dir.x, data->player->dir.y);
 	printf("portal pos %d %d, dir %d %d\n", data->player->portal[type].pos.x, data->player->portal[type].pos.y,
@@ -156,11 +157,14 @@ int	check_portal(t_data *data, int x, int y, t_vector v)
 
 	port = data->player->portal;
 	i = 0;
-	printf("Going to %i %i\n", x, y);
+	// printf("Going to %i %i\n", x, y);
 	if (data->map->door_stat == 1 && ((data->map->door_pos.y == y
 		&& (fabs(data->map->door_pos.x - x) == 1)) || (data->map->door_pos.x == x
 		&& (fabs(data->map->door_pos.y - y) == 1))))
-		return (change_map(data, 1), 1);
+	{
+		data->exit = 3;
+		return (1);
+	}
 	while (i < 2)
 	{
 		if (port[i].status && ((port[i].pos.y == y && (abs(port[i].pos.x - x) == 1))

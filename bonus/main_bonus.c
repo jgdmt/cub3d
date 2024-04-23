@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/23 18:20:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:49:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,26 @@ t_player	init_player(void)
 	return (player);
 }
 
+void	init_door_text(t_data *data, mlx_t *mlx)
+{
+	mlx_texture_t	*cur;
+	mlx_texture_t	*tmp;
+
+	cur = mlx_load_png("./maps/pics/door_close_128.png");
+	if (!cur)
+		free_all(ERR_MLX, 2, data);
+	tmp = cur;
+	data->map->door_close = mlx_texture_to_image(mlx, cur);
+	free(tmp);
+	cur = mlx_load_png("./maps/pics/door_open_128.png");
+	if (!cur)
+		free_all(ERR_MLX, 2, data);
+	data->map->door_open = mlx_texture_to_image(mlx, cur);
+	free(cur);
+	if (!data->map->door_close || !data->map->door_open)
+		free_all(ERR_MLX, 2, data);
+}
+
 void	init_data_text(t_data *data, mlx_t *mlx)
 {
 	mlx_texture_t	*cur;
@@ -140,6 +160,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 		free_all(ERR_MLX, 2, &data);
 	data.loading->enabled = false;
 	init_data_text(&data, mlx);
+	init_door_text(&data, mlx);
 	return (data);
 }
 

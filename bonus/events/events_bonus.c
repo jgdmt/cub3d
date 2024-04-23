@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/23 11:18:53 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:03:56 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ int		check_portal(t_data *data, int x, int y, t_vector v);
 void	door_event(t_data *data)
 {
 	printf("%f %f %f %f\n", data->map->door_pos.x, data->map->door_pos.y, data->player->pos.x, data->player->pos.y);
-	// if (fabs(data->player->pos.x - data->map->door_pos.x) < 2.5
-	// 	&& fabs(data->player->pos.y - data->map->door_pos.y) < 2.5)
-	// {
-	// 	printf("Hey\n");
-	// 	if (data->map->door_stat)
-	// 		data->map->door_stat = 0;
-	// 	else
-	// 		data->map->door_stat = 1;
-	// }
+	if (fabs(data->player->pos.x - data->map->door_pos.x) < 2.5
+		&& fabs(data->player->pos.y - data->map->door_pos.y) < 2.5)
+	{
+		if (data->map->door_stat)
+			data->map->door_stat = 0;
+		else
+			data->map->door_stat = 1;
+		ft_usleep(250);
+	}
 }
 
 /**
@@ -104,7 +104,7 @@ void	move(t_data *data)
 		data->player->pos.x += v.x;
 	else
 	{
-		if (check_portal(data, floor(pos.x + v.x), floor(data->player->pos.y), v))
+		if (check_portal(data, floor(pos.x + v.x), floor(pos.y), v))
 			return ;
 		else
 			data->player->vx = 0;
@@ -116,7 +116,7 @@ void	move(t_data *data)
 		data->player->pos.y += v.y;
 	else
 	{
-		if (check_portal(data, floor(pos.x), floor(data->player->pos.y + v.y), v))
+		if (check_portal(data, floor(pos.x), floor(pos.y + v.y), v))
 			return ;
 		else
 			data->player->vy = 0;
@@ -145,6 +145,8 @@ void	hook(void *gdata)
 		free_all("Game quit", 1, data);
 	// if (data->exit == 1)
 	// 	menu_events(data);
+	if (data->exit == 3)
+		change_map(data, 1);
 	if (data->exit)
 		return ;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_E))
@@ -162,6 +164,7 @@ void	hook(void *gdata)
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D) && data->player->vx > -MAXV)
 		data->player->vx -= ACCELERATION;
 	// if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
+	// 	jump(data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
 		change_map(data, 1);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_P))
