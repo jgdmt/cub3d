@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/22 20:50:26 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:20:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,13 @@ t_player	init_player(void)
 	player.posz = 0;
 	player.nb = 0;
 	player.dir.x = -1;
-	player.dir.y = 0;
+	player.dir.y = 0;    
 	player.plane.x = 0;
 	player.plane.y = 1;
 	player.pitch = 0;
 	player.vx = 0;
 	player.vy = 0;
+	player.hp = 50;
 	init_portal(player.portal);
 	return (player);
 }
@@ -150,6 +151,7 @@ int	main(int argc, char **argv)
 	mlx_t		*mlx;
 	pthread_t	thread;
 	pthread_t	inertia;
+	pthread_t	hud;
 
 	if (argc < 2 || argc > 11)
 		return (ft_printf(2, ERR_ARGV), 0);
@@ -162,14 +164,19 @@ int	main(int argc, char **argv)
 	data = init_data(&map, &player, mlx, argv);
 	parsing(argv[1], &data);
 	data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	data.hud = mlx_new_image(mlx, 200, 200);
 	data.buff = malloc(WIDTH * HEIGHT * sizeof(int));
-	if (!data.img || !data.buff)
+	if (!data.img || !data.buff || !data.hud)
 		free_all(ERR_MALLOC, 2, &data);
 	if (pthread_create(&thread, NULL, raycast_threader, &data))
 		free_all(ERR_MUTEX, 2, &data);
 	if (pthread_create(&inertia, NULL, update_inertia, &data))
 		free_all(ERR_MUTEX, 2, &data);
+	if (pthread_create(&hud, NULL, thread_hud, &data))
+		free_all(ERR_MUTEX, 2, &data);
 	if (mlx_image_to_window(data.mlx, data.img, 0, 0) == -1)
+		free_all(ERR_MLX, 2, &data);
+	if (mlx_image_to_window(data.mlx, data.hud, 0, HEIGHT - 200) == -1)
 		free_all(ERR_MLX, 2, &data);
 	mlx_loop_hook(mlx, &hook, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);

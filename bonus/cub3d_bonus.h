@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/23 14:12:53 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:50:29 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_player
 	int						nb;
 	int						posz;
 	int						pitch;
+	int						hp;
 	_Atomic double			vx;
 	_Atomic double			vy;
 }	t_player;
@@ -236,6 +237,7 @@ typedef struct s_data
 	t_player		*player;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
+	mlx_image_t		*hud;
 	mlx_image_t		*loading;
 	mlx_image_t		*cursor[5];
 	uint32_t		*buff;
@@ -266,6 +268,9 @@ void	get_tex_ptr(t_data *data, t_raycast *rc);
 void	init(t_raycast *rc);
 void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
 void	*update_inertia(void *gdata);
+
+void	*thread_hud(void *gdata);
+void	print_hp(t_data *data);
 
 double	find_sign1(t_portal to, t_portal from, double portal);
 double	find_sign2(t_portal to, t_portal from, double portal);
