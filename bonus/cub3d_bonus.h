@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/23 17:50:29 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:51:42 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,13 @@ typedef struct s_player
 	_Atomic double			vy;
 }	t_player;
 
+typedef struct s_hud
+{
+	int	width;
+	int	heigth;
+
+}	t_hud;
+
 /**
  * @brief 
  * @param draw_start minimum y to print a wall column on the screen
@@ -213,6 +220,7 @@ typedef struct s_map
 	int			nb_enemy;
 	size_t		max;
 	size_t		maxy;
+	t_hud		hud;
 }	t_map;
 
 /**
@@ -271,6 +279,7 @@ void	*update_inertia(void *gdata);
 
 void	*thread_hud(void *gdata);
 void	print_hp(t_data *data);
+void	get_minimap(t_data *data);
 
 double	find_sign1(t_portal to, t_portal from, double portal);
 double	find_sign2(t_portal to, t_portal from, double portal);
