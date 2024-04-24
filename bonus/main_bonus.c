@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/24 13:31:22 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:23:13 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,29 +75,65 @@ t_player	init_player(void)
 	return (player);
 }
 
-// void	init_hud_text(t_data *data, mlx_t *mlx)
-// {
-// 	int	i;
-// 	mlx_texture_t	*cur;
-// 	mlx_texture_t	*tmp;
+void	init_hud_text(t_data *data, mlx_t *mlx)
+{
+	int	i;
+	int	j;
+	mlx_texture_t	*cur;
+	mlx_texture_t	*tmp;
 
-// 	i = 0;
-// 	while (i < 5)
-// 		data->hud.menu[i++] = 0;
-// 	i = 0;
-// 	while (i < 1)
-// 	{
-// 		cur = mlx_load_png("./bonus/assets/next_map.png");
-// 		if (!cur)
-// 			free_all(ERR_MLX, 2, data);
-// 		tmp = cur;
-// 		data->hud.menu[0] = mlx_texture_to_image(mlx, cur);
-// 		if (!data->hud.menu[i])
-// 			free_all(ERR_MLX, 2, data);
-// 		mlx_delete_texture(tmp);
-// 		i++;
-// 	}
-// }
+	i = 0;
+	j = 0;
+	while (i < 12)
+		data->hud.menu[i++] = 0;
+	i = 0;
+	while (i < 12)
+	{
+		if (i == 0)
+			cur = mlx_load_png("./bonus/assets/next_map.png");
+		else if (i == 1)
+			cur = mlx_load_png("./bonus/assets/previous_map.png");
+		else if (i == 2)
+			cur = mlx_load_png("./bonus/assets/reset_map.png");
+		else if (i == 3)
+			cur = mlx_load_png("./bonus/assets/hide_hud.png");
+		else if (i == 4)
+			cur = mlx_load_png("./bonus/assets/exit.png");
+		else if (i == 5)
+			cur = mlx_load_png("./bonus/assets/show_hud.png");
+		else if (i == 6)
+			cur = mlx_load_png("./bonus/assets/next_map_selected.png");
+		else if (i == 7)
+			cur = mlx_load_png("./bonus/assets/previous_map_selected.png");
+		else if (i == 8)
+			cur = mlx_load_png("./bonus/assets/reset_map_selected.png");
+		else if (i == 9)
+			cur = mlx_load_png("./bonus/assets/hide_hud_selected.png");
+		else if (i == 10)
+			cur = mlx_load_png("./bonus/assets/exit_selected.png");
+		else if (i == 11)
+			cur = mlx_load_png("./bonus/assets/show_hud_selected.png");
+		if (!cur)
+			free_all(ERR_MLX, 2, data);
+		tmp = cur;
+		data->hud.menu[i] = mlx_texture_to_image(mlx, cur);
+		if (!data->hud.menu[i])
+			free_all(ERR_MLX, 2, data);
+		tmp = cur;
+		data->hud.menu[i] = mlx_texture_to_image(mlx, cur);
+		if (!data->hud.menu[i])
+			free_all(ERR_MLX, 2, data);
+		j = i % 6;
+		if (j == 5)
+			j = 3;
+		if (mlx_image_to_window(mlx, data->hud.menu[i], data->width / 15, data->height / 3 + j * 70) == -1)
+			free_all(ERR_MLX, 2, data);
+		data->hud.menu[i]->instances[0].z = 10;
+		data->hud.menu[i]->enabled = false;
+		mlx_delete_texture(tmp);
+		i++;
+	}
+}
 
 void	init_portals_text(t_data *data, mlx_t *mlx)
 {
@@ -120,7 +156,7 @@ void	init_portals_text(t_data *data, mlx_t *mlx)
 			free_all(ERR_MLX, 2, data);
 		tmp = cur;
 		data->portal[i] = mlx_texture_to_image(mlx, cur);
-		if (!data->cursor[i])
+		if (!data->portal[i])
 			free_all(ERR_MLX, 2, data);
 		mlx_delete_texture(tmp);
 		i++;
@@ -174,7 +210,7 @@ void	init_data_text(t_data *data, mlx_t *mlx)
 			free_all(ERR_MLX, 2, data);
 		if (mlx_image_to_window(mlx, data->cursor[i], data->width / 2 - data->cursor[i]->width / 2, data->height / 2 - data->cursor[i]->height / 2) == -1)
 			free_all(ERR_MLX, 2, data);
-		data->cursor[i]->instances->z = 7;
+		data->cursor[i]->instances[0].z = 19;
 		data->cursor[i]->enabled = false;
 		mlx_delete_texture(tmp);
 		i++;
@@ -196,6 +232,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.inv = 0;
 	data.loading = 0;
 	data.argv = argv;
+	data.hud.hidden = 0;
 	data.cursor[0] = 0;
 	data.cursor[1] = 0;
 	data.cursor[2] = 0;
@@ -211,9 +248,10 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	if (mlx_image_to_window(data.mlx, data.loading, 704, 284) == -1)
 		free_all(ERR_MLX, 2, &data);
 	data.loading->enabled = false;
-	init_data_text(&data, mlx);
 	init_door_text(&data, mlx);
 	init_portals_text(&data, mlx);
+	init_hud_text(&data, mlx);
+	init_data_text(&data, mlx);
 	return (data);
 }
 
@@ -252,6 +290,7 @@ int	main(int argc, char **argv)
 		free_all(ERR_MLX, 2, &data);
 	if (mlx_image_to_window(data.mlx, data.hud_img, 0, HEIGHT - 200) == -1)
 		free_all(ERR_MLX, 2, &data);
+	// printf("%i\n", data.img->instances[0].z);
 	mlx_loop_hook(mlx, &hook, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);

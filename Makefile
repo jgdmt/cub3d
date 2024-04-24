@@ -13,7 +13,7 @@ OBJS_BONUS 		:= $(addprefix bonus/,$(SRCS_BONUS:.c=.o))
 
 CC				:= cc
 RM				:= rm -rf
-CFLAGS			:= -Wall -Wextra -Werror  -I. -O3 -Ofast -ffast-math #-fsanitize=address -ggdb3
+CFLAGS			:= -Wall -Wextra -Werror  -I. -O3 -Ofast -ffast-math -fsanitize=address -ggdb3
 MLXFLAGS		:= -framework Cocoa -framework OpenGL -framework IOKit  -L "/Users/$(USER)/.brew/opt/glfw/lib/" -I MLX42/include -lglfw
 NAME			:= cub3D
 NAME_BONUS		:= potato4D

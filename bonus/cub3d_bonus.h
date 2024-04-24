@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/24 13:25:49 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:47:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ typedef struct s_hud
 {
 	int	width;
 	int	heigth;
-	mlx_image_t	**menu[5];
+	int	hidden;
+	mlx_image_t	*menu[12];
 }	t_hud;
 
 /**

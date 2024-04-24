@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/23 19:34:33 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:51:47 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 void	resize_render(t_data *data)
 {
 	int			i;
+	// int			j;
 	mlx_image_t	**cursor;
 	bool		check;
 
@@ -37,6 +38,16 @@ void	resize_render(t_data *data)
 		cursor[i]->instances[0].y = data->height / 2 - cursor[i]->height / 2;
 		i++;
 	}
+	// i = 0;
+	// j = i % 6;
+	// while (i < 12)
+	// {
+	// 	data->hud.menu[i]->instances[0].x = data->width / 15;
+	// 	if (i == 5)
+	// 		j = 3;
+	// 	data->hud.menu[i]->instances[0].y = data->height / 3 + j * 60;
+	// 	i++;
+	// }
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/23 16:41:02 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:24:11 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,25 @@ void	change_map(t_data *data, int np)
 	data->exit = 0;
 }
 
+void	show_menu(t_data *data, bool show)
+{
+	int	i;
+
+	i = 0;
+	while (show && i < 5)
+	{
+		if (i == 3 && data->hud.hidden)
+			data->hud.menu[5]->enabled = show;
+		else if (i == 0)
+			data->hud.menu[i + 6]->enabled = show;
+		else
+			data->hud.menu[i]->enabled = show;
+		i++;
+	}
+	while (!show && i < 12)
+		data->hud.menu[i++]->enabled = show;
+}
+
 /**
  * @brief Handles the menu.
  * 
@@ -72,6 +91,7 @@ void	menu(t_data *data)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
 		data->exit = 1;
+		show_menu(data, 1);
 		data->img->enabled = false;
 		ft_usleep(250);
 		// paused = 1;
@@ -80,6 +100,7 @@ void	menu(t_data *data)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
 		data->exit = 0;
+		show_menu(data, 0);
 		data->img->enabled = true;
 		ft_usleep(250);
 		// paused = 0;
