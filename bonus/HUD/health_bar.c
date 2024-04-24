@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   health_bar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 17:39:13 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/23 18:35:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:27:59 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_hp(t_data *data)
 		y = 190;
 		while (y < 200)
 		{
-			mlx_put_pixel(data->hud, x, y, 0xFF0000FF);
+			mlx_put_pixel(data->hud_img, x, y, 0xFF0000FF);
 			y++;
 		}
 		x++;
@@ -35,7 +35,7 @@ void	print_hp(t_data *data)
 		y = 190;
 		while (y < 200)
 		{
-			mlx_put_pixel(data->hud, x, y, 0xFF000064);
+			mlx_put_pixel(data->hud_img, x, y, 0xFF000064);
 			y++;
 		}
 		x++;

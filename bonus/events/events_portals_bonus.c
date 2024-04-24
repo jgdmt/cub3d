@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/23 19:16:06 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:35:50 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,15 @@ void	shoot_portal(t_data *data, int type)
 	}
 	else
 		y = -data->player->dir.y / fabs(data->player->dir.y);
+	if (data->player->portal[other].status && data->player->portal[other].dir.x == x
+		&& data->player->portal[other].dir.y == y
+		&& data->player->portal[other].pos.x == rc.ipos.x
+		&& data->player->portal[other].pos.y == rc.ipos.y)
+		return ;
 	data->player->portal[type].pos.x = rc.ipos.x;
 	data->player->portal[type].pos.y = rc.ipos.y;
 	data->player->portal[type].dir.x = x;
 	data->player->portal[type].dir.y = y;
-	if (data->player->portal[other].status && data->player->portal[other].dir.x == data->player->portal[type].dir.x
-		&& data->player->portal[other].dir.y == data->player->portal[type].dir.y
-		&& data->player->portal[other].pos.x == data->player->portal[type].pos.x
-		&& data->player->portal[other].pos.y == data->player->portal[type].pos.y)
-		return ;
 	if (data->player->portal[type].status == 0)
 		data->player->portal[type].status = 1;
 

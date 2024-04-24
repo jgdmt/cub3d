@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 19:19:34 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/23 19:30:06 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:27:43 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void	change_hud(t_data *data)
 {
 	static int	hidden = 0;
 
-	printf("img, hud %i %i\n", data->img->instances[0].z, data->hud->instances[0].z);
+	printf("img, hud %i %i\n", data->img->instances[0].z, data->hud_img->instances[0].z);
 	if (!hidden)
 	{
 		data->img->instances[0].z = 7;
-		data->hud->instances[0].z = 10;
+		data->hud_img->instances[0].z = 10;
 		hidden = 1;
 	}
 	else
 	{
 		data->img->instances[0].z = 6;
-		data->hud->instances[0].z = 7;
+		data->hud_img->instances[0].z = 7;
 		hidden = 0;
 	}
 }

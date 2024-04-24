@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/23 18:49:08 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:31:22 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,58 @@ t_player	init_player(void)
 	return (player);
 }
 
+// void	init_hud_text(t_data *data, mlx_t *mlx)
+// {
+// 	int	i;
+// 	mlx_texture_t	*cur;
+// 	mlx_texture_t	*tmp;
+
+// 	i = 0;
+// 	while (i < 5)
+// 		data->hud.menu[i++] = 0;
+// 	i = 0;
+// 	while (i < 1)
+// 	{
+// 		cur = mlx_load_png("./bonus/assets/next_map.png");
+// 		if (!cur)
+// 			free_all(ERR_MLX, 2, data);
+// 		tmp = cur;
+// 		data->hud.menu[0] = mlx_texture_to_image(mlx, cur);
+// 		if (!data->hud.menu[i])
+// 			free_all(ERR_MLX, 2, data);
+// 		mlx_delete_texture(tmp);
+// 		i++;
+// 	}
+// }
+
+void	init_portals_text(t_data *data, mlx_t *mlx)
+{
+	mlx_texture_t	*cur;
+	mlx_texture_t	*tmp;
+	int				i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (i == 0)
+			cur = mlx_load_png("./bonus/assets/bportal_close.png");
+		else if (i == 1)
+			cur = mlx_load_png("./bonus/assets/oportal_close.png");
+		else if (i == 2)
+			cur = mlx_load_png("./bonus/assets/bportal_open.png");
+		else if (i == 3)
+			cur = mlx_load_png("./bonus/assets/oportal_open.png");
+		if (!cur)
+			free_all(ERR_MLX, 2, data);
+		tmp = cur;
+		data->portal[i] = mlx_texture_to_image(mlx, cur);
+		if (!data->cursor[i])
+			free_all(ERR_MLX, 2, data);
+		mlx_delete_texture(tmp);
+		i++;
+	}
+}
+
 void	init_door_text(t_data *data, mlx_t *mlx)
 {
 	mlx_texture_t	*cur;
@@ -85,12 +137,12 @@ void	init_door_text(t_data *data, mlx_t *mlx)
 		free_all(ERR_MLX, 2, data);
 	tmp = cur;
 	data->map->door_close = mlx_texture_to_image(mlx, cur);
-	free(tmp);
+	mlx_delete_texture(tmp);
 	cur = mlx_load_png("./maps/pics/door_open_128.png");
 	if (!cur)
 		free_all(ERR_MLX, 2, data);
 	data->map->door_open = mlx_texture_to_image(mlx, cur);
-	free(cur);
+	mlx_delete_texture(cur);
 	if (!data->map->door_close || !data->map->door_open)
 		free_all(ERR_MLX, 2, data);
 }
@@ -161,6 +213,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.loading->enabled = false;
 	init_data_text(&data, mlx);
 	init_door_text(&data, mlx);
+	init_portals_text(&data, mlx);
 	return (data);
 }
 
@@ -185,9 +238,9 @@ int	main(int argc, char **argv)
 	data = init_data(&map, &player, mlx, argv);
 	parsing(argv[1], &data);
 	data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	data.hud = mlx_new_image(mlx, 200, 200);
+	data.hud_img = mlx_new_image(mlx, 200, 200);
 	data.buff = malloc(WIDTH * HEIGHT * sizeof(int));
-	if (!data.img || !data.buff || !data.hud)
+	if (!data.img || !data.buff || !data.hud_img)
 		free_all(ERR_MALLOC, 2, &data);
 	if (pthread_create(&thread, NULL, raycast_threader, &data))
 		free_all(ERR_MUTEX, 2, &data);
@@ -197,7 +250,7 @@ int	main(int argc, char **argv)
 		free_all(ERR_MUTEX, 2, &data);
 	if (mlx_image_to_window(data.mlx, data.img, 0, 0) == -1)
 		free_all(ERR_MLX, 2, &data);
-	if (mlx_image_to_window(data.mlx, data.hud, 0, HEIGHT - 200) == -1)
+	if (mlx_image_to_window(data.mlx, data.hud_img, 0, HEIGHT - 200) == -1)
 		free_all(ERR_MLX, 2, &data);
 	mlx_loop_hook(mlx, &hook, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);
