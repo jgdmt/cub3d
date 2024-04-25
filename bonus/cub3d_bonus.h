@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/24 15:47:34 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:50:16 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ typedef struct s_raycast
 	double			perp_wall_dist;
 	double			portal_first_ray;
 	mlx_image_t		*t;
+	bool			print;
 }	t_raycast;
 
 /**
@@ -278,6 +279,12 @@ void	get_tex_ptr(t_data *data, t_raycast *rc);
 void	init(t_raycast *rc);
 void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
 void	*update_inertia(void *gdata);
+void	ray_to_img(t_data *data, t_raycast *rc);
+void	get_tex_coord(t_raycast *rc);
+void	get_screen_coord(t_data *data, t_raycast *rc);
+void	fill_buff(uint32_t *buff, size_t length);
+void	border(t_data *data, t_raycast *rc, int from);
+void	print_ray(t_data *data, t_raycast *rc);
 
 void	*thread_hud(void *gdata);
 void	print_hp(t_data *data);

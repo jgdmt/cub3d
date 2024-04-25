@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/24 16:23:13 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 09:53:51 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,8 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.cursor[2] = 0;
 	data.cursor[3] = 0;
 	data.cursor[4] = 0;
+	data.hud.width = 566;
+	data.hud.heigth	= 576;
 	loading = mlx_load_png("./bonus/assets/icon.png");
 	if (!loading)
 		free_all(ERR_MLX, 2, &data);

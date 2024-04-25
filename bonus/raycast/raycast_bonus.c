@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/23 11:45:39 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:50:57 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	correct_color(u_int8_t *pixel)
  * @param data structure with all program data
  * @param rc structure that store all raycast parameters
  */
-static void	ray_to_img(t_data *data, t_raycast *rc)
+void	ray_to_img(t_data *data, t_raycast *rc)
 {
 	double		step;
 	double		tex_pos;
@@ -64,7 +64,7 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
  * @param data structure with all program data
  * @param rc structure that store all raycast parameters
  */
-static void	get_screen_coord(t_data *data, t_raycast *rc)
+void	get_screen_coord(t_data *data, t_raycast *rc)
 {
 	rc->line_height = (int)(data->height / rc->perp_wall_dist);
 	rc->draw_start = (-rc->line_height / 2 + data->height / 2) + rc->player.pitch;
@@ -80,7 +80,7 @@ static void	get_screen_coord(t_data *data, t_raycast *rc)
  * 
  * @param rc structure that store all raycast parameters
  */
-static void	get_tex_coord(t_raycast *rc)
+void	get_tex_coord(t_raycast *rc)
 {
 	double	wall_x;
 
@@ -130,6 +130,17 @@ void	*update_inertia(void *gdata)
 	}
 }
 
+void	print_ray(t_data *data, t_raycast *rc)
+{
+		if (rc->side == 0)
+			rc->perp_wall_dist = (rc->side_dist.x - rc->delta_dist.x) + rc->portal_first_ray;
+		else
+			rc->perp_wall_dist = (rc->side_dist.y - rc->delta_dist.y) + rc->portal_first_ray;
+		get_screen_coord(data, rc);
+		get_tex_coord(rc);
+		ray_to_img(data, rc);
+		// border(data, rc);
+}
 
 /**
  * @brief the complete raycast algoritm that generates a frame based on t_data::map and t_data::player informations.
@@ -154,16 +165,12 @@ void	raycast(t_data *data)
 	{
 		rc.player = temp;
 		rc.portal_first_ray = 0;
+		rc.print = false;
 		init_ray_param(data->width, &rc);
 		step_init(&rc);
 		dda(data, &rc, 0);
-		if (rc.side == 0)
-			rc.perp_wall_dist = (rc.side_dist.x - rc.delta_dist.x) + rc.portal_first_ray;
-		else
-			rc.perp_wall_dist = (rc.side_dist.y - rc.delta_dist.y) + rc.portal_first_ray;
-		get_screen_coord(data, &rc);
-		get_tex_coord(&rc);
-		ray_to_img(data, &rc);
+		if (rc.print == false)
+			print_ray(data, &rc);
 		rc.x += 1;
 	}
 	put_to_screen(data);

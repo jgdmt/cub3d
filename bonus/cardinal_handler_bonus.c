@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:27:43 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/23 14:15:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:45:04 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,17 @@
 void	get_tex_ptr(t_data *data, t_raycast *rc)
 {
 	if (rc->ipos.x >= rc->player.pos.x && rc->side == 0)
-	{
 		rc->t = data->map->ea;
-	}
 	if (rc->ipos.x < rc->player.pos.x && rc->side == 0)
-	{
 		rc->t = data->map->we;
-	}
 	if (rc->ipos.y >= rc->player.pos.y && rc->side == 1)
-	{
 		rc->t = data->map->no;
-	}
 	if (rc->ipos.y < rc->player.pos.y && rc->side == 1)
-	{
 		rc->t = data->map->so;
-	}
+	if (rc->ipos.x == data->player->portal[0].pos.x && rc->ipos.y == data->player->portal[0].pos.y)
+		rc->t = data->portal[0];
+	if (rc->ipos.x == data->player->portal[1].pos.x && rc->ipos.y == data->player->portal[1].pos.y)
+		rc->t = data->portal[1];
 	if (data->map->map[rc->ipos.y][rc->ipos.x] == '2')
 	{
 		if (data->map->door_stat == 0)
@@ -75,6 +71,17 @@ void	ft_usleep(size_t msec)
 		usleep(500);
 }
 
+void	fill_buff(uint32_t *buff, size_t length)
+{
+	size_t i;
+
+	i = 0;
+	while(i < length)
+	{
+		buff[i] = 1;
+		i++;
+	}
+}
 /**
  * @brief Puts RGBA pixel inside t_data::buff for a usage later.
  * 
@@ -85,8 +92,10 @@ void	ft_usleep(size_t msec)
  */
 void	my_mlx_put_pixel(t_data *data, int x, int y, uint32_t color)
 {
+
 	if (y < data->height && x < data->width && x >= 0 && y >= 0)
-		data->buff[(y * data->width) + x] = color;
+		if (color)
+			data->buff[(y * data->width) + x] = color;
 }
 
 /**

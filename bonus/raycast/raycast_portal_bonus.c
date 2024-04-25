@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:10:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/22 16:10:21 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:21:13 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,20 @@ double	find_sign2(t_portal to, t_portal from, double portal)
 	return (1 - portal);
 }
 
+void	border(t_data *data, t_raycast *rc, int from)
+{
+	rc->t = data->portal[2 + from];
+
+	// if (rc->side == 0)
+	// 	rc->perp_wall_dist = (rc->side_dist.x - rc->delta_dist.x) ;//+ rc->portal_first_ray;
+	// else
+	// 	rc->perp_wall_dist = (rc->side_dist.y - rc->delta_dist.y) ;//+ rc->portal_first_ray;
+	rc->perp_wall_dist = rc->portal_first_ray;
+	get_screen_coord(data, rc);
+	get_tex_coord(rc);
+	ray_to_img(data, rc);
+}
+
 /**
  * @brief Calculate recursively raypath of a ray from the outgoing portal.
  * Could it recursively a portal inside of a portal.
@@ -75,15 +89,17 @@ void	portal(t_data *data, t_raycast *rc, int from, int to, int deep)
 	t_raycast	test;
 	double		portal;
 
+	// rc->t = data->portal[2 + from]; 
+	// *(rc->portal_coord) = *rc;
 	if (rc->side == 0)
-		rc->portal_first_ray = (rc->side_dist.x - rc->delta_dist.x);
+		rc->portal_first_ray += (rc->side_dist.x - rc->delta_dist.x);
 	else
-		rc->portal_first_ray = (rc->side_dist.y - rc->delta_dist.y);
+		rc->portal_first_ray += (rc->side_dist.y - rc->delta_dist.y);
+	test = *rc;
 	if (rc->side == 0)
 		portal = rc->player.pos.y + rc->portal_first_ray * rc->ray_dir.y - rc->player.portal[from].pos.y;
 	else
 		portal = rc->player.pos.x + rc->portal_first_ray * rc->ray_dir.x - rc->player.portal[from].pos.x;
-	test = *rc;
 	if (!rc->player.portal[to].dir.x)
 	{
 		test.player.pos.x = rc->player.portal[to].pos.x + find_sign1(rc->player.portal[to], rc->player.portal[from], portal);
@@ -102,7 +118,7 @@ void	portal(t_data *data, t_raycast *rc, int from, int to, int deep)
 		test.player.pos.y = rc->player.portal[to].pos.y + find_sign2(rc->player.portal[to], rc->player.portal[from], portal);
 	}
 	rotate_vector(&test.ray_dir, &rc->player.portal[from].dir, &rc->player.portal[to].dir);
-	test.portal_first_ray = 0;
+	// test.portal_first_ray = 0;
 	test.player.dir = test.ray_dir;
 	test.player.plane.x = 0;
 	test.player.plane.y = 0;
@@ -111,8 +127,16 @@ void	portal(t_data *data, t_raycast *rc, int from, int to, int deep)
 	init_ray_param(data->width, &test);
 	step_init(&test);
 	dda(data, &test, deep);
-	get_tex_ptr(data, &test);
+	// printf("%lf, %lf\n", rc->portal_first_ray, test.portal_first_ray);
+	// test.portal_first_ray += rc->portal_first_ray;
+	// get_tex_ptr(data, &test);
 	// test.player = rc->player;
-	test.portal_first_ray += rc->portal_first_ray;
-	*rc = test;
+	if (test.print == false)
+		print_ray(data, &test);
+	
+		// printf("%lf\n", test.portal_first_ray);
+		// border(data, rc, from);
+	rc->print = true;
+	
+	// *rc = test;
 }

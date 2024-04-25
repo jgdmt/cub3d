@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_hud.c                                         :+:      :+:    :+:   */
+/*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 15:32:23 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/24 09:50:45 by vilibert         ###   ########.fr       */
+/*   Created: 2024/04/24 09:51:05 by vilibert          #+#    #+#             */
+/*   Updated: 2024/04/24 13:04:28 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-void	*thread_hud(void *gdata)
+void	get_minimap(t_data *data)
 {
-	t_data	*data;
-	size_t	last_time;
-	size_t	time;
+	t_vector	pos;
 
-	data = gdata;
-	last_time = get_time();
-	while (1)
-	{
-		print_hp(data);
-		get_minimap(data);
-		time = get_time();
-		if (time - last_time < 13)
-			ft_usleep(13 - (time - last_time));
-		last_time = time;
-	}
+	pos = data->player->pos;
+	
 }
