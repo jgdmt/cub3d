@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/24 13:34:20 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:14:28 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ static void	check_map(t_data *data, t_map *map)
 	map->maxy = i;
 	if (map->nb_enemy > 0 && !map->en_sprites)
 		free_all(ERR_ENTEX, 2, data);
-	map->enemies = ft_calloc(map->nb_enemy + 1, sizeof(t_enemy *));
+	map->enemies = malloc((map->nb_enemy) * sizeof(t_enemy));
 	if (!map->enemies)
 		free_all(ERR_MALLOC, 2, data);
 	i = 0;

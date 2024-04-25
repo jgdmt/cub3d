@@ -1,0 +1,16 @@
+NO ./maps/pics/north_128.png
+SO       ./maps/pics/south_128.png
+
+
+WE ./maps/pics/blank_wall_128.png
+
+EA                 ./maps/pics/iron_128.png
+F ./maps/pics/floor_128.png
+E ./maps/pics/ceilling_128.png
+
+C ./maps/pics/ceilling_128.png
+
+
+1111111111111
+1E00000003111
+1111111111111

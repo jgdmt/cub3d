@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/22 19:59:09 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:57:45 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,23 @@ void	debug(t_data *data)
 			if (i == floor(data->player->pos.y) && j == floor(data->player->pos.x))
 				printf("\e[0;32mP\e[0;37m");
 			else
-				printf("%c", data->map->map[i][j]);
+			{
+				if (data->map->nb_enemy > 0)
+				{
+					int k = 0;
+					while (k < data->map->nb_enemy)
+					{
+						if (data->map->enemies[k].pos.x == j && data->map->enemies[k].pos.y == i)
+							printf("\033[31mE\e[0;37m");
+						k++;
+					}
+					if (k == data->map->nb_enemy)
+						printf("%c", data->map->map[i][j]);
+				}
+				else
+					printf("%c", data->map->map[i][j]);
+
+			}
 			j++;
 		}
 		printf("\n");

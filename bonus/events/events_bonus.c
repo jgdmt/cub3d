@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/23 19:03:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:33:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,25 @@ float	angle(double ux, double uy, double vx, double vy)
 		return (-acos(ps / (u_norm * v_norm)));
 }
 
+int	collide_enemy(t_data *data, double x, double y)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->map->nb_enemy)
+	{
+		if (fabs(data->map->enemies[i].pos.x - x) <= 1 && fabs(data->map->enemies[i].pos.y - y) <= 1)
+		{
+		printf("enemy, player, diff %lf %lf %lf %lf %lf %lf\n", data->map->enemies[i].pos.x, data->map->enemies[i].pos.y, x, y, data->map->enemies[i].pos.x - x, data->map->enemies[i].pos.y - y);
+		printf("life %i\n", data->player->hp);
+			data->player->hp -= 11;
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 /**
  * @brief Allows the player to move.
  * 
@@ -99,7 +118,15 @@ void	move(t_data *data)
 	// printf("%f\n", theta);
 	if (fabs(v.x) == 1)
 		sign = v.x;
-	if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + v.x * 2)] == '0'
+	if (data->map->nb_enemy && collide_enemy(data, pos.x + v.x, pos.y))
+	{
+		// data->player->pos.x -= v.x;
+		data->player->vy = - data->player->vy * 2;
+		data->player->vx = - data->player->vx * 2;
+		// data->player->vx = - 1 ;// * data->player->dir.x / fabs(data->player->dir.x);
+		return ;
+	}
+	else if (map[(int)(pos.y + sign * 0.1)][(int)(pos.x + v.x * 2)] == '0'
 		&& map[(int)(pos.y - sign * 0.1)][(int)(pos.x + v.x * 2)] == '0')
 		data->player->pos.x += v.x;
 	else
@@ -111,7 +138,15 @@ void	move(t_data *data)
 	}
 	if (fabs(v.y) == 1)
 		sign = v.y;
-	if (map[(int)(pos.y + v.y * 2)][(int)(pos.x + sign * 0.1)] == '0'
+	if (data->map->nb_enemy && collide_enemy(data, pos.x, pos.y + v.y))
+	{
+		data->player->vx = - data->player->vx * 2;
+		data->player->vy = - data->player->vy * 2;
+		// data->player->pos.y += v.y;
+		// data->player->vy = - 1 ;//* data->player->dir.y / fabs(data->player->dir.y);
+		return ;
+	}
+	else if (map[(int)(pos.y + v.y * 2)][(int)(pos.x + sign * 0.1)] == '0'
 		&& map[(int)(pos.y + v.y * 2)][(int)(pos.x - sign * 0.1)] == '0')
 		data->player->pos.y += v.y;
 	else
@@ -121,6 +156,12 @@ void	move(t_data *data)
 		else
 			data->player->vy = 0;
 	}
+}
+
+void	check_death(t_data *data)
+{
+	if (data->player->hp <= 0)
+		free_all(MSG_DEATH, 1, data);
 }
 
 /**
@@ -134,6 +175,7 @@ void	hook(void *gdata)
 	static int		i = 0;
 
 	data = gdata;
+	check_death(data);
 	if (i < 2)
 	{
 		mlx_set_mouse_pos(data->mlx, WIDTH / 2, HEIGHT / 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 15:10:54 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:53:12 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_smap(mlx_t *mlx, t_map *map)
 	int	i;
 
 	free_array((void **) map->map);
-	free_array((void **) map->enemies);
+	free(map->enemies);
 	i = 0;
 	while (map->en_sprites && map->en_sprites[i])
 		mlx_delete_image(mlx, map->en_sprites[i++]);

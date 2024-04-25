@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/25 16:19:33 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:38:06 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define ERR_FILEEXTENSION "File extension invalid."
 
 # define MSG_END "You reached the end. Congratulations, your cake is waiting."
+# define MSG_DEATH "Tests results: humans are too weak. NB: upgrade to robots."
 # define MSG_GAMEQUIT "You've already ragequit? Not surprising coming from you."
 # define MSG_NEXT1_1 "I should praise you for the finally flawless parsing.\n"
 # define MSG_NEXT1_2 "'Congratulations for achieving such a simple task!'\n"
@@ -216,7 +217,7 @@ typedef struct s_map
 	mlx_image_t	**en_sprites;
 	mlx_image_t *door_open;
 	mlx_image_t *door_close;
-	t_enemy		**enemies;
+	t_enemy		*enemies;
 	int			door_stat;
 	t_vector	door_pos;
 	int			nb_enemy;
@@ -257,7 +258,7 @@ typedef struct s_data
 	int				inv;
 	int				width;
 	int				height;
-	int				exit;
+	_Atomic int				exit;
 }	t_data;
 
 void	raycast(t_data *data);

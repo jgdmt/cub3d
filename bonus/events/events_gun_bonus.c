@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:36:49 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 14:26:46 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:59:50 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	is_enemy(t_map *map, t_raycast *rc)
 	int	i;
 
 	i = 0;
-	while (map->enemies[i])
+	while (i < map->nb_enemy)
 	{
-		if (map->enemies[i]->status && map->enemies[i]->pos.x == rc->ipos.x
-			&& map->enemies[i]->pos.y == rc->ipos.y)
+		if (map->enemies[i].status && map->enemies[i].pos.x == rc->ipos.x
+			&& map->enemies[i].pos.y == rc->ipos.y)
 			return (i);
 		i++;
 	}
@@ -52,9 +52,9 @@ void	shoot(t_data *data)
 	i = is_enemy(data->map, &rc);
 	if (i >= 0)
 	{
-		data->map->enemies[i]->life--;
-		if (data->map->enemies[i]->life == 0)
-			data->map->enemies[i]->status = 0;
+		data->map->enemies[i].life--;
+		if (data->map->enemies[i].life == 0)
+			data->map->enemies[i].status = 0;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/24 16:24:11 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:05:30 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ void	reinit_data(t_data *data)
 	data->map->so = 0;
 	data->map->we = 0;
 	data->map->ea = 0;
+	data->player->pos.x = 0;
+	data->player->pos.y = 0;
 	data->map->floor_color = 0;
 	data->map->ceiling_color = 0;
 	data->map->en_sprites = 0;
 	data->map->enemies = 0;
+	data->map->nb_enemy = 0;
 	data->map->max = 0;
 	data->map->door_stat = -1;
 	data->player->nb = 0;

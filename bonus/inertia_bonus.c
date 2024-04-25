@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inertia_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:24:32 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/25 15:25:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:33:19 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	*update_inertia(void *gdata)
 	{
 		if (!data->exit)
 		{
+			// check_death(data);
 			move(data);
 			if (data->player->vx > 10e-8)
 				data->player->vx -= INERTIA;

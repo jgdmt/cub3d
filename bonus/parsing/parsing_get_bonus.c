@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/23 16:49:29 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:28:19 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	get_sprite(char *line, int start, t_data *data, t_map *map)
 	text = ft_modif_split(line, ",");
 	if (!text)
 		free_all(ERR_MALLOC, 2, data);
-	map->en_sprites = ft_calloc(ft_strslen(text) + 1, sizeof(mlx_image_t));
+	map->en_sprites = ft_calloc(ft_strslen(text) + 1, sizeof(mlx_image_t *));
 	if (!map->en_sprites)
 		free_ex(data, text, 1);
 	i = 0;
