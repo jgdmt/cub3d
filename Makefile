@@ -1,10 +1,10 @@
 SRCS			:=	main.c raycast.c raycast_bis.c cardinal_handler.c free.c parsing.c parsing_get.c parsing_utils.c events.c parsing_split.c
 
-SRCB_HUD		:=  main_hud.c health_bar.c minimap.c
-SRCB_EVENTS		:=	events_menu_bonus.c events_bonus.c events_gun_bonus.c events_level_bonus.c events_portals_bonus.c events_mouse_bonus.c
+SRCB_HUD		:=  main_hud_bonus.c health_bar_bonus.c minimap_bonus.c
+SRCB_EVENTS		:=	events_menu_bonus.c events_bonus.c events_gun_bonus.c events_level_bonus.c events_portals_bonus.c events_mouse_bonus.c events_resize_bonus.c
 SRCB_PARSING	:=	parsing_bonus.c parsing_get_bonus.c parsing_utils_bonus.c parsing_split_bonus.c parsing_getbon_bonus.c
-SRCB_RAYCAST	:=	raycast_bonus.c raycast_bis_bonus.c raycast_floor_sky_casting.c raycast_portal_bonus.c
-SRCB			:=  main_bonus.c cardinal_handler_bonus.c free_bonus.c loading_bonus.c 
+SRCB_RAYCAST	:=	raycast_bonus.c raycast_cast_bonus.c raycast_floor_sky_casting_bonus.c raycast_portal_bonus.c raycast_tools_bonus.c raycast_main_bonus.c
+SRCB			:=  main_bonus.c free_bonus.c loading_bonus.c  inertia_bonus.c thread_tools_bonus.c
 SRCS_BONUS		:=	$(SRCB) $(addprefix events/,$(SRCB_EVENTS)) $(addprefix HUD/,$(SRCB_HUD)) $(addprefix parsing/,$(SRCB_PARSING)) $(addprefix raycast/,$(SRCB_RAYCAST)) 
 
 OBJS			:= $(SRCS:.c=.o)

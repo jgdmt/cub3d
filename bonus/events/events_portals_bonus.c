@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/24 11:35:50 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:56:19 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ void	get_ray(t_data *data, t_raycast *rc)
 	rc->x = data->width / 2;
 	rc->player.plane.x = 0;
 	rc->player.plane.y = 0;
-	init_ray_param(data->width, rc);
-	step_init(rc);
-	dda(data, rc, 40);
+	cast_a_ray(data, rc, 40);
 }
 
 // void	find_xy(t_data *data, t_raycast rc, int *x, int *y)

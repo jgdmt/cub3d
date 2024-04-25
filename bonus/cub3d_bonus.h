@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/25 11:50:16 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:19:33 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,21 +269,14 @@ size_t	get_time(void);
 void	loading_screen(t_data *data);
 void	cursor_screen(t_data *data);
 void	resize_render(t_data *data);
-void	init_ray_param(int width, t_raycast *rc);
-void	step_init(t_raycast *rc);
-void	dda(t_data *data, t_raycast *rc, int deep);
-void	portal(t_data *data, t_raycast *rc, int from, int to, int deep);
+void	cast_a_ray(t_data *data, t_raycast *rc, int deep);
+void	portal(t_data *data, t_raycast *rc, int from, int deep);
 void	floor_cast(t_data *data, t_player player);
 int		correct_color(u_int8_t *pixel);
 void	get_tex_ptr(t_data *data, t_raycast *rc);
 void	init(t_raycast *rc);
 void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
 void	*update_inertia(void *gdata);
-void	ray_to_img(t_data *data, t_raycast *rc);
-void	get_tex_coord(t_raycast *rc);
-void	get_screen_coord(t_data *data, t_raycast *rc);
-void	fill_buff(uint32_t *buff, size_t length);
-void	border(t_data *data, t_raycast *rc, int from);
 void	print_ray(t_data *data, t_raycast *rc);
 
 void	*thread_hud(void *gdata);

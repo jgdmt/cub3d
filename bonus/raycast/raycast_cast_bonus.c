@@ -1,54 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_bis_bonus.c                                :+:      :+:    :+:   */
+/*   raycast_cast_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/25 10:23:14 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:16:03 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
-/**
- * @brief Detect a change in width and height from struct data in comparaison
- * with last call a recreate the data->img(mlx_image_t *).
- * If this function encounter a problem they stop the programm with free_all().
- * 
- * @param data structure with all program data
- */
-void	resize_render(t_data *data)
-{
-	int			i;
-	// int			j;
-	mlx_image_t	**cursor;
-	bool		check;
-
-	cursor = data->cursor;
-	free(data->buff);
-	check = mlx_resize_image(data->img, data->width, data->height);
-	data->buff = malloc(data->width * data->height * sizeof(int));
-	if (!check || !data->buff)
-		free_all(ERR_MALLOC, 2, data);
-	i = 0;
-	while (i < 5)
-	{
-		cursor[i]->instances[0].x = data->width / 2 - cursor[i]->width / 2;
-		cursor[i]->instances[0].y = data->height / 2 - cursor[i]->height / 2;
-		i++;
-	}
-	// i = 0;
-	// j = i % 6;
-	// while (i < 12)
-	// {
-	// 	data->hud.menu[i]->instances[0].x = data->width / 15;
-	// 	if (i == 5)
-	// 		j = 3;
-	// 	data->hud.menu[i]->instances[0].y = data->height / 3 + j * 60;
-	// 	i++;
-	// }
-}
 
 /**
  * @brief Init all ray parameters inside the rc structure.
@@ -56,7 +18,7 @@ void	resize_render(t_data *data)
  * @param width of the raycast render image
  * @param rc structure that store all raycast parameters
  */
-void	init_ray_param(int width, t_raycast *rc)
+static void	init_ray_param(int width, t_raycast *rc)
 {
 	double		camera_x;
 
@@ -75,7 +37,7 @@ void	init_ray_param(int width, t_raycast *rc)
 		rc->delta_dist.y = fabs(1 / rc->ray_dir.y);
 }
 
-void	step_init( t_raycast *rc)
+static void	step_init( t_raycast *rc)
 {
 	if (rc->ray_dir.x < 0)
 	{
@@ -110,7 +72,7 @@ void	step_init( t_raycast *rc)
  * @param data structure with all program data
  * @param rc structure that store all raycast parameters
  */
-void	dda(t_data *data, t_raycast *rc, int deep)
+static void	dda(t_data *data, t_raycast *rc, int deep)
 {
 	while (1)
 	{
@@ -126,11 +88,11 @@ void	dda(t_data *data, t_raycast *rc, int deep)
 			rc->ipos.y += rc->step.y;
 			rc->side = 1;
 		}
-		if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x && rc->player.portal[1].status == 1 && deep < 40) // && (rc->player.dir.x * rc->player.portal[0].dir.x) <= 0 && (rc->player.dir.y * rc->player.portal[0].dir.y) <= 0 
+		if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x && rc->player.portal[1].status == 1 && deep < 40)
 		{
 			if ((rc->player.portal[0].dir.x && rc->player.portal[0].dir.x * rc->ray_dir.x < 0 && rc->side == 0) || (rc->player.portal[0].dir.y && rc->player.portal[0].dir.y * rc->ray_dir.y < 0 && rc->side == 1))
 			{
-			portal(data, rc, 0, 1, ++deep);
+			portal(data, rc, 0, ++deep);
 			return ;
 			}
 		}
@@ -138,7 +100,7 @@ void	dda(t_data *data, t_raycast *rc, int deep)
 		{
 			if ((rc->player.portal[1].dir.x && rc->player.portal[1].dir.x * rc->ray_dir.x < 0 && rc->side == 0) || (rc->player.portal[1].dir.y && rc->player.portal[1].dir.y * rc->ray_dir.y < 0 && rc->side == 1))
 			{
-			portal(data, rc, 1, 0, ++deep);
+			portal(data, rc, 1, ++deep);
 			return ;
 			}
 		}
@@ -148,4 +110,11 @@ void	dda(t_data *data, t_raycast *rc, int deep)
 			return ;
 		}
 	}
+}
+
+void	cast_a_ray(t_data *data, t_raycast *rc, int deep)
+{
+	init_ray_param(data->width, rc);
+	step_init(rc);
+	dda(data, rc, deep);
 }
