@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 16:57:45 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:33:28 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ void	scroll(double xdelta, double ydelta, void *gdata)
 	printf("inventory slot: %i\n", data->inv);
 }
 
+double	get_speed(int32_t diff)
+{
+	double	speed;
+
+	speed = RSPEED * (diff / abs(diff));
+	if (abs(diff) < 2)
+		return (speed / 10);
+	else if (abs(diff) > 20)
+		return (speed);
+	else
+		return (speed / (10 - abs(diff) % 10));
+}
+
 /**
  * @brief Handles the player's rotation with the mouse.
  * 
@@ -59,10 +72,8 @@ void	mouse_move(void *gdata)
 		old_y = y;
 		return ;
 	}
-	if (x < old_x)
-		rotate(RSPEED, data);
-	else if (x > old_x)
-		rotate(-RSPEED, data);
+	if (x != old_x)
+		rotate(get_speed(old_x - x), data);
 	if (y < old_y && data->player->pitch < 500)
 		data->player->pitch += 25;
 	if (y > old_y && data->player->pitch > -500)
