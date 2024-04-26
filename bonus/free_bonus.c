@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 16:53:12 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:53:16 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@ void	free_array(void **array)
 	while (array[i])
 		free(array[i++]);
 	free(array);
+}
+
+void	destroy(mlx_t *mlx, mlx_image_t	**imgs, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		if (imgs[j])
+			mlx_delete_image(mlx, imgs[j]);
+		j++;
+	}
 }
 
 void	free_smap(mlx_t *mlx, t_map *map)
@@ -50,9 +63,6 @@ void	free_smap(mlx_t *mlx, t_map *map)
 
 void	free_all(char *str, int out, t_data *data)
 {
-	int	i;
-
-	i = 0;
 	data->exit = 1;
 	if (out == 2)
 		ft_printf(out, "Error\n");
@@ -63,7 +73,8 @@ void	free_all(char *str, int out, t_data *data)
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
 	mlx_terminate(data->mlx);
-	while (i < 5)
-		mlx_delete_image(data->mlx, data->cursor[i++]);
+	destroy(data->mlx, data->cursor, 5);
+	destroy(data->mlx, data->portal, 4);
+	destroy(data->mlx, data->hud.menu, 12);
 	exit (0);
 }

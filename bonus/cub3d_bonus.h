@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/26 09:15:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:35:16 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@
 # define MSG_NEXT1_3 "I heard humans were happy with meaningless words.\n"
 # define MSG_NEXT2_1 "What, were you expecting more? Get over yourself."
 # define MSG_NEXT2_2 " It's just parsing.\n"
-# define MSG_DMGDONE "Hey, I can shoot you but you can't, it's called consent you dork!\n"
 
 /**
  * @brief Simple 2D vector structure that uses doubles.
@@ -142,9 +141,9 @@ typedef struct s_player
 
 typedef struct s_hud
 {
-	int	width;
-	int	heigth;
-	int	hidden;
+	int			width;
+	int			heigth;
+	int			hidden;
 	mlx_image_t	*menu[12];
 }	t_hud;
 
@@ -163,7 +162,8 @@ typedef struct s_hud
  * @param delta_dist 
  * @param side_dist
  * @param player a copy of t_data::player for avoiding data races
- * @param perp_wall_dist length of the ray relative to the plan + eventual portal ray length
+ * @param perp_wall_dist length of the ray relative to the plan + 
+ * eventual portal ray length
  * @param portal_first_ray length of each portal ray
  * @param t pointer to the correct(cardinal oriented texture) texture of wall
  * 
@@ -217,8 +217,8 @@ typedef struct s_map
 	mlx_image_t	*floor_color;
 	mlx_image_t	*ceiling_color;
 	mlx_image_t	**en_sprites;
-	mlx_image_t *door_open;
-	mlx_image_t *door_close;
+	mlx_image_t	*door_open;
+	mlx_image_t	*door_close;
 	t_enemy		*enemies;
 	int			door_stat;
 	t_vector	door_pos;
@@ -260,55 +260,70 @@ typedef struct s_data
 	int				inv;
 	int				width;
 	int				height;
-	_Atomic int				exit;
+	_Atomic int		exit;
 }	t_data;
 
-void	raycast(t_data *data);
-void	*raycast_threader(void *data);
-void	my_mlx_put_pixel(t_data *data, int x, int y, uint32_t color);
-void	put_to_screen(t_data *data);
-void	ft_usleep(size_t msec);
-size_t	get_time(void);
-void	loading_screen(t_data *data);
-void	cursor_screen(t_data *data);
-void	resize_render(t_data *data);
-void	cast_a_ray(t_data *data, t_raycast *rc, int deep);
-void	portal(t_data *data, t_raycast *rc, int from, int deep);
-void	floor_cast(t_data *data, t_player player);
-int		correct_color(u_int8_t *pixel);
-void	get_tex_ptr(t_data *data, t_raycast *rc);
-void	init(t_raycast *rc);
-void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
-void	*update_inertia(void *gdata);
-void	print_ray(t_data *data, t_raycast *rc);
-void	sprite(t_data *data, t_raycast *rc);
+void		raycast(t_data *data);
+void		*raycast_threader(void *data);
+void		my_mlx_put_pixel(t_data *data, int x, int y, uint32_t color);
+void		put_to_screen(t_data *data);
+void		ft_usleep(size_t msec);
+size_t		get_time(void);
+void		loading_screen(t_data *data);
+void		cursor_screen(t_data *data);
+void		resize_render(t_data *data);
+void		cast_a_ray(t_data *data, t_raycast *rc, int deep);
+void		portal(t_data *data, t_raycast *rc, int from, int deep);
+void		floor_cast(t_data *data, t_player player);
+int			correct_color(u_int8_t *pixel);
+void		get_tex_ptr(t_data *data, t_raycast *rc);
+void		init(t_raycast *rc);
+void		rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
+void		*update_inertia(void *gdata);
+void		print_ray(t_data *data, t_raycast *rc);
+void		sprite(t_data *data, t_raycast *rc);
 
+void		*thread_hud(void *gdata);
+void		print_hp(t_data *data);
+void		get_minimap(t_data *data);
 
-void	*thread_hud(void *gdata);
-void	print_hp(t_data *data);
-void	get_minimap(t_data *data);
+double		find_sign1(t_portal to, t_portal from, double portal);
+double		find_sign2(t_portal to, t_portal from, double portal);
 
-double	find_sign1(t_portal to, t_portal from, double portal);
-double	find_sign2(t_portal to, t_portal from, double portal);
+t_data		init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv);
+t_map		init_map(void);
+t_player	init_player(void);
 
-int		parsing(char *map_name, t_data *data);
-void	check_enemy(t_data *data);
-void	get_infos(int fd, t_data *data);
+void		init_portals_text(t_data *data, mlx_t *mlx);
+void		init_cursor_text(t_data *data, mlx_t *mlx);
+void		init_door_text(t_data *data, mlx_t *mlx);
+void		init_hud_text(t_data *data, mlx_t *mlx);
 
-void	free_all(char *str, int out, t_data *data);
-void	free_smap(mlx_t *mlx, t_map *map);
+char		*assets_portals(int i);
+char		*assets_cursor(int i);
+char		*assets_doors(int i);
+char		*assets_hud(int i);
 
-void	close_window(void *gdata);
-void	resize_window(int32_t width, int32_t height, void *gdata);
-void	hook(void *data);
-void	change_map(t_data *data, int np);
-void	menu(t_data *data);
-void	menu_events(mlx_key_data_t key, void *gdata);
-// void	menu_events(t_data *data);
-void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt);
-void	reset_portal(t_data *data);
-void	shoot(t_data *data);
-void	scroll(double xdelta, double ydelta, void *gdata);
-void	move(t_data *data);
+int			parsing(char *map_name, t_data *data);
+void		check_enemy(t_data *data);
+void		get_infos(int fd, t_data *data);
+
+void		free_all(char *str, int out, t_data *data);
+void		free_smap(mlx_t *mlx, t_map *map);
+
+void		close_window(void *gdata);
+void		resize_window(int32_t width, int32_t height, void *gdata);
+void		hook(void *data);
+void		change_map(t_data *data, int np);
+void		menu(t_data *data);
+void		menu_events(mlx_key_data_t key, void *gdata);
+void		portals(mouse_key_t b, action_t act, modifier_key_t mod, void *dt);
+void		reset_portal(t_data *data);
+int			check_portal(t_data *data, int x, int y, t_vector v);
+void		shoot_portal(t_data *data, int type, int other);
+void		shoot(t_data *data);
+void		scroll(double xdelta, double ydelta, void *gdata);
+void		mouse_move(void *gdata);
+void		move(t_data *data);
 
 #endif // CUB3D_BONUS_H

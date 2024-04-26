@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 17:05:30 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:44:05 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ void	show_menu(t_data *data, bool show)
  */
 void	menu(t_data *data)
 {
-	// static int	paused = 0;
-
 	if (!data->exit)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
@@ -97,7 +95,6 @@ void	menu(t_data *data)
 		show_menu(data, 1);
 		data->img->enabled = false;
 		ft_usleep(250);
-		// paused = 1;
 	}
 	else if (data->exit == 1)
 	{
@@ -106,6 +103,5 @@ void	menu(t_data *data)
 		show_menu(data, 0);
 		data->img->enabled = true;
 		ft_usleep(250);
-		// paused = 0;
 	}
 }

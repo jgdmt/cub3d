@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 15:56:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:30:21 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,15 @@ void	get_ray(t_data *data, t_raycast *rc)
  * @param data structure with all program data
  * @param type portal blue or portal orange
  */
-void	shoot_portal(t_data *data, int type)
+void	shoot_portal(t_data *data, int type, int other)
 {
 	t_raycast	rc;
-	int		other;
 	int		x;
 	int		y;
 
 	get_ray(data, &rc);
 	x = 0;
 	y = 0;
-	other = (type + 1) % 2;
 	if (rc.side == 0)
 	{
 		x = 1;
@@ -92,13 +90,10 @@ void	shoot_portal(t_data *data, int type)
  * @param data structure with all program data
  * @param to destination portal
  */
-void	tp(t_data *data, int to)
+void	tp(t_data *data, int to, int from)
 {
-	int			from;
 	t_vector	test;
 	double		test_a;
-
-	from = (to + 1) % 2;
 
 	test.x = 0;
 	test.y = 0;
@@ -169,7 +164,7 @@ int	check_portal(t_data *data, int x, int y, t_vector v)
 			|| (port[i].pos.x == x && (abs(port[i].pos.y - y) == 1))))
 			if (port[(i + 1) % 2].status)
 				if ((port[i].dir.x && port[i].dir.x * v.x < 0) || (port[i].dir.y && port[i].dir.y * v.y < 0))
-					return (tp(data, (i + 1) % 2), 1);
+					return (tp(data, (i + 1) % 2, i), 1);
 		i++;
 	}
 	return (0);

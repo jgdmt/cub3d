@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_resize_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:36:21 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/25 15:37:05 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:49:13 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 void	resize_render(t_data *data)
 {
 	int			i;
-	// int			j;
+	int			j;
 	mlx_image_t	**cursor;
 	bool		check;
 
@@ -39,14 +39,31 @@ void	resize_render(t_data *data)
 		cursor[i]->instances[0].y = data->height / 2 - cursor[i]->height / 2;
 		i++;
 	}
-	// i = 0;
-	// j = i % 6;
-	// while (i < 12)
-	// {
-	// 	data->hud.menu[i]->instances[0].x = data->width / 15;
-	// 	if (i == 5)
-	// 		j = 3;
-	// 	data->hud.menu[i]->instances[0].y = data->height / 3 + j * 60;
-	// 	i++;
-	// }
+	i = 0;
+	while (i < 12)
+	{
+		j = i % 6;
+		data->hud.menu[i]->instances->x = data->width / 15;
+		if (i == 5)
+			j = 3;
+		data->hud.menu[i]->instances->y = (data->height - 350) / 2 + j * 70;
+		i++;
+	}
+}
+
+/**
+ * @brief Handles the resize of the window.
+ * 
+ * @param width new width of the window
+ * @param height new height of the window
+ * @param gdata structure with all program data
+ */
+void	resize_window(int32_t width, int32_t height, void *gdata)
+{
+	t_data	*data;
+
+	data = gdata;
+	data->width = width;
+	data->height = height;
+	resize_render(data);
 }

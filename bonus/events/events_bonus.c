@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 18:41:55 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:08:56 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-void	mouse_move(void *gdata);
-int		check_portal(t_data *data, int x, int y, t_vector v);
-
 void	door_event(t_data *data)
 {
-	printf("%f %f %f %f\n", data->map->door_pos.x, data->map->door_pos.y, data->player->pos.x, data->player->pos.y);
 	if (fabs(data->player->pos.x - data->map->door_pos.x) < 2.5
 		&& fabs(data->player->pos.y - data->map->door_pos.y) < 2.5)
 	{
@@ -225,21 +221,4 @@ void	close_window(void *gdata)
 
 	data = gdata;
 	free_all("Game closed", 1, data);
-}
-
-/**
- * @brief Handles the resize of the window.
- * 
- * @param width new width of the window
- * @param height new height of the window
- * @param gdata structure with all program data
- */
-void	resize_window(int32_t width, int32_t height, void *gdata)
-{
-	t_data	*data;
-
-	data = gdata;
-	data->width = width;
-	data->height = height;
-	resize_render(data);
 }

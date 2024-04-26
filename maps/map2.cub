@@ -5,8 +5,8 @@ SO       ./maps/pics/greystone.png
 WE ./maps/pics/bluestone.png
 
 EA ./maps/pics/purplestone.png
-F  ./maps/pics/barrel.png
-C ./maps/pics/barrel.png
+F ./maps/pics/floor_128.png
+C ./maps/pics/ceilling_128.png
 
 E ./maps/pics/purplestone.png,./maps/pics/purplestone.png,./maps/pics/purplestone.png,./maps/pics/purplestone.png
 

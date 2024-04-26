@@ -6,13 +6,12 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 19:33:28 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:45:23 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-void	shoot_portal(t_data *data, int type);
 void	rotate(double speed, t_data *data);
 void	get_ray(t_data *data, t_raycast *rc);
 
@@ -27,15 +26,14 @@ void	scroll(double xdelta, double ydelta, void *gdata)
 {
 	t_data	*data;
 
+	(void) xdelta;
 	data = gdata;
 	if (data->exit)
 		return ;
-	(void) xdelta;
 	if (ydelta < 0)
 		data->inv = (data->inv + 1) % 2;
 	if (ydelta > 0)
 		data->inv = (2 + data->inv - 1) % 2;
-	printf("inventory slot: %i\n", data->inv);
 }
 
 double	get_speed(int32_t diff)
@@ -45,7 +43,7 @@ double	get_speed(int32_t diff)
 	speed = RSPEED * (diff / abs(diff));
 	if (abs(diff) < 2)
 		return (speed / 10);
-	else if (abs(diff) > 20)
+	else if (abs(diff) > 10)
 		return (speed);
 	else
 		return (speed / (10 - abs(diff) % 10));
@@ -84,16 +82,18 @@ void	mouse_move(void *gdata)
 
 void	debug(t_data *data)
 {
+	int i = 0;
+	int j;
+
 	printf("player pos %f %f, dir %f %f\n", data->player->pos.x, data->player->pos.y,
 	data->player->dir.x, data->player->dir.y);
 	printf("portal blue pos %d %d, dir %d %d\n", data->player->portal[BLUE].pos.x, data->player->portal[BLUE].pos.y,
 	data->player->portal[BLUE].dir.x, data->player->portal[BLUE].dir.y);
 	printf("portal orange pos %d %d, dir %d %d\n", data->player->portal[ORANGE].pos.x, data->player->portal[ORANGE].pos.y,
 	data->player->portal[ORANGE].dir.x, data->player->portal[ORANGE].dir.y);
-	int i = 0;
 	while (data->map->map[i])
 	{
-	int j = 0;
+		j = 0;
 		while (data->map->map[i][j])
 		{
 			if (i == floor(data->player->pos.y) && j == floor(data->player->pos.x))
@@ -114,7 +114,6 @@ void	debug(t_data *data)
 				}
 				else
 					printf("%c", data->map->map[i][j]);
-
 			}
 			j++;
 		}
@@ -140,12 +139,13 @@ void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt)
 	if (data->exit)
 		return ;
 	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS && data->inv == 0)
-		shoot_portal(data, BLUE);
+		shoot_portal(data, BLUE, ORANGE);
 	if (button == MLX_MOUSE_BUTTON_RIGHT && act == MLX_PRESS && data->inv == 0)
-		shoot_portal(data, ORANGE);
+		shoot_portal(data, ORANGE, BLUE);
 	if (button == MLX_MOUSE_BUTTON_MIDDLE && mod == MLX_SHIFT && act == MLX_PRESS && data->inv == 0)
 		debug(data);
-	else if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS && data->inv == 0)
+	else if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS
+		&& data->inv == 0)
 		reset_portal(data);
 	if (button == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS && data->inv == 1)
 		shoot(data);
