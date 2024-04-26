@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/25 17:42:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:15:19 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ typedef struct s_raycast
 	t_player		player;
 	double			perp_wall_dist;
 	double			portal_first_ray;
+	double			z_buff_x[3840]; //temp
 	mlx_image_t		*t;
 	bool			print;
 }	t_raycast;
@@ -280,6 +281,8 @@ void	init(t_raycast *rc);
 void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
 void	*update_inertia(void *gdata);
 void	print_ray(t_data *data, t_raycast *rc);
+void	sprite(t_data *data, t_raycast *rc);
+
 
 void	*thread_hud(void *gdata);
 void	print_hp(t_data *data);

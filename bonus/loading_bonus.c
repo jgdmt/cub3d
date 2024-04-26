@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:23:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/18 15:06:29 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/26 08:33:07 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@
 void	loading_screen(t_data *data)
 {
 	static int	exit = 0;
-	int			i;
 
 	if (data->exit == 2 && exit != 2)
 	{
-		i = 0;
 		data->loading->enabled = true;
 		data->img->enabled = false;
 		exit = 2;

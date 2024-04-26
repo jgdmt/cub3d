@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:22:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/25 15:56:47 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:35:40 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ void	raycast(t_data *data)
 		cast_a_ray(data, &rc, 0);
 		if (rc.print == false)
 			print_ray(data, &rc);
+		rc.z_buff_x[rc.x] = rc.perp_wall_dist;
 		rc.x += 1;
 	}
+	sprite(data, &rc);
 	put_to_screen(data);
 }
 
