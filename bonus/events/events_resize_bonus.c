@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:36:21 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/26 17:49:13 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:35:19 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	resize_render(t_data *data)
 	{
 		j = i % 6;
 		data->hud.menu[i]->instances->x = data->width / 15;
-		if (i == 5)
+		if (j == 5)
 			j = 3;
 		data->hud.menu[i]->instances->y = (data->height - 350) / 2 + j * 70;
 		i++;
