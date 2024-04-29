@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:12:11 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 11:55:52 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:53:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	ray_to_img(t_data *data, t_raycast *rc)
 
 	y = 0;
 	step = 1.0 * rc->t->height / rc->line_height;
-	tex_pos = (rc->draw_start - rc->player.pitch - ((double)data->player->posz / rc->perp_wall_dist) - data->height / 2 \
+	tex_pos = (rc->draw_start - rc->player.pitch - ((double)rc->player.posz / rc->perp_wall_dist) - data->height / 2 \
 	+ rc->line_height / 2) * step;
 	y = rc->draw_start;
 	while (y <= rc->draw_end)

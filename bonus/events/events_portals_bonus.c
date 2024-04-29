@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 16:30:21 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:51:52 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ void	shoot_portal(t_data *data, int type, int other)
 	if (data->player->portal[type].status == 0)
 		data->player->portal[type].status = 1;
 
-	printf("player pos %f %f, dir %f %f\n", data->player->pos.x, data->player->pos.y,
-	data->player->dir.x, data->player->dir.y);
-	printf("portal pos %d %d, dir %d %d\n", data->player->portal[type].pos.x, data->player->portal[type].pos.y,
-	data->player->portal[type].dir.x, data->player->portal[type].dir.y);
+	// printf("player pos %f %f, dir %f %f\n", data->player->pos.x, data->player->pos.y,
+	// data->player->dir.x, data->player->dir.y);
+	// printf("portal pos %d %d, dir %d %d\n", data->player->portal[type].pos.x, data->player->portal[type].pos.y,
+	// data->player->portal[type].dir.x, data->player->portal[type].dir.y);
 }
 
 /**
