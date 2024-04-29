@@ -1,16 +1,16 @@
-NO ./bonus/assets/portal_gun.png
+NO ./bonus/assets/portal_gun/b_portal_gun_2.png
 SO       ./maps/pics/bluestone.png
 
 
 WE ./maps/pics/bluestone.png
 
 EA ./maps/pics/bluestone.png
-F ./maps/pics/barrel.png
+F ./maps/pics/bluestone.png
 
 E NONE
 
 
-C ./maps/pics/barrel.png
+C ./maps/pics/bluestone.png
 
 111
 1S1

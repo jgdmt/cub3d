@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/29 17:51:52 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:46:13 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,29 @@ void	get_ray(t_data *data, t_raycast *rc)
 // 	return (0);
 // }
 
+void	*portal_shot(void *gdata)
+{
+	int		i;
+	t_data	*data;
+	int		type;
+
+	data = gdata;
+	i = 0;
+	type = 4 * data->portal_shot;
+	data->portal_gun[0]->enabled = false;
+	while (i < 4)
+	{
+		data->portal_gun[i + type]->enabled = false;
+		data->portal_gun[i + type + 1]->enabled = true;
+		i++;
+		ft_usleep(80);
+	}
+	data->portal_gun[i + type]->enabled = false;
+	data->portal_gun[0]->enabled = true;
+	data->portal_shot = -1;
+	return (0);
+}
+
 /**
  * @brief Creates the portal when shot.
  * 
@@ -52,9 +75,15 @@ void	get_ray(t_data *data, t_raycast *rc)
 void	shoot_portal(t_data *data, int type, int other)
 {
 	t_raycast	rc;
-	int		x;
-	int		y;
+	pthread_t	panim;
+	int			x;
+	int			y;
 
+	if (data->portal_shot != -1)
+		return ;
+	data->portal_shot = type;
+	if (pthread_create(&panim, NULL, portal_shot, data))
+		free_all(ERR_MUTEX, 2, data);
 	get_ray(data, &rc);
 	x = 0;
 	y = 0;

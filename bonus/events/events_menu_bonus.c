@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 19:19:34 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 16:22:51 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:45:15 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,31 @@ void	change_menu_text(t_data *data, int i, int j)
 	data->hud.menu[i]->enabled = false;
 }
 
+void	hide_hud(t_data *data, int hidden)
+{
+	int	i;
+
+	i = 0;
+	data->hud_img->instances[0].z = 34 * hidden;
+	while (i < 5)
+	{
+		data->cursor[i]->instances[0].z = 34 * hidden;
+		i++;
+	}
+}
+
 void	change_hud(t_data *data)
 {
 	if (!data->hud.hidden)
 	{
-		data->img->instances[0].z = 19;
-		data->hud_img->instances[0].z = 22;
+		hide_hud(data, 0);
 		data->hud.menu[9]->enabled = false;
 		data->hud.menu[11]->enabled = true;
 		data->hud.hidden = 1;
 	}
 	else
 	{
-		data->img->instances[0].z = 18;
-		data->hud_img->instances[0].z = 7;
+		hide_hud(data, 1);
 		data->hud.menu[11]->enabled = false;
 		data->hud.menu[9]->enabled = true;
 		data->hud.hidden = 0;

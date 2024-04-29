@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:36:49 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/29 18:04:19 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:19:32 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ void	*gun_shot(void *gdata)
 	i = 0;
 	while (i < 4)
 	{
-		ft_usleep(80);
 		data->gun[i]->enabled = false;
 		data->gun[i + 1]->enabled = true;
 		i++;
+		ft_usleep(80);
 	}
-	// data->gun[4]->enabled = false;
-	// data->gun[0]->enabled = true;
+	// ft_usleep(80);
+	data->gun[4]->enabled = false;
+	data->gun[0]->enabled = true;
 	data->gun_shot = 0;
-	write(1, "H\n", 2);
 	return (0);
 }
 

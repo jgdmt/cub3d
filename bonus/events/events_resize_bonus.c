@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:36:21 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/26 18:35:19 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:52:42 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ void	resize_render(t_data *data)
 		if (j == 5)
 			j = 3;
 		data->hud.menu[i]->instances->y = (data->height - 350) / 2 + j * 70;
+		i++;
+	}
+	i = 0;
+	while (i < 10)
+	{
+		if (i < 5)
+			data->gun[i]->instances->x = data->width - data->gun[i]->width;
+		if (i < 5)
+			data->gun[i]->instances->y = data->height - data->gun[i]->height;
+		data->portal_gun[i]->instances->x = data->width - data->portal_gun[i]->width;
+		data->portal_gun[i]->instances->y = data->height - data->portal_gun[i]->height;
 		i++;
 	}
 }

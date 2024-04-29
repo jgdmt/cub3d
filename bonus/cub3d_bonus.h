@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 16:46:59 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:41:26 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,12 +254,13 @@ typedef struct s_data
 	mlx_image_t		*loading;
 	mlx_image_t		*cursor[5];
 	mlx_image_t		*portal[4];
-	mlx_image_t		*portal_gun;
+	mlx_image_t		*portal_gun[10];
 	mlx_image_t		*gun[5];
 	uint32_t		*buff;
 	size_t			time;
 	char			**argv;
 	int				inv;
+	_Atomic int		portal_shot;
 	_Atomic int		gun_shot;
 	int				width;
 	int				height;

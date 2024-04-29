@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:42:15 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/29 15:16:02 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:39:47 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	init_cursor_text(t_data *data, mlx_t *mlx)
 				- data->cursor[i]->width / 2, data->height / 2
 				- data->cursor[i]->height / 2) == -1)
 			free_all(ERR_MLX, 2, data);
-		data->cursor[i]->instances[0].z = 25;
+		data->cursor[i]->instances[0].z = 34;
 		data->cursor[i]->enabled = false;
 		i++;
 	}
