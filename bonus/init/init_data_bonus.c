@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:27:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 16:38:23 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:05:07 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ void	init_data_values(t_data *data)
 	int	i;
 
 	i = 0;
+	data->portal_gun = 0;
 	while (i < 12)
 	{
 		if (i < 5)
 			data->cursor[i] = 0;
+		if (i < 5)
+			data->gun[i] = 0;
 		if (i < 4)
 			data->portal[i] = 0;
 		data->hud.menu[i] = 0;
@@ -47,6 +50,8 @@ void	init_data_texture(t_data *data, mlx_t *mlx)
 	init_portals_text(data, mlx);
 	init_hud_text(data, mlx);
 	init_cursor_text(data, mlx);
+	init_portalgun_text(data, mlx);
+	init_gun_text(data, mlx);
 }
 
 t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
@@ -62,6 +67,7 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.exit = 0;
 	data.inv = 0;
 	data.loading = 0;
+	data.gun_shot = 0;
 	data.argv = argv;
 	data.hud.hidden = 0;
 	data.hud.width = 566;

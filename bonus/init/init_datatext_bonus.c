@@ -6,13 +6,13 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:42:15 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 17:48:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:16:02 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-static mlx_image_t	*create_image(mlx_t *mlx, char*(text)(int), int i)
+mlx_image_t	*create_image(mlx_t *mlx, char*(text)(int), int i)
 {
 	mlx_texture_t	*curr;
 	mlx_texture_t	*tmp;
@@ -75,7 +75,7 @@ void	init_cursor_text(t_data *data, mlx_t *mlx)
 				- data->cursor[i]->width / 2, data->height / 2
 				- data->cursor[i]->height / 2) == -1)
 			free_all(ERR_MLX, 2, data);
-		data->cursor[i]->instances[0].z = 19;
+		data->cursor[i]->instances[0].z = 25;
 		data->cursor[i]->enabled = false;
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loading_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:23:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/26 08:33:07 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:33:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,25 @@ void	cursor_screen(t_data *data)
 	data->cursor[i]->enabled = false;
 	data->cursor[curr]->enabled = true;
 	i = curr;
+}
+
+void	guns_screen(t_data *data)
+{
+
+	if (data->exit)
+	{
+		data->gun[0]->enabled = false;
+		data->portal_gun->enabled = false;
+		return ;
+	}
+	else if (data->inv == 1)
+	{
+		data->gun[0]->enabled = true;
+		data->portal_gun->enabled = false;
+	}
+	else
+	{
+		data->gun[0]->enabled = false;
+		data->portal_gun->enabled = true;
+	}
 }

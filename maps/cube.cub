@@ -1,4 +1,4 @@
-NO ./maps/pics/greystone.png
+NO ./bonus/assets/portal_gun.png
 SO       ./maps/pics/bluestone.png
 
 
@@ -13,5 +13,5 @@ E NONE
 C ./maps/pics/barrel.png
 
 111
-1N1
+1S1
 111

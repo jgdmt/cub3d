@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_main_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:22:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 11:45:41 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:54:31 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	raycast(t_data *data)
 
 	cursor_screen(data);
 	loading_screen(data);
+	guns_screen(data);
 	if (data->exit)
 		return ;
 	rc.x = 0;

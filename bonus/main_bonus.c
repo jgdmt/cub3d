@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/26 16:04:39 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 14:51:09 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 		free_all(ERR_MLX, 2, &data);
 	if (mlx_image_to_window(data.mlx, data.hud_img, 0, HEIGHT - 200) == -1)
 		free_all(ERR_MLX, 2, &data);
-	// printf("%i\n", data.img->instances[0].z);
+	printf("%i\n", data.img->instances[0].z);
 	mlx_loop_hook(mlx, &hook, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/26 16:35:16 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:46:59 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,10 +254,13 @@ typedef struct s_data
 	mlx_image_t		*loading;
 	mlx_image_t		*cursor[5];
 	mlx_image_t		*portal[4];
+	mlx_image_t		*portal_gun;
+	mlx_image_t		*gun[5];
 	uint32_t		*buff;
 	size_t			time;
 	char			**argv;
 	int				inv;
+	_Atomic int		gun_shot;
 	int				width;
 	int				height;
 	_Atomic int		exit;
@@ -269,8 +272,6 @@ void		my_mlx_put_pixel(t_data *data, int x, int y, uint32_t color);
 void		put_to_screen(t_data *data);
 void		ft_usleep(size_t msec);
 size_t		get_time(void);
-void		loading_screen(t_data *data);
-void		cursor_screen(t_data *data);
 void		resize_render(t_data *data);
 void		cast_a_ray(t_data *data, t_raycast *rc, int deep);
 void		portal(t_data *data, t_raycast *rc, int from, int deep);
@@ -283,6 +284,10 @@ void		*update_inertia(void *gdata);
 void		print_ray(t_data *data, t_raycast *rc);
 void		sprite(t_data *data, t_raycast *rc);
 
+void		loading_screen(t_data *data);
+void		cursor_screen(t_data *data);
+void		guns_screen(t_data *data);
+
 void		*thread_hud(void *gdata);
 void		print_hp(t_data *data);
 void		get_minimap(t_data *data);
@@ -294,10 +299,13 @@ t_data		init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv);
 t_map		init_map(void);
 t_player	init_player(void);
 
+mlx_image_t	*create_image(mlx_t *mlx, char*(text)(int), int i);
 void		init_portals_text(t_data *data, mlx_t *mlx);
 void		init_cursor_text(t_data *data, mlx_t *mlx);
 void		init_door_text(t_data *data, mlx_t *mlx);
 void		init_hud_text(t_data *data, mlx_t *mlx);
+void		init_portalgun_text(t_data *data, mlx_t *mlx);
+void		init_gun_text(t_data *data, mlx_t *mlx);
 
 char		*assets_portals(int i);
 char		*assets_cursor(int i);
