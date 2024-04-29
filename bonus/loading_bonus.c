@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:23:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 16:33:08 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:03:21 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ void	guns_screen(t_data *data)
 		data->portal_gun->enabled = false;
 		return ;
 	}
-	else if (data->inv == 1)
+	else if (data->inv == 1 && !data->gun_shot)
 	{
 		data->gun[0]->enabled = true;
 		data->portal_gun->enabled = false;
 	}
-	else
+	else if (data->inv == 0)
 	{
 		data->gun[0]->enabled = false;
 		data->portal_gun->enabled = true;

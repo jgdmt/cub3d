@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 16:53:16 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:00:49 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	free_all(char *str, int out, t_data *data)
 	free_smap(data->mlx, data->map);
 	if (data->img)
 		mlx_delete_image(data->mlx, data->img);
-	mlx_terminate(data->mlx);
 	destroy(data->mlx, data->cursor, 5);
 	destroy(data->mlx, data->portal, 4);
 	destroy(data->mlx, data->hud.menu, 12);
+	mlx_terminate(data->mlx);
 	exit (0);
 }

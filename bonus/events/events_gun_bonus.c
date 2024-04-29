@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:36:49 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/29 16:55:11 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:04:19 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,19 @@ int	is_enemy(t_map *map, t_raycast *rc)
 void	*gun_shot(void *gdata)
 {
 	t_data	*data;
-	// int		i;
+	int		i;
 
 	data = gdata;
-	// i = 0;
-	// while (i < 4)
-	// {
-	// 	data->gun[i]->enabled = false;
-	// 	data->gun[i + 1]->enabled = true;
-	// 	i++;
-	// }
-	data->gun[0]->enabled = false;
-	data->gun[1]->enabled = true;
-	ft_usleep(1000);
-	data->gun[1]->enabled = false;
-	data->gun[2]->enabled = true;
-	ft_usleep(100);
-	data->gun[2]->enabled = false;
-	data->gun[3]->enabled = true;
-	ft_usleep(100);
-	data->gun[3]->enabled = false;
-	data->gun[4]->enabled = true;
-	ft_usleep(100);
-	data->gun[4]->enabled = false;
-	data->gun[0]->enabled = true;
+	i = 0;
+	while (i < 4)
+	{
+		ft_usleep(80);
+		data->gun[i]->enabled = false;
+		data->gun[i + 1]->enabled = true;
+		i++;
+	}
+	// data->gun[4]->enabled = false;
+	// data->gun[0]->enabled = true;
 	data->gun_shot = 0;
 	write(1, "H\n", 2);
 	return (0);
