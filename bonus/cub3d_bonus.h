@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/30 11:19:45 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:48:08 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,19 @@ typedef struct s_raycast
 	bool			print;
 }	t_raycast;
 
+typedef struct s_sprites
+{
+	t_vector		sprite;
+	t_vector		transform;
+	t_int_vector	draw_start;
+	t_int_vector	draw_end;
+	t_int_vector	size;
+	t_int_vector	tex;
+	int				z_cor;
+	int				sprite_screen;
+	uint32_t		color;
+}	t_sprites;
+
 /**
  * @brief 
  * @param map array containing the map itself
@@ -219,7 +232,10 @@ typedef struct s_map
 	mlx_image_t	**en_sprites;
 	mlx_image_t	*door_open;
 	mlx_image_t	*door_close;
+	mlx_image_t	*en_sp;
 	t_enemy		*enemies;
+	int			*sp_order;
+	double		*sp_distance;
 	int			door_stat;
 	t_vector	door_pos;
 	int			nb_enemy;

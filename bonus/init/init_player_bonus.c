@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:32:45 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 16:40:01 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:05:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_player	init_player(void)
 	player.pitch = 0;
 	player.vx = 0;
 	player.vy = 0;
-	player.hp = 50;
+	player.hp = 100;
 	init_portal(player.portal);
 	return (player);
 }

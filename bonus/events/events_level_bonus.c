@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_level_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 16:44:05 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:22:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ void	reinit_data(t_data *data)
 	data->map->nb_enemy = 0;
 	data->map->max = 0;
 	data->map->door_stat = -1;
+	data->map->sp_distance = 0;
+	data->map->sp_order = 0;
 	data->player->nb = 0;
 	data->player->portal[0].status = 0;
 	data->player->portal[1].status = 0;
+
 }
 
 /**

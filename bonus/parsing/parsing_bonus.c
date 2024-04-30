@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 17:14:28 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:18:56 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_player_infos(t_data *data, double dir[2], double plane[2]);
 void	fill_door_infos(t_data *data, int x, int y);
-void	fill_enemy_infos(t_data *data, int x, int y);
+void	fill_enemy_infos(t_data *data, double x, double y);
 char	*fill_line(t_data *data, char *str);
 
 /**
@@ -68,7 +68,7 @@ static void	check_char(t_data *data, char c, int y, int x)
 	else if (c == '2')
 		fill_door_infos(data, x, y);
 	else if (c == '3')
-		fill_enemy_infos(data, x, y);
+		fill_enemy_infos(data, 0.5f + x, 0.5f + y);
 	else if (c != '0' && c != '1' && c != ' ')
 		free_all(ERR_FORBIDDENCHAR, 2, data);
 }
@@ -126,8 +126,10 @@ static void	check_map(t_data *data, t_map *map)
 	map->maxy = i;
 	if (map->nb_enemy > 0 && !map->en_sprites)
 		free_all(ERR_ENTEX, 2, data);
+	map->sp_distance = malloc(map->nb_enemy * sizeof(double));
+	map->sp_order = malloc(map->nb_enemy * sizeof(int));
 	map->enemies = malloc((map->nb_enemy) * sizeof(t_enemy));
-	if (!map->enemies)
+	if (!map->enemies || !map->sp_distance || !map->sp_order)
 		free_all(ERR_MALLOC, 2, data);
 	i = 0;
 	while (map->map[i])

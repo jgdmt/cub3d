@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_getbon_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:06:01 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 17:14:18 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:54:51 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	fill_door_infos(t_data *data, int x, int y)
  * @param x coordonate x of the enemy
  * @param y coordonate y of the enemy
  */
-void	fill_enemy_infos(t_data *data, int x, int y)
+void	fill_enemy_infos(t_data *data, double x, double y)
 {
 	t_map		*map;
 	static int	i = 0;
@@ -51,7 +51,7 @@ void	fill_enemy_infos(t_data *data, int x, int y)
 	map->enemies[i].pos.y = y;
 	map->enemies[i].status = 0;
 	map->enemies[i].life = 3;
-	data->map->map[y][x] = '0';
+	data->map->map[(int)floor(y)][(int)floor(x)] = '0';
 	i++;
 	if (i == data->map->nb_enemy)
 		i = 0;

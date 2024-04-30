@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:31:33 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 14:32:30 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:20:16 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ t_map	init_map(void)
 	map.door_pos.x = 0;
 	map.door_pos.y = 0;
 	map.door_stat = -1;
+	map.sp_distance = 0;
+	map.sp_order = 0;
 	return (map);
 }

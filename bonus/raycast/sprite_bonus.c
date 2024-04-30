@@ -6,78 +6,129 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:11:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/26 11:34:23 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:48:42 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
+static void	sort(t_map *map)
+{
+	int		i;
+	double	ftemp;
+	int		temp;
+	int		max;
+	int		j;
+
+	i = 0;
+	while (i < map->nb_enemy - 1)
+	{
+		j = i;
+		ftemp = map->sp_distance[i];
+		max = i;
+		while (++j < map->nb_enemy)
+		{
+			if (map->sp_distance[max] < map->sp_distance[j])
+				max = j;
+		}
+		map->sp_distance[i] = map->sp_distance[max];
+		map->sp_distance[max] = ftemp;
+		temp = map->sp_order[i];
+		map->sp_order[i] = map->sp_order[max];
+		map->sp_order[max] = temp;
+		i++;
+	}
+
+}
+
+static void	order_sprites(t_map	*map, t_raycast *rc)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->nb_enemy)
+	{
+		map->sp_order[i] = i;
+		map->sp_distance[i] = ((rc->player.pos.x - \
+		map->enemies[i].pos.x) * (rc->player.pos.x - \
+		map->enemies[i].pos.x) + (rc->player.pos.y - \
+		map->enemies[i].pos.y) * (rc->player.pos.y - \
+		map->enemies[i].pos.y));
+		i++;
+	}
+	sort(map);
+}
+
+static void	init_var(t_data *data, t_raycast *rc, t_sprites *sp, int i)
+{
+	sp->sprite.x = data->map->enemies[data->map->sp_order[i]].pos.x \
+	- rc->player.pos.x;
+	sp->sprite.y = data->map->enemies[data->map->sp_order[i]].pos.y \
+	- rc->player.pos.y;
+	sp->transform.x = (rc->player.dir.y * sp->sprite.x \
+		- rc->player.dir.x * sp->sprite.y);
+	sp->transform.y = (-rc->player.plane.y * sp->sprite.x \
+		+ rc->player.plane.x * sp->sprite.y);
+	sp->sprite_screen = (int)((data->width / 2) \
+		* (1 + sp->transform.x / sp->transform.y));
+	sp->z_cor = rc->player.pitch + rc->player.posz / sp->transform.y;
+	sp->size.y = abs((int)(data->height / sp->transform.y));
+	sp->size.x = abs((int)(data->width / (sp->transform.y))) / 2;
+}
+
+static void	put_sprite(t_data *data, t_raycast *rc, t_sprites *sp)
+{
+	t_int_vector	i;
+	int				d;
+
+	i.x = sp->draw_start.x;
+	while (i.x < sp->draw_end.x)
+	{
+		sp->tex.x = (i.x - (-sp->size.x / 2 + sp->sprite_screen)) \
+		* data->map->en_sp->width / sp->size.x;
+		i.y = sp->draw_start.y;
+		if (sp->transform.y > 0 && i.x > 0 && i.x < data->width && \
+			sp->transform.y < rc->z_buff_x[i.x])
+		{
+			while (i.y < sp->draw_end.y)
+			{
+				d = (i.y - sp->z_cor) * 256 + (sp->size.y - data->height) * 128;
+				sp->tex.y = ((d * data->map->en_sp->height) / sp->size.y) / 256;
+				sp->color = correct_color(&data->map->en_sp->pixels[
+						(data->map->en_sp->width * sp->tex.y + sp->tex.x) * 4]);
+				if (sp->color)
+					data->buff[(i.y * data->width) + i.x] = sp->color;
+				(i.y)++;
+			}
+		}
+		(i.x)++;
+	}
+}
+
 void	sprite(t_data *data, t_raycast *rc)
 {
-	int		spriteOrder[data->map->nb_enemy];
-	double	spriteDistance[data->map->nb_enemy];
-	for(int i = 0; i < data->map->nb_enemy; i++)
-    {
-      spriteOrder[i] = i;
-      spriteDistance[i] = ((rc->player.pos.x - data->map->enemies[i].pos.x) * (rc->player.pos.x - data->map->enemies[i].pos.x) + (rc->player.pos.y - data->map->enemies[i].pos.y) * (rc->player.pos.y - data->map->enemies[i].pos.y)); //sqrt not taken, unneeded
-    }
-    // sortSprites(spriteOrder, spriteDistance, data->map->nb_enemy);
+	t_sprites	sp;
+	int			i;
 
-    //after sorting the sprites, do the projection and draw them
-    for(int i = 0; i < data->map->nb_enemy; i++)
-    {
-      //translate sprite position to relative to camera
-      double spriteX = data->map->enemies[spriteOrder[i]].pos.x - rc->player.pos.x;
-      double spriteY = data->map->enemies[spriteOrder[i]].pos.y - rc->player.pos.y;
-
-      //transform sprite with the inverse camera matrix
-      // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
-      // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
-      // [ planeY   dirY ]                                          [ -planeY  planeX ]
-
-      double invDet = 1.0 / ((rc->player.plane.x * rc->player.dir.y) - (rc->player.dir.x * rc->player.plane.y)); //required for correct matrix multiplication
-      double transformX = invDet * (rc->player.dir.y * spriteX - rc->player.dir.x * spriteY);
-      double transformY = invDet * (-rc->player.plane.y * spriteX + rc->player.plane.x * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
-      int spriteScreenX = (int)((data->width / 2) * (1 + transformX / transformY));
-		printf("%lf\n", transformY);
-      #define uDiv 1
-      #define vDiv 1
-      #define vMove 0.0
-      int vMoveScreen = (int)(vMove / transformY) + rc->player.pitch + rc->player.posz / transformY;
-
-      //calculate height of the sprite on screen
-      int spriteHeight = abs((int)(data->height / (transformY))) / vDiv; //using 'transformY' instead of the real distance prevents fisheye
-      //calculate lowest and highest pixel to fill in current stripe
-		int drawStartY = -spriteHeight / 2 + data->height / 2 + vMoveScreen;
-      if(drawStartY < 0) drawStartY = 0;
-      int drawEndY = spriteHeight / 2 + data->height / 2 + vMoveScreen;
-      if(drawEndY >= data->height) drawEndY = data->height - 1;
-
-      //calculate width of the sprite
-      int spriteWidth = abs( (int)(data->width / (transformY))) / uDiv;
-      int drawStartX = -spriteWidth / 2 + spriteScreenX;
-      if(drawStartX < 0) drawStartX = 0;
-      int drawEndX = spriteWidth / 2 + spriteScreenX;
-      if(drawEndX >= data->width) drawEndX = data->width - 1;
-
-      //loop through every vertical stripe of the sprite on screen
-      for(int stripe = drawStartX; stripe < drawEndX; stripe++)
-      {
-        int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * data->map->en_sprites[0]->width / spriteWidth) / 256;
-        //the conditions in the if are:
-        //1) it's in front of camera plane so you don't see things behind you
-        //2) it's on the screen (left)
-        //3) it's on the screen (right)
-        //4) ZBuffer, with perpendicular distance
-        if(transformY > 0 && stripe > 0 && stripe < data->width && transformY < rc->z_buff_x[stripe])
-        for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
-        {
-          int d = (y - vMoveScreen) * 256 - data->height * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
-          int texY = ((d * data->map->en_sprites[0]->height) / spriteHeight) / 256;
-          uint32_t color = correct_color((u_int8_t *)&(((uint32_t *)data->map->en_sprites[0]->pixels)[data->map->en_sprites[0]->width * texY + texX])); //get current color from the texture
-          if(color)
-		  	data->buff[(y * data->width) + stripe] = color; 
-        }
-      }
-    }
+	order_sprites(data->map, rc);
+	i = 0;
+	data->map->en_sp = data->map->en_sprites[0];
+	while (i < data->map->nb_enemy)
+	{
+		init_var(data, rc, &sp, i);
+		sp.draw_start.y = -sp.size.y / 2 + data->height / 2 + sp.z_cor;
+		if (sp.draw_start.y < 0)
+			sp.draw_start.y = 0;
+		sp.draw_end.y = sp.size.y / 2 + data->height / 2 + sp.z_cor;
+		if (sp.draw_end.y >= data->height)
+			sp.draw_end.y = data->height - 1;
+		sp.draw_start.x = -sp.size.x / 2 + sp.sprite_screen;
+		if (sp.draw_start.x < 0)
+			sp.draw_start.x = 0;
+		sp.draw_end.x = sp.size.x / 2 + sp.sprite_screen;
+		if (sp.draw_end.x >= data->width)
+			sp.draw_end.x = data->width - 1;
+		put_sprite(data, rc, &sp);
+		i++;
+	}
 }
