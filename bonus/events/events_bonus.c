@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 16:08:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:19:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,12 +201,16 @@ void	hook(void *gdata)
 		data->player->vx += ACCELERATION;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D) && data->player->vx > -MAXV)
 		data->player->vx -= ACCELERATION;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE) && !data->player->posz)
+	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE) && !data->player->vz)
 		data->player->vz += 5;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_N))
 		change_map(data, 1);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_P))
 		change_map(data, -1);
+	// if (data->player->vz > 5 || data->player->vz < -5)
+	// 	printf("Z : \033[31m%f\e[0;37m\n", data->player->vz);
+	// else
+	// 	printf("Z : %f\n", data->player->vz);
 	mouse_move(gdata);
 }
 
