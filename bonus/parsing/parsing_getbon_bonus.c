@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_getbon_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:06:01 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/30 12:54:51 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:39:56 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	fill_enemy_infos(t_data *data, double x, double y)
 		free_all(ERR_ENEMIES, 2, data);
 	map->enemies[i].pos.x = x;
 	map->enemies[i].pos.y = y;
-	map->enemies[i].status = 0;
+	map->enemies[i].status = 1;
 	map->enemies[i].life = 3;
 	data->map->map[(int)floor(y)][(int)floor(x)] = '0';
 	i++;

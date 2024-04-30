@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/30 11:19:34 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:53:39 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	collide_enemy(t_data *data, double x, double y)
 	i = 0;
 	while (i < data->map->nb_enemy)
 	{
-		if (fabs(data->map->enemies[i].pos.x - x) <= 1 && fabs(data->map->enemies[i].pos.y - y) <= 1)
+		if (data->map->enemies[i].status && fabs(data->map->enemies[i].pos.x - x) <= 1 && fabs(data->map->enemies[i].pos.y - y) <= 1)
 		{
 		printf("enemy, player, diff %lf %lf %lf %lf %lf %lf\n", data->map->enemies[i].pos.x, data->map->enemies[i].pos.y, x, y, data->map->enemies[i].pos.x - x, data->map->enemies[i].pos.y - y);
 		printf("life %i\n", data->player->hp);
@@ -212,6 +212,7 @@ void	hook(void *gdata)
 	// else
 	// 	printf("Z : %f\n", data->player->vz);
 	mouse_move(gdata);
+	// printf("%f %f\n", data->player->pos.x, data->player->pos.y);
 }
 
 /**

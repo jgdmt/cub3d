@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_level_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/30 16:22:59 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:56:56 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	reinit_data(t_data *data)
 	data->player->nb = 0;
 	data->player->portal[0].status = 0;
 	data->player->portal[1].status = 0;
-
+	data->player->portal[0].pos.x = 0;
+	data->player->portal[0].pos.y = 0;	
+	data->player->portal[1].pos.x = 0;
+	data->player->portal[1].pos.y = 0;
 }
 
 /**

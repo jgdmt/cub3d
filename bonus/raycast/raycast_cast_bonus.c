@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_cast_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 11:44:05 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:51:37 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param width of the raycast render image
  * @param rc structure that store all raycast parameters
  */
-static void	init_ray_param(int width, t_raycast *rc)
+void	init_ray_param(int width, t_raycast *rc)
 {
 	double		camera_x;
 
@@ -37,7 +37,7 @@ static void	init_ray_param(int width, t_raycast *rc)
 		rc->delta_dist.y = fabs(1 / rc->ray_dir.y);
 }
 
-static void	step_init( t_raycast *rc)
+void	step_init( t_raycast *rc)
 {
 	if (rc->ray_dir.x < 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/30 16:22:42 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:00:37 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void	free_all(char *str, int out, t_data *data)
 		ft_printf(out, "%s\n", str);
 	ft_usleep(250);
 	free_smap(data->mlx, data->map);
-	if (data->img)
-		mlx_delete_image(data->mlx, data->img);
 	destroy(data->mlx, data->cursor, 5);
 	destroy(data->mlx, data->portal, 4);
 	destroy(data->mlx, data->hud.menu, 12);
-	mlx_terminate(data->mlx);
+	if (data->img)
+		mlx_delete_image(data->mlx, data->img);
+	// mlx_terminate(data->mlx);
 	exit (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/26 16:45:23 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:33:05 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	debug(t_data *data)
 					int k = 0;
 					while (k < data->map->nb_enemy)
 					{
-						if (data->map->enemies[k].pos.x == j && data->map->enemies[k].pos.y == i)
+						if ((int) data->map->enemies[k].pos.x == j && (int) data->map->enemies[k].pos.y == i)
 							printf("\033[31mE\e[0;37m");
 						k++;
 					}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/30 16:48:08 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:54:59 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,9 @@ void		rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
 void		*update_inertia(void *gdata);
 void		print_ray(t_data *data, t_raycast *rc);
 void		sprite(t_data *data, t_raycast *rc);
+
+void		init_ray_param(int width, t_raycast *rc);
+void		step_init(t_raycast *rc);
 
 void		loading_screen(t_data *data);
 void		cursor_screen(t_data *data);
