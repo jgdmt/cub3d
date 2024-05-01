@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/30 19:54:59 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:25:00 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ typedef struct s_player
 typedef struct s_hud
 {
 	int			width;
-	int			heigth;
+	int			height;
 	int			hidden;
 	mlx_image_t	*menu[12];
 }	t_hud;
@@ -185,7 +185,7 @@ typedef struct s_raycast
 	t_player		player;
 	double			perp_wall_dist;
 	double			portal_first_ray;
-	double			z_buff_x[3840]; //temp
+	double			z_buff_x[3840];
 	mlx_image_t		*t;
 	bool			print;
 }	t_raycast;

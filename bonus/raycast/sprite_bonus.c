@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:11:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/30 20:26:28 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/01 10:49:16 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,12 @@ void	sprite(t_data *data, t_raycast *rc)
 	int			i;
 
 	order_sprites(data->map, rc);
-	i = 0;
+	i = -1;
 	data->map->en_sp = data->map->en_sprites[0];
-	while (i < data->map->nb_enemy)
+	while (++i < data->map->nb_enemy)
 	{
-		while (i < data->map->nb_enemy && !data->map->enemies[i].status)
-			i++;
-		if (i >= data->map->nb_enemy)
-			return ;
+		if (!data->map->enemies[data->map->sp_order[i]].status)
+			continue ;
 		init_var(data, rc, &sp, i);
 		sp.draw_start.y = -sp.size.y / 2 + data->height / 2 + sp.z_cor;
 		if (sp.draw_start.y < 0)
@@ -133,6 +131,5 @@ void	sprite(t_data *data, t_raycast *rc)
 		if (sp.draw_end.x >= data->width)
 			sp.draw_end.x = data->width - 1;
 		put_sprite(data, rc, &sp);
-		i++;
 	}
 }

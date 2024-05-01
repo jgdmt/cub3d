@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_resize_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:36:21 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 19:52:42 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:54:10 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ void	resize_render(t_data *data)
 	int			i;
 	int			j;
 	mlx_image_t	**cursor;
-	bool		check;
-
+	bool		check[2];
 	cursor = data->cursor;
 	free(data->buff);
-	check = mlx_resize_image(data->img, data->width, data->height);
+	data->hud.height = data->height / 3 + 15;
+	data->hud.width = data->hud.height - 15;
+	check[0] = mlx_resize_image(data->img, data->width, data->height);
+	check[1] = mlx_resize_image(data->hud_img, data->hud.width, data->hud.height);
 	data->buff = malloc(data->width * data->height * sizeof(int));
-	if (!check || !data->buff)
+	if (!check[0]  || !check[1] || !data->buff)
 		free_all(ERR_MALLOC, 2, data);
 	i = 0;
 	while (i < 5)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 14:51:09 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:42:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ int	main(int argc, char **argv)
 	player = init_player();
 	data = init_data(&map, &player, mlx, argv);
 	parsing(argv[1], &data);
-	data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	data.hud_img = mlx_new_image(mlx, 200, 200);
+	data.hud_img = mlx_new_image(mlx, data.hud.width, data.hud.height);
 	data.buff = malloc(WIDTH * HEIGHT * sizeof(int));
-	if (!data.img || !data.buff || !data.hud_img)
+	if (!data.buff || !data.hud_img)
 		free_all(ERR_MALLOC, 2, &data);
 	if (pthread_create(&thread, NULL, raycast_threader, &data))
 		free_all(ERR_MUTEX, 2, &data);
@@ -43,9 +42,7 @@ int	main(int argc, char **argv)
 		free_all(ERR_MUTEX, 2, &data);
 	if (pthread_create(&hud, NULL, thread_hud, &data))
 		free_all(ERR_MUTEX, 2, &data);
-	if (mlx_image_to_window(data.mlx, data.img, 0, 0) == -1)
-		free_all(ERR_MLX, 2, &data);
-	if (mlx_image_to_window(data.mlx, data.hud_img, 0, HEIGHT - 200) == -1)
+	if (mlx_image_to_window(data.mlx, data.hud_img, 0, 0) == -1)
 		free_all(ERR_MLX, 2, &data);
 	printf("%i\n", data.img->instances[0].z);
 	mlx_loop_hook(mlx, &hook, &data);

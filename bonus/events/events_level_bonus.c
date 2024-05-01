@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_level_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/30 20:56:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:02:51 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	reinit_data(t_data *data)
 	data->player->portal[0].status = 0;
 	data->player->portal[1].status = 0;
 	data->player->portal[0].pos.x = 0;
-	data->player->portal[0].pos.y = 0;	
+	data->player->portal[0].pos.y = 0;
 	data->player->portal[1].pos.x = 0;
 	data->player->portal[1].pos.y = 0;
 }
@@ -94,20 +94,25 @@ void	show_menu(t_data *data, bool show)
  */
 void	menu(t_data *data)
 {
+	uint32_t	i;
+
 	if (!data->exit)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
 		data->exit = 1;
-		show_menu(data, 1);
-		data->img->enabled = false;
 		ft_usleep(250);
+		i = -1;
+		while (++i < data->img->width * data->img->height)
+			data->img->pixels[(i * 4) + 3] = 125;
+		data->hud_img->enabled = false;
+		show_menu(data, 1);
 	}
 	else if (data->exit == 1)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
 		data->exit = 0;
 		show_menu(data, 0);
-		data->img->enabled = true;
+		data->hud_img->enabled = true;
 		ft_usleep(250);
 	}
 }

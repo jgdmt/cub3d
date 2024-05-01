@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   health_bar.c                                       :+:      :+:    :+:   */
+/*   health_bar_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 17:39:13 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/24 13:27:59 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:29:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,18 @@ void	print_hp(t_data *data)
 {
 	int	x;
 	int	y;
-	int width;
+	int	width;
 
 	x = 0;
-	width = 200 * ((float)data->player->hp / 100);
-	while (x < width)
+	width = data->hud.width * ((float)data->player->hp / 100);
+	while (x < data->hud.width)
 	{
-		y = 190;
-		while (y < 200)
-		{
-			mlx_put_pixel(data->hud_img, x, y, 0xFF0000FF);
-			y++;
-		}
-		x++;
-	}
-	while (x < 200)
-	{
-		y = 190;
-		while (y < 200)
+		y = data->hud.height - 15;
+		while (y < data->hud.height)
 		{
 			mlx_put_pixel(data->hud_img, x, y, 0xFF000064);
+			if (x < width)
+				mlx_put_pixel(data->hud_img, x, y, 0xFF0000FF);
 			y++;
 		}
 		x++;

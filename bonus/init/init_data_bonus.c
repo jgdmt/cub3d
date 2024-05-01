@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:27:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/29 18:51:10 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:43:15 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ void	init_data_texture(t_data *data, mlx_t *mlx)
 {
 	mlx_texture_t	*loading;
 
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	loading = mlx_load_png("./bonus/assets/icon.png");
-	if (!loading)
+	if (!loading || !data->img)
 		free_all(ERR_MLX, 2, data);
 	data->loading = mlx_texture_to_image(mlx, loading);
 	mlx_delete_texture(loading);
 	if (!data->loading)
+		free_all(ERR_MLX, 2, data);
+	if (mlx_image_to_window(mlx, data->img, 0, 0) == -1)
 		free_all(ERR_MLX, 2, data);
 	if (mlx_image_to_window(mlx, data->loading, 704, 284) == -1)
 		free_all(ERR_MLX, 2, data);
@@ -72,8 +75,8 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.portal_shot = -1;
 	data.argv = argv;
 	data.hud.hidden = 0;
-	data.hud.width = 566;
-	data.hud.heigth = 576;
+	data.hud.width = 360;
+	data.hud.height = 375;
 	data.loading = 0;
 	init_data_texture(&data, mlx);
 	return (data);
