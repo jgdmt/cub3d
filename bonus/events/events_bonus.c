@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/30 20:53:39 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:00:26 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	move(t_data *data)
 	if (data->player->vx < 10e-7 && data->player->vx > -10e-7 && data->player->vy < 10e-7 && data->player->vy > -10e-7)
 		return ;
 	theta = angle(data->player->dir.x, data->player->dir.y, 0, -1);
-	v.x = data->player->vx * cos(theta) + data->player->vy * - sin(theta);
+	v.x = data->player->vx * cos(theta) + data->player->vy * -sin(theta);
 	v.y = data->player->vx * sin(theta) + data->player->vy * cos(theta);
 	map = data->map->map;
 	pos = data->player->pos;

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:27:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/01 15:43:15 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:14:35 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,19 @@ void	init_data_texture(t_data *data, mlx_t *mlx)
 	init_gun_text(data, mlx);
 }
 
+void	init_data_hud(t_data *data)
+{
+	data->hud.width = 360;
+	data->hud.height = 375;
+	data->hud.img = mlx_new_image(data->mlx, data->hud.width, data->hud.height);
+	data->hud.buff = malloc(data->hud.width * (data->hud.height - 15) * \
+	sizeof(uint32_t));
+	if (!data->hud.img || !data->hud.buff)
+		free_all(ERR_MALLOC, 2, data);
+	if (mlx_image_to_window(data->mlx, data->hud.img, 0, 0) == -1)
+		free_all(ERR_MLX, 2, data);
+}
+
 t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 {
 	t_data			data;
@@ -75,9 +88,9 @@ t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)
 	data.portal_shot = -1;
 	data.argv = argv;
 	data.hud.hidden = 0;
-	data.hud.width = 360;
-	data.hud.height = 375;
 	data.loading = 0;
+	data.hud.buff = 0;
 	init_data_texture(&data, mlx);
+	init_data_hud(&data);
 	return (data);
 }

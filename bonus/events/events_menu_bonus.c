@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_menu_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 19:19:34 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 12:24:19 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:12:29 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	hide_hud(t_data *data, int hidden)
 	int	i;
 
 	i = 0;
-	data->hud_img->instances[0].enabled = hidden;
+	data->hud.img->instances[0].enabled = hidden;
 	while (i < 5)
 	{
 		data->cursor[i]->instances[0].enabled = hidden;

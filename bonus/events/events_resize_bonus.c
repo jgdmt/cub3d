@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:36:21 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/01 14:54:10 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:15:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,22 @@ void	resize_render(t_data *data)
 	int			j;
 	mlx_image_t	**cursor;
 	bool		check[2];
+
+	printf("%i %i\n", data->width, data->height);
 	cursor = data->cursor;
 	free(data->buff);
+	free(data->hud.buff);
 	data->hud.height = data->height / 3 + 15;
 	data->hud.width = data->hud.height - 15;
 	check[0] = mlx_resize_image(data->img, data->width, data->height);
-	check[1] = mlx_resize_image(data->hud_img, data->hud.width, data->hud.height);
+	check[1] = mlx_resize_image(data->hud.img, data->hud.width, data->hud.height);
 	data->buff = malloc(data->width * data->height * sizeof(int));
+	data->hud.buff = malloc(data->hud.width * (data->hud.height - 15) * sizeof(uint32_t));
 	if (!check[0]  || !check[1] || !data->buff)
 		free_all(ERR_MALLOC, 2, data);
+	i = 0;
+	while (i < data->hud.height * data->hud.width)
+		data->hud.img->pixels[i++ * 4 + 3] = 0x00;
 	i = 0;
 	while (i < 5)
 	{

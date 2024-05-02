@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/02 12:15:35 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:41:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ typedef struct s_hud
 	int			height;
 	int			hidden;
 	mlx_image_t	*menu[12];
+	mlx_image_t *img;
+	uint32_t	*buff;
 }	t_hud;
 
 /**
@@ -266,7 +268,6 @@ typedef struct s_data
 	t_hud			hud;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	mlx_image_t		*hud_img;
 	mlx_image_t		*loading;
 	mlx_image_t		*cursor[5];
 	mlx_image_t		*portal[4];
@@ -353,6 +354,7 @@ void		shoot_portal(t_data *data, int type, int other);
 void		shoot(t_data *data);
 void		scroll(double xdelta, double ydelta, void *gdata);
 void		mouse_move(void *gdata);
+float		angle(double ux, double uy, double vx, double vy);
 void		move(t_data *data);
 
 #endif // CUB3D_BONUS_H
