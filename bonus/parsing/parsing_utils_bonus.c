@@ -6,11 +6,34 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:18:12 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/18 12:19:35 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:35:26 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
+
+int	add_line(t_map *map)
+{
+	int		i;
+	char	*line;
+	char	**tmp;
+
+	i = 0;
+	while (map->map[i])
+		i++;
+	if (map->map[i - 1][0] != '\n')
+	{
+		line = ft_strdup("\n");
+		if (!line)
+			return (ft_printf(2, ERR_MALLOC), 1);
+		tmp = ft_arrayjoin(map->map, &line, 1);
+		if (!tmp)
+			return (free(line), ft_printf(2, ERR_MALLOC), 1);
+		free(map->map);
+		map->map = tmp;
+	}
+	return (0);
+}
 
 /**
  * @brief Fills the data::player informations.
@@ -87,10 +110,11 @@ char	*fill_line(t_data *data, char *str)
  * @brief Frees an array and may exit.
  * 
  * @param data structure with all program data
+ * @param msg message to exit with
  * @param strs array to be free
  * @param ex 1 to exit, 0 otherwise
  */
-void	free_ex(t_data *data, char **strs, int ex)
+void	free_ex(t_data *data, char *msg, char **strs, int ex)
 {
 	int	i;
 
@@ -102,5 +126,5 @@ void	free_ex(t_data *data, char **strs, int ex)
 	}
 	free(strs);
 	if (ex)
-		free_all(ERR_MALLOC, 2, data);
+		free_all(msg, 2, data);
 }

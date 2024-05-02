@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/25 17:28:19 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:36:21 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ char	*strdup_to(char *line, int start);
 void	add_color(char t, t_data *data);
 char	**ft_modif_split(char *str, char *sep);
 void	split_free(char **array, int len);
-void	free_ex(t_data *data, char **strs, int ex);
+int		add_line(t_map *map);
+void	free_ex(t_data *data, char *msg, char **strs, int ex);
 
 /**
  * @brief Checks if the given texture exists and turns
@@ -46,32 +47,6 @@ static mlx_image_t	*check_texture(char *line, int start, t_data *data)
 		return (NULL);
 	return (img);
 }
-
-// static u_int32_t	check_color(char *l, char t, t_data *data)
-// {
-// 	int		rgb[3];
-// 	char	**col;
-// 	int		i;
-
-// 	add_color(t, data);
-// 	col = ft_modif_split(l, " ,\n");
-// 	if (!col)
-// 		return (free(l), free_all(ERR_MALLOC, 2, data), 1);
-// 	if (ft_strslen(col) == 1)
-// 		return (split_free(col, -1), free(l), free_all(ERR_NORGB, 2, data), 1);
-// 	if (ft_strslen(col) != 4)
-// 		return (split_free(col, -1), free(l), free_all(ERR_RGB, 2, data), 1);
-// 	i = -1;
-// 	while (++i < 3)
-// 	{
-// 		rgb[i] = ft_atoi(col[i + 1]);
-// 		if (ft_strlen(col[i + 1]) > 3 || rgb[i] > 255 || rgb[i] < 0)
-// 			return (split_free(col, -1), free(l),
-// 				free_all(ERR_OUFLOW, 2, data), 1);
-// 	}
-// 	split_free(col, -1);
-// 	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255);
-// }
 
 /**
  * @brief Gets the (char **) data::map::map object.
@@ -107,7 +82,7 @@ static int	get_map(int fd, char *line, t_map *map)
 		free(map->map);
 		map->map = temp;
 	}
-	return (0);
+	return (add_line(map));
 }
 
 /**
@@ -130,18 +105,20 @@ void	get_sprite(char *line, int start, t_data *data, t_map *map)
 	text = ft_modif_split(line, ",");
 	if (!text)
 		free_all(ERR_MALLOC, 2, data);
+	if (ft_strslen(text) != 4)
+		free_ex(data, ERR_NBENTEX, text, 1);
 	map->en_sprites = ft_calloc(ft_strslen(text) + 1, sizeof(mlx_image_t *));
 	if (!map->en_sprites)
-		free_ex(data, text, 1);
+		free_ex(data, ERR_MALLOC, text, 1);
 	i = 0;
 	while (text[i])
 	{
 		map->en_sprites[i] = check_texture(text[i], 0, data);
 		if (!map->en_sprites[i])
-			free_ex(data, text, 1);
+			free_ex(data, ERR_MALLOC, text, 1);
 		i++;
 	}
-	free_ex(data, text, 0);
+	free_ex(data, 0, text, 0);
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/02 15:41:59 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:52:39 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define ERR_ENCLOSE "For your own security, do not put enemy too close to you."
 # define ERR_ENEMIES "Too many enemies. Do not bite more than you can chew."
 # define ERR_ENTEX "No enemies sprites. Your carelessness is disappointing."
+# define ERR_NBENTEX "I thought 4 enemy sprites was obvious. Ah humans."
 # define ERR_FILENAME "File name invalid."
 # define ERR_FILEEXTENSION "File extension invalid."
 

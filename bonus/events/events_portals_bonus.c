@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/29 19:46:13 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:58:27 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ void	shoot_portal(t_data *data, int type, int other)
 		&& data->player->portal[other].dir.y == y
 		&& data->player->portal[other].pos.x == rc.ipos.x
 		&& data->player->portal[other].pos.y == rc.ipos.y)
+		return ;
+	if (data->map->door_stat >= 0 && data->map->door_pos.x == rc.ipos.x
+		&& data->map->door_pos.y == rc.ipos.y)
 		return ;
 	data->player->portal[type].pos.x = rc.ipos.x;
 	data->player->portal[type].pos.y = rc.ipos.y;

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:36:49 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/30 20:47:48 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:59:20 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	shoot(t_data *data)
 	if (data->map->nb_enemy == 0)
 		return ;
 	i = get_enemy_ray(data, &rc);
-	printf("i %i\n", i);
+	// printf("i %i\n", i);
 	if (i >= 0)
 	{
 		printf("But... What are you doing? Stop it!\n");

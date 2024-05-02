@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 16:00:26 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:59:11 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 void	door_event(t_data *data)
 {
+	int	i;
+
+	i = -1;
 	if (fabs(data->player->pos.x - data->map->door_pos.x) < 2.5
 		&& fabs(data->player->pos.y - data->map->door_pos.y) < 2.5)
 	{
+		while (++i < data->map->nb_enemy)
+			if (data->map->enemies[i].status)
+				return ;
 		if (data->map->door_stat)
 			data->map->door_stat = 0;
 		else
@@ -78,10 +84,10 @@ int	collide_enemy(t_data *data, double x, double y)
 	i = 0;
 	while (i < data->map->nb_enemy)
 	{
-		if (data->map->enemies[i].status && fabs(data->map->enemies[i].pos.x - x) <= 1 && fabs(data->map->enemies[i].pos.y - y) <= 1)
+		if (data->map->enemies[i].status && fabs(data->map->enemies[i].pos.x - x) <= 0.5f && fabs(data->map->enemies[i].pos.y - y) <= 0.5f)
 		{
-		printf("enemy, player, diff %lf %lf %lf %lf %lf %lf\n", data->map->enemies[i].pos.x, data->map->enemies[i].pos.y, x, y, data->map->enemies[i].pos.x - x, data->map->enemies[i].pos.y - y);
-		printf("life %i\n", data->player->hp);
+		// printf("enemy, player, diff %lf %lf %lf %lf %lf %lf\n", data->map->enemies[i].pos.x, data->map->enemies[i].pos.y, x, y, data->map->enemies[i].pos.x - x, data->map->enemies[i].pos.y - y);
+		// printf("life %i\n", data->player->hp);
 			data->player->hp -= 11;
 			return (1);
 		}
