@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/01 15:25:00 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:15:35 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,6 +345,7 @@ void		hook(void *data);
 void		change_map(t_data *data, int np);
 void		menu(t_data *data);
 void		menu_events(mlx_key_data_t key, void *gdata);
+void		show_menu(t_data *data, bool show);
 void		portals(mouse_key_t b, action_t act, modifier_key_t mod, void *dt);
 void		reset_portal(t_data *data);
 int			check_portal(t_data *data, int x, int y, t_vector v);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_menu_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 19:19:34 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/01 15:38:40 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:24:19 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	change_menu_text(t_data *data, int i, int j)
 {
-	if (i == j)
+	if (i == j || i == -1)
 		return ;
 	if (j == 3 && data->hud.hidden)
 		j = 5;
@@ -70,7 +70,9 @@ int	menu_action(t_data *data, int i)
 	else if (i == 4)
 		free_all(MSG_GAMEQUIT, 1, data);
 	if (i != 3)
-		return (0);
+		show_menu(data, 0);
+	if (i != 3)
+		return (-1);
 	return (i);
 }
 
