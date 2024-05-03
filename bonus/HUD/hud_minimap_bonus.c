@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hud_minimap_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:51:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 19:44:29 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:42:20 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ int	is_enemy2(t_data *data, double i, double j)
 	k = 0;
 	while (k < data->map->nb_enemy)
 	{
-		if (data->map->enemies[k].status && fabs(data->map->enemies[k].pos.x - i) < 0.5f && fabs(data->map->enemies[k].pos.y - j) < 0.5f)
+		if (data->map->enemies[k].status && \
+		fabs(data->map->enemies[k].pos.x - i) < 0.5f \
+		&& fabs(data->map->enemies[k].pos.y - j) < 0.5f)
 			return (1);
 		k++;
 	}

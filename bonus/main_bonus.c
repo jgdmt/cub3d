@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 12:36:17 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:38:58 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ void	key_events(mlx_key_data_t key, void *gdata)
 {
 	menu_events(key, gdata);
 	door(key, gdata);
+}
+
+void	play(t_data *data)
+{
+	mlx_loop_hook(data->mlx, &hook, data);
+	mlx_resize_hook(data->mlx, &resize_window, data);
+	mlx_close_hook(data->mlx, &close_window, data);
+	mlx_mouse_hook(data->mlx, &portals, data);
+	mlx_scroll_hook(data->mlx, &scroll, data);
+	mlx_key_hook(data->mlx, &key_events, data);
+	mlx_loop(data->mlx);
 }
 
 int	main(int argc, char **argv)
@@ -48,13 +59,7 @@ int	main(int argc, char **argv)
 	if (!data.buff)
 		free_all(ERR_MALLOC, 2, &data);
 	init_thread(&data);
-	mlx_loop_hook(mlx, &hook, &data);
-	mlx_resize_hook(mlx, &resize_window, &data);
-	mlx_close_hook(mlx, &close_window, &data);
 	mlx_set_cursor_mode(mlx, MLX_MOUSE_DISABLED);
-	mlx_mouse_hook(mlx, &portals, &data);
-	mlx_scroll_hook(mlx, &scroll, &data);
-	mlx_key_hook(mlx, &key_events, &data);
-	mlx_loop(mlx);
+	play(&data);
 	return (0);
 }

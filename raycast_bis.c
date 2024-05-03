@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_bis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/03/15 11:32:00 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:34:46 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	init_ray_param(t_data *data, t_raycast *rc)
 
 	camera_x = 2 * rc->x / (double) data->width - 1;
 	rc->ray_dir.x = data->player->dir.x + data->player->plane.x * camera_x;
-	rc->ray_dir.y = data->player->dir.y 
-		+ data->player->plane.y * camera_x; 
+	rc->ray_dir.y = data->player->dir.y
+		+ data->player->plane.y * camera_x;
 	rc->ipos.x = (int)data->player->pos.x;
 	rc->ipos.y = (int)data->player->pos.y;
 	if (rc->ray_dir.x == 0)
@@ -81,19 +81,19 @@ void	step_init(t_data *data, t_raycast *rc)
 	else
 	{
 		rc->step.x = 1;
-		rc->side_dist.x = (rc->ipos.x + 1.0 - data->player->pos.x) 
+		rc->side_dist.x = (rc->ipos.x + 1.0 - data->player->pos.x)
 			* rc->delta_dist.x;
 	}
 	if (rc->ray_dir.y < 0)
 	{
 		rc->step.y = -1;
-		rc->side_dist.y = (data->player->pos.y - rc->ipos.y) 
+		rc->side_dist.y = (data->player->pos.y - rc->ipos.y)
 			* rc->delta_dist.y;
 	}
 	else
 	{
 		rc->step.y = 1;
-		rc->side_dist.y = (rc->ipos.y + 1.0 - data->player->pos.y) 
+		rc->side_dist.y = (rc->ipos.y + 1.0 - data->player->pos.y)
 			* rc->delta_dist.y;
 	}
 }

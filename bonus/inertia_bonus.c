@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inertia_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:24:32 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 19:03:49 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:41:46 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_enemy3(t_data *data, double x, double y, int j)
 	i = 0;
 	while (i < data->map->nb_enemy)
 	{
-		if (i != j && data->map->enemies[i].status\
+		if (i != j && data->map->enemies[i].status \
 		&& (fabs(data->map->enemies[i].pos.x - x) < 1 \
 		&& fabs(data->map->enemies[i].pos.y - y) < 1))
 			return (1);
@@ -40,15 +40,20 @@ int	is_enemy3(t_data *data, double x, double y, int j)
 
 void	moving(t_data *data, t_enemy *enemy, int i)
 {
-	if ((fabs(enemy->pos.x - data->player->pos.x) > 13 || fabs(enemy->pos.y - data->player->pos.y) > 13))
+	if ((fabs(enemy->pos.x - data->player->pos.x) > 13 \
+	|| fabs(enemy->pos.y - data->player->pos.y) > 13))
 		return ;
-	if (data->player->pos.x - enemy->pos.x < 0 && !is_enemy3(data, enemy->pos.x - 0.02f, enemy->pos.y, i))
+	if (data->player->pos.x - enemy->pos.x < 0 \
+	&& !is_enemy3(data, enemy->pos.x - 0.02f, enemy->pos.y, i))
 		data->map->enemies[i].pos.x -= 0.02f;
-	else if (data->player->pos.x - enemy->pos.x > 0 && !is_enemy3(data, enemy->pos.x + 0.02f, enemy->pos.y, i))
+	else if (data->player->pos.x - enemy->pos.x > 0 \
+	&& !is_enemy3(data, enemy->pos.x + 0.02f, enemy->pos.y, i))
 		enemy->pos.x += 0.02f;
-	if (data->player->pos.y - enemy->pos.y < 0 && !is_enemy3(data, enemy->pos.x, enemy->pos.y - 0.02f, i))
+	if (data->player->pos.y - enemy->pos.y < 0 \
+	&& !is_enemy3(data, enemy->pos.x, enemy->pos.y - 0.02f, i))
 		enemy->pos.y -= 0.02f;
-	else if (data->player->pos.y - enemy->pos.y > 0 && !is_enemy3(data, enemy->pos.x, enemy->pos.y + 0.02f, i))
+	else if (data->player->pos.y - enemy->pos.y > 0 \
+	&& !is_enemy3(data, enemy->pos.x, enemy->pos.y + 0.02f, i))
 		enemy->pos.y += 0.02f;
 }
 
@@ -72,7 +77,7 @@ static void	refresh_enemy(t_data *data)
 		k = 0;
 }
 
-static void inertia(t_data *data)
+static void	inertia(t_data *data)
 {
 	data->player->posz += data->player->vz;
 	if (data->player->posz > 0)
@@ -90,7 +95,8 @@ static void inertia(t_data *data)
 }
 
 /**
- * @brief Slow the player by tends data::player::vx and data::player::vy towards 0.
+ * @brief Slow the player by tends data::player::vx and 
+ * data::player::vy towards 0.
  * 
  * @param data structure with all program data
  */

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_hud_bonus.c                                   :+:      :+:    :+:   */
+/*   hud_main_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:32:23 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/01 13:45:04 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:39:49 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	*thread_hud(void *gdata)
 	{
 		if (!data->exit)
 		{
-		print_hp(data);
-		get_minimap(data);
+			print_hp(data);
+			get_minimap(data);
 		}
 		time = get_time();
 		if (time - last_time < 13)

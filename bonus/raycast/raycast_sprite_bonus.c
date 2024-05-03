@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_sprite_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:11:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 18:57:56 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:39:13 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	sort(t_map *map)
 		map->sp_order[max] = temp;
 		i++;
 	}
-
 }
 
 static void	order_sprites(t_map	*map, t_raycast *rc)

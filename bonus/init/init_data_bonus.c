@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:27:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 19:24:18 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:39:44 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	init_data_texture(t_data *data, mlx_t *mlx)
 
 void	init_data_hud(t_data *data)
 {
-	data->hud.img = mlx_new_image(data->mlx,360, 375);
-	data->hud.buff = malloc(data->hud.img->width * (data->hud.img->height - 15) * \
-	sizeof(uint32_t));
+	data->hud.img = mlx_new_image(data->mlx, 360, 375);
+	data->hud.buff = malloc(data->hud.img->width * \
+	(data->hud.img->height - 15) * sizeof(uint32_t));
 	if (!data->hud.img || !data->hud.buff)
 		free_all(ERR_MALLOC, 2, data);
 	if (mlx_image_to_window(data->mlx, data->hud.img, 0, 0) == -1)
