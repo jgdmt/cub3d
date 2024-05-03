@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_main_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:22:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/02 11:45:30 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:38:08 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * Can be interrupted by setting data::exit to any positive value.
  * @param data structure with all program data
  */
-void	raycast(t_data *data)
+static void	raycast(t_data *data)
 {
 	t_raycast	rc;
 	t_player	temp;

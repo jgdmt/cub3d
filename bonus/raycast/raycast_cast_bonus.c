@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_cast_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/30 19:51:37 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:00:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,30 @@ void	step_init( t_raycast *rc)
 	}
 }
 
+static void	portal_hit(t_raycast *rc, t_portal *pl, t_data *data, int deep)
+{
+	if (rc->ipos.y == pl[0].pos.y && rc->ipos.x == pl[0].pos.x \
+	&& pl[1].status == 1 && deep < 15)
+	{
+		if ((pl[0].dir.x && pl[0].dir.x * rc->ray_dir.x < 0 && rc->side == 0) \
+		|| (pl[0].dir.y && pl[0].dir.y * rc->ray_dir.y < 0 && rc->side == 1))
+		{
+			portal(data, rc, 0, ++deep);
+			return ;
+		}
+	}
+	if (rc->ipos.y == pl[1].pos.y && rc->ipos.x == pl[1].pos.x \
+	&& pl[0].status == 1 && deep < 15)
+	{
+		if ((pl[1].dir.x && pl[1].dir.x * rc->ray_dir.x < 0 && rc->side == 0) \
+		|| (pl[1].dir.y && pl[1].dir.y * rc->ray_dir.y < 0 && rc->side == 1))
+		{
+			portal(data, rc, 1, ++deep);
+			return ;
+		}
+	}
+}
+
 /**
  * @brief This is the Digital differential analyzer algorithm 
  * that rasterize the ray parcour until it hit a wall or a portal.
@@ -71,6 +95,7 @@ void	step_init( t_raycast *rc)
  * 
  * @param data structure with all program data
  * @param rc structure that store all raycast parameters
+ * @param deep nb of recursive call made by portal
  */
 static void	dda(t_data *data, t_raycast *rc, int deep)
 {
@@ -88,23 +113,9 @@ static void	dda(t_data *data, t_raycast *rc, int deep)
 			rc->ipos.y += rc->step.y;
 			rc->side = 1;
 		}
-		if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x && rc->player.portal[1].status == 1 && deep < 15)
-		{
-			if ((rc->player.portal[0].dir.x && rc->player.portal[0].dir.x * rc->ray_dir.x < 0 && rc->side == 0) || (rc->player.portal[0].dir.y && rc->player.portal[0].dir.y * rc->ray_dir.y < 0 && rc->side == 1))
-			{
-			portal(data, rc, 0, ++deep);
-			return ;
-			}
-		}
-		if (rc->ipos.y == rc->player.portal[1].pos.y && rc->ipos.x == rc->player.portal[1].pos.x && rc->player.portal[0].status == 1 && deep < 15)
-		{
-			if ((rc->player.portal[1].dir.x && rc->player.portal[1].dir.x * rc->ray_dir.x < 0 && rc->side == 0) || (rc->player.portal[1].dir.y && rc->player.portal[1].dir.y * rc->ray_dir.y < 0 && rc->side == 1))
-			{
-			portal(data, rc, 1, ++deep);
-			return ;
-			}
-		}
-		 if (data->map->map[rc->ipos.y][rc->ipos.x] == '1' || data->map->map[rc->ipos.y][rc->ipos.x] == '2')
+		portal_hit(rc, rc->player.portal, data, deep);
+		if (data->map->map[rc->ipos.y][rc->ipos.x] == '1' \
+		|| data->map->map[rc->ipos.y][rc->ipos.x] == '2')
 		{
 			get_tex_ptr(data, rc);
 			return ;
@@ -112,6 +123,13 @@ static void	dda(t_data *data, t_raycast *rc, int deep)
 	}
 }
 
+/**
+ * @brief 
+ * 
+ * @param data structure with all program data
+ * @param rc structure that store all raycast parameters
+ * @param deep nb of recursive call made by portal
+ */
 void	cast_a_ray(t_data *data, t_raycast *rc, int deep)
 {
 	init_ray_param(data->width, rc);

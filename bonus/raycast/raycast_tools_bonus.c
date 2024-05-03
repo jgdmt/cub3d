@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:37:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 14:43:42 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:48:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	correct_color(u_int8_t *pixel)
  * @param p1 the first reference vector
  * @param p2 the second reference vector
  */
-void	rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2)
+void	rot_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2)
 {
 	t_vector	temp;
 
@@ -112,21 +112,26 @@ void	my_mlx_put_pixel(t_data *data, int x, int y, uint32_t color)
  */
 void	get_tex_ptr(t_data *data, t_raycast *rc)
 {
-	if (rc->ipos.x >= rc->player.pos.x && rc->side == 0)
+	t_portal	*pl;
+
+	pl = rc->player.portal;
+	if (rc->ipos.x >= rc->player.pos.x && !rc->side)
 		rc->t = data->map->ea;
-	if (rc->ipos.x < rc->player.pos.x && rc->side == 0)
+	if (rc->ipos.x < rc->player.pos.x && !rc->side)
 		rc->t = data->map->we;
-	if (rc->ipos.y >= rc->player.pos.y && rc->side == 1)
+	if (rc->ipos.y >= rc->player.pos.y && rc->side)
 		rc->t = data->map->no;
-	if (rc->ipos.y < rc->player.pos.y && rc->side == 1)
+	if (rc->ipos.y < rc->player.pos.y && rc->side)
 		rc->t = data->map->so;
-	if (rc->ipos.y == rc->player.portal[0].pos.y && rc->ipos.x == rc->player.portal[0].pos.x && ((rc->player.portal[0].dir.x && rc->player.portal[0].dir.x * rc->ray_dir.x < 0 && rc->side == 0) || (rc->player.portal[0].dir.y && rc->player.portal[0].dir.y * rc->ray_dir.y < 0 && rc->side == 1)))
+	if (rc->ipos.y == pl[0].pos.y && rc->ipos.x == pl[0].pos.x && ((pl[0].dir.x \
+	&& pl[0].dir.x * rc->ray_dir.x < 0 && !rc->side) || (pl[0].dir.y && pl[0].dir.y * rc->ray_dir.y < 0 && rc->side)))
 		rc->t = data->portal[0];
-	if (rc->ipos.y == rc->player.portal[1].pos.y && rc->ipos.x == rc->player.portal[1].pos.x && ((rc->player.portal[1].dir.x && rc->player.portal[1].dir.x * rc->ray_dir.x < 0 && rc->side == 0) || (rc->player.portal[1].dir.y && rc->player.portal[1].dir.y * rc->ray_dir.y < 0 && rc->side == 1)))
+	if (rc->ipos.y == pl[1].pos.y && rc->ipos.x == pl[1].pos.x && ((pl[1].dir.x \
+	&& pl[1].dir.x * rc->ray_dir.x < 0 && !rc->side) || (pl[1].dir.y && pl[1].dir.y * rc->ray_dir.y < 0 && rc->side)))
 		rc->t = data->portal[1];
 	if (data->map->map[rc->ipos.y][rc->ipos.x] == '2')
 	{
-		if (data->map->door_stat == 0)
+		if (!data->map->door_stat)
 			rc->t = data->map->door_open;
 		else
 			rc->t = data->map->door_close;

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/02 17:17:43 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:06:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ int	main(int argc, char **argv)
 	t_data		data;
 	t_player	player;
 	mlx_t		*mlx;
-	pthread_t	thread;
-	pthread_t	inertia;
-	pthread_t	hud;
 
 	if (argc < 2 || argc > 11)
 		return (ft_printf(2, ERR_ARGV), 0);
@@ -35,13 +32,7 @@ int	main(int argc, char **argv)
 	data.buff = malloc(WIDTH * HEIGHT * sizeof(int));
 	if (!data.buff)
 		free_all(ERR_MALLOC, 2, &data);
-	if (pthread_create(&thread, NULL, raycast_threader, &data))
-		free_all(ERR_MUTEX, 2, &data);
-	if (pthread_create(&inertia, NULL, update_inertia, &data))
-		free_all(ERR_MUTEX, 2, &data);
-	if (pthread_create(&hud, NULL, thread_hud, &data))
-		free_all(ERR_MUTEX, 2, &data);
-	// printf("%i\n", data.img->instances[0].z);
+	init_thread(&data);
 	mlx_loop_hook(mlx, &hook, &data);
 	mlx_resize_hook(mlx, &resize_window, &data);
 	mlx_close_hook(mlx, &close_window, &data);

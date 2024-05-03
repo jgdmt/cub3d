@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/02 17:52:39 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:06:12 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,6 @@ typedef struct s_data
 	_Atomic int		exit;
 }	t_data;
 
-void		raycast(t_data *data);
 void		*raycast_threader(void *data);
 void		my_mlx_put_pixel(t_data *data, int x, int y, uint32_t color);
 void		put_to_screen(t_data *data);
@@ -298,7 +297,7 @@ void		floor_cast(t_data *data, t_player player);
 int			correct_color(u_int8_t *pixel);
 void		get_tex_ptr(t_data *data, t_raycast *rc);
 void		init(t_raycast *rc);
-void		rotate_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
+void		rot_vector(t_vector *v1, t_int_vector *p1, t_int_vector *p2);
 void		*update_inertia(void *gdata);
 void		print_ray(t_data *data, t_raycast *rc);
 void		sprite(t_data *data, t_raycast *rc);
@@ -311,11 +310,9 @@ void		cursor_screen(t_data *data);
 void		guns_screen(t_data *data);
 
 void		*thread_hud(void *gdata);
+void		init_thread(t_data *data);
 void		print_hp(t_data *data);
 void		get_minimap(t_data *data);
-
-double		find_sign1(t_portal to, t_portal from, double portal);
-double		find_sign2(t_portal to, t_portal from, double portal);
 
 t_data		init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv);
 t_map		init_map(void);

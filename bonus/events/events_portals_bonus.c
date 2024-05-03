@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 15:58:27 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:45:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,8 @@ void	tp(t_data *data, int to, int from)
 		data->player->pos.y = test.y + data->player->portal[to].pos.y + test_a * data->player->portal[to].dir.y;
 		printf("pos is now %lf %lf\n", data->player->pos.x, data->player->pos.y);
 	}
-	rotate_vector(&data->player->dir, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
-	rotate_vector(&data->player->plane, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
+	rot_vector(&data->player->dir, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
+	rot_vector(&data->player->plane, &data->player->portal[(to + 1) % 2].dir, &data->player->portal[to].dir);
 }
 
 /**
@@ -182,7 +182,6 @@ int	check_portal(t_data *data, int x, int y, t_vector v)
 
 	port = data->player->portal;
 	i = 0;
-	// printf("Going to %i %i\n", x, y);
 	if (data->map->door_stat == 1 && ((data->map->door_pos.y == y
 		&& (fabs(data->map->door_pos.x - x) == 1)) || (data->map->door_pos.x == x
 		&& (fabs(data->map->door_pos.y - y) == 1))))
