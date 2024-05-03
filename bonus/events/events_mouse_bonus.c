@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 18:52:34 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:33:19 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,48 +79,6 @@ void	mouse_move(void *gdata)
 	old_y = y;
 }
 
-void	debug(t_data *data)
-{
-	int i = 0;
-	int j;
-
-	printf("player pos %f %f, dir %f %f\n", data->player->pos.x, data->player->pos.y,
-	data->player->dir.x, data->player->dir.y);
-	printf("portal blue pos %d %d, dir %d %d\n", data->player->portal[BLUE].pos.x, data->player->portal[BLUE].pos.y,
-	data->player->portal[BLUE].dir.x, data->player->portal[BLUE].dir.y);
-	printf("portal orange pos %d %d, dir %d %d\n", data->player->portal[ORANGE].pos.x, data->player->portal[ORANGE].pos.y,
-	data->player->portal[ORANGE].dir.x, data->player->portal[ORANGE].dir.y);
-	while (data->map->map[i])
-	{
-		j = 0;
-		while (data->map->map[i][j])
-		{
-			if (i == floor(data->player->pos.y) && j == floor(data->player->pos.x))
-				printf("\e[0;32mP\e[0;37m");
-			else
-			{
-				if (data->map->nb_enemy > 0)
-				{
-					int k = 0;
-					while (k < data->map->nb_enemy)
-					{
-						if ((int) data->map->enemies[k].pos.x == j && (int) data->map->enemies[k].pos.y == i)
-							printf("\033[31mE\e[0;37m");
-						k++;
-					}
-					if (k == data->map->nb_enemy)
-						printf("%c", data->map->map[i][j]);
-				}
-				else
-					printf("%c", data->map->map[i][j]);
-			}
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
 /**
  * @brief Handles the actions with the mouse.
  * 
@@ -141,8 +99,6 @@ void	portals(mouse_key_t button, action_t act, modifier_key_t mod, void *dt)
 		shoot_portal(data, BLUE, ORANGE);
 	if (button == MLX_MOUSE_BUTTON_RIGHT && act == MLX_PRESS && data->inv == 0)
 		shoot_portal(data, ORANGE, BLUE);
-	if (button == MLX_MOUSE_BUTTON_MIDDLE && mod == MLX_SHIFT && act == MLX_PRESS && data->inv == 0)
-		debug(data);
 	else if (button == MLX_MOUSE_BUTTON_MIDDLE && act == MLX_PRESS
 		&& data->inv == 0)
 		reset_portal(data);
