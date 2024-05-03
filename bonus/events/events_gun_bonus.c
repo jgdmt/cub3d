@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:36:49 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 17:59:20 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:51:54 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 int	is_enemy(t_data *data, int x, int y)
 {
-	int	i;
+	int		i;
+	t_enemy	*enemies;
 
 	i = 0;
+	enemies = data->map->enemies;
 	while (i < data->map->nb_enemy)
 	{
-		// printf("%i %d %i %d %i\n", i, (int) data->map->enemies[i].pos.x, x, (int) data->map->enemies[i].pos.y, y);
-		if (data->map->enemies[i].status && (int) data->map->enemies[i].pos.x == x && (int) data->map->enemies[i].pos.y == y)
+		if (enemies[i].status && (int)enemies[i].pos.x == x \
+		&& (int)enemies[i].pos.y == y)
 			return (i);
 		i++;
 	}
@@ -45,14 +47,12 @@ static int	dda_enemy(t_data *data, t_raycast *rc)
 			rc->ipos.y += rc->step.y;
 			rc->side = 1;
 		}
-		if (data->map->map[rc->ipos.y][rc->ipos.x] == '1' || data->map->map[rc->ipos.y][rc->ipos.x] == '2')
+		if (data->map->map[rc->ipos.y][rc->ipos.x] == '1' \
+		|| data->map->map[rc->ipos.y][rc->ipos.x] == '2')
 			return (-1);
-		else
-		{
-			i = is_enemy(data, rc->ipos.x, rc->ipos.y);
-			if (i >= 0)
-				return (i);
-		}
+		i = is_enemy(data, rc->ipos.x, rc->ipos.y);
+		if (i >= 0)
+			return (i);
 	}
 }
 
@@ -66,37 +66,6 @@ int	get_enemy_ray(t_data *data, t_raycast *rc)
 	step_init(rc);
 	return (dda_enemy(data, rc));
 }
-
-/**
- * @brief Unfinished function.
- * 
- * @param map 
- * @param rc 
- * @return int 
- */
-// int	is_enemy(t_player *player, t_map *map, t_raycast *rc)
-// {
-// 	int		i;
-// 	double	delta;
-// 	double	p;
-
-// 	// y = mx + p -> y = ()
-// 	i = 0;
-// 	delta = (rc->ipos.y - player->pos.y) / (rc->ipos.x - player->pos.x);
-// 	p = rc->ipos.y - rc->ipos.x * delta;
-// 	// printf("%d %d %f %f\n", rc->ipos.x, rc->ipos.y, rc->ray_dir.x, rc->ray_dir.y);
-// 	while (i < map->nb_enemy)
-// 	{
-// 		printf("%i %i %f %f %f %i\n", i, map->enemies[i].status, map->enemies[i].pos.y, delta * map->enemies[i].pos.x + p,  floor(fabs(map->enemies[i].pos.y - delta * map->enemies[i].pos.x + p)), floor(fabs(map->enemies[i].pos.y - delta * map->enemies[i].pos.x + p)) < 1);
-// 		if (map->enemies[i].status && floor(fabs(map->enemies[i].pos.y - delta * map->enemies[i].pos.x + p)) < 1)
-// 			return (i);
-// 		// if (map->enemies[i].status && map->enemies[i].pos.x == rc->ipos.x
-// 		// 	&& map->enemies[i].pos.y == rc->ipos.y)
-// 		// 	return (i);
-// 		i++;
-// 	}
-// 	return (-1);
-// }
 
 void	*gun_shot(void *gdata)
 {
@@ -112,7 +81,6 @@ void	*gun_shot(void *gdata)
 		i++;
 		ft_usleep(80);
 	}
-	// ft_usleep(80);
 	data->gun[4]->enabled = false;
 	data->gun[0]->enabled = true;
 	data->gun_shot = 0;
@@ -138,7 +106,6 @@ void	shoot(t_data *data)
 	if (data->map->nb_enemy == 0)
 		return ;
 	i = get_enemy_ray(data, &rc);
-	// printf("i %i\n", i);
 	if (i >= 0)
 	{
 		printf("But... What are you doing? Stop it!\n");

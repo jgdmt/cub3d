@@ -2,7 +2,7 @@ SRCS			:=	main.c raycast.c bis.c cardinal_handler.c free.c parsing.c parsing_get
 
 SRCB_HUD		:=  main_bonus.c health_bar_bonus.c minimap_bonus.c
 SRCB_INIT		:=	gunstext_bonus.c data_bonus.c map_bonus.c player_bonus.c assets_bonus.c datatext_bonus.c thread.c
-SRCB_EVENTS		:=	menu_bonus.c bonus.c gun_bonus.c level_bonus.c portals_bonus.c mouse_bonus.c resize_bonus.c
+SRCB_EVENTS		:=	bonus.c math_bonus.c move_bonus.c tp_bonus.c menu_bonus.c gun_bonus.c level_bonus.c portals_bonus.c mouse_bonus.c resize_bonus.c
 SRCB_PARSING	:=	bonus.c get_bonus.c utils_bonus.c split_bonus.c getbon_bonus.c
 SRCB_RAYCAST	:=	bonus.c cast_bonus.c floor_sky_casting_bonus.c portal_bonus.c tools_bonus.c main_bonus.c sprite_bonus.c
 SRCB			:=  main_bonus.c free_bonus.c loading_bonus.c  inertia_bonus.c thread_tools_bonus.c

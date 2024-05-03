@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread_tools_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:01:36 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 19:04:50 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:14:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_usleep(size_t msec)
 		usleep(500);
 }
 
-void	*attack_sprite(void *genemy)
+void	*atk_sprite(void *genemy)
 {
 	t_enemy *enemy;
 

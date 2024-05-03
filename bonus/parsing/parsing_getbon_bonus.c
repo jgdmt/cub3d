@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_getbon_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:06:01 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 14:54:32 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:39:15 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	check_enemy(t_data *data)
 	i = 0;
 	while (map->enemies && i < map->nb_enemy)
 	{
-		// printf("check p %f %f\ne %f %f\n %f %f\n", data->player->pos.x - 0.5f, data->player->pos.y - 0.5f, map->enemies[i]->pos.x, map->enemies[i]->pos.y, fabs(data->player->pos.x - 0.5f - map->enemies[i]->pos.x), fabs(data->player->pos.y - 0.5f - map->enemies[i]->pos.y));
 		if (fabs(data->player->pos.x - 0.5f - map->enemies[i].pos.x) < 2
 			&& fabs(data->player->pos.y - 0.5f - map->enemies[i].pos.y) < 2)
 			free_all(ERR_ENCLOSE, 2, data);

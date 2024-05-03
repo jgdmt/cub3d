@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 19:16:49 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:17:54 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,6 +345,7 @@ void		change_map(t_data *data, int np);
 void		menu(t_data *data);
 void		menu_events(mlx_key_data_t key, void *gdata);
 void		show_menu(t_data *data, bool show);
+void		tp(t_data *data, int to, int from);
 void		portals(mouse_key_t b, action_t act, modifier_key_t mod, void *dt);
 void		reset_portal(t_data *data);
 int			check_portal(t_data *data, int x, int y, t_vector v);
@@ -352,10 +353,13 @@ void		shoot_portal(t_data *data, int type, int other);
 void		shoot(t_data *data);
 void		scroll(double xdelta, double ydelta, void *gdata);
 void		mouse_move(void *gdata);
-float		angle(double ux, double uy, double vx, double vy);
 void		move(t_data *data);
-void		*attack_sprite(void *gdata);
+void		*atk_sprite(void *gdata);
 
-void        door_event(t_data *data);
+float		angle(double ux, double uy, double vx, double vy);
+void		rotate(double speed, t_data *data);
+void		get_ray(t_data *data, t_raycast *rc);
+
+void		door_event(t_data *data);
 
 #endif // CUB3D_BONUS_H

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_level_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 14:28:05 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:26:37 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	change_map(t_data *data, int np)
 	else
 		free_all(MSG_END, 1, data);
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
+	data->hud.img->enabled = true;
 	data->exit = 0;
 }
 

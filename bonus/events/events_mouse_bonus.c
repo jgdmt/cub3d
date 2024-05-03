@@ -6,13 +6,12 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:53:39 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/04/30 20:33:05 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:52:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-void	rotate(double speed, t_data *data);
 void	get_ray(t_data *data, t_raycast *rc);
 
 /**
