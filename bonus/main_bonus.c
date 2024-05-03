@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 12:33:41 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:36:17 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int argc, char **argv)
 	mlx_set_cursor_mode(mlx, MLX_MOUSE_DISABLED);
 	mlx_mouse_hook(mlx, &portals, &data);
 	mlx_scroll_hook(mlx, &scroll, &data);
-	mlx_key_hook(mlx, &menu_events, &data);
+	mlx_key_hook(mlx, &key_events, &data);
 	mlx_loop(mlx);
 	return (0);
 }

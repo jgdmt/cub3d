@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 12:06:12 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:36:01 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,5 +354,7 @@ void		scroll(double xdelta, double ydelta, void *gdata);
 void		mouse_move(void *gdata);
 float		angle(double ux, double uy, double vx, double vy);
 void		move(t_data *data);
+
+void        door_event(t_data *data);
 
 #endif // CUB3D_BONUS_H
