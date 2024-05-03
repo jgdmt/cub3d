@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 12:06:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:33:41 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+void	door(mlx_key_data_t key, void *gdata)
+{
+	t_data	*data;
+
+	data = gdata;
+	if (key.key == MLX_KEY_E && key.action == MLX_PRESS)
+		door_event(data);
+}
+
+void	key_events(mlx_key_data_t key, void *gdata)
+{
+	menu_events(key, gdata);
+	door(key, gdata);
+}
 
 int	main(int argc, char **argv)
 {

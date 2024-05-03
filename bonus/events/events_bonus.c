@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 17:59:11 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:19:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	door_event(t_data *data)
 			data->map->door_stat = 0;
 		else
 			data->map->door_stat = 1;
-		ft_usleep(250);
+		// ft_usleep(250);
 	}
 }
 
@@ -193,8 +193,8 @@ void	hook(void *gdata)
 		change_map(data, 1);
 	if (data->exit)
 		return ;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_E))
-		door_event(data);
+	// if (mlx_is_key_down(data->mlx, MLX_KEY_E))
+	// 	door_event(data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 		rotate(RSPEED, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
