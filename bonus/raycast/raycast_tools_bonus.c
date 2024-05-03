@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:37:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 11:48:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:34:20 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,15 @@ void	get_tex_ptr(t_data *data, t_raycast *rc)
 	if (rc->ipos.y < rc->player.pos.y && rc->side)
 		rc->t = data->map->so;
 	if (rc->ipos.y == pl[0].pos.y && rc->ipos.x == pl[0].pos.x && ((pl[0].dir.x \
-	&& pl[0].dir.x * rc->ray_dir.x < 0 && !rc->side) || (pl[0].dir.y && pl[0].dir.y * rc->ray_dir.y < 0 && rc->side)))
+	&& pl[0].dir.x * rc->ray_dir.x < 0 && !rc->side) \
+	|| (pl[0].dir.y && pl[0].dir.y * rc->ray_dir.y < 0 && rc->side)))
 		rc->t = data->portal[0];
 	if (rc->ipos.y == pl[1].pos.y && rc->ipos.x == pl[1].pos.x && ((pl[1].dir.x \
-	&& pl[1].dir.x * rc->ray_dir.x < 0 && !rc->side) || (pl[1].dir.y && pl[1].dir.y * rc->ray_dir.y < 0 && rc->side)))
+	&& pl[1].dir.x * rc->ray_dir.x < 0 && !rc->side) \
+	|| (pl[1].dir.y && pl[1].dir.y * rc->ray_dir.y < 0 && rc->side)))
 		rc->t = data->portal[1];
-	if (data->map->map[rc->ipos.y][rc->ipos.x] == '2')
-	{
-		if (!data->map->door_stat)
-			rc->t = data->map->door_open;
-		else
-			rc->t = data->map->door_close;
-	}
+	if (data->map->map[rc->ipos.y][rc->ipos.x] == '2' && !data->map->door_stat)
+		rc->t = data->map->door_open;
+	else if (data->map->map[rc->ipos.y][rc->ipos.x] == '2')
+		rc->t = data->map->door_close;
 }

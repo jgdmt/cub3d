@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:01:36 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 15:05:02 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:04:50 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,6 @@ void	*attack_sprite(void *genemy)
 	t_enemy *enemy;
 
 	enemy = genemy;
-	// (void) gdata;
-	// write(1, "a\n", 2);
-	
-	// enemy = (t_enemy *)(((void **)gdata)[0]);
-	// write(1, "b\n", 2);
-	// textures = (mlx_image_t **)(((void **)gdata)[1]);
-	// write(1, "c\n", 2);
 	enemy->flag = 1;
 	enemy->t = enemy->en_sprites[3];
 	ft_usleep(250);

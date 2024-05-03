@@ -1,12 +1,12 @@
-SRCS			:=	main.c raycast.c raycast_bis.c cardinal_handler.c free.c parsing.c parsing_get.c parsing_utils.c events.c parsing_split.c
+SRCS			:=	main.c raycast.c bis.c cardinal_handler.c free.c parsing.c parsing_get.c parsing_utils.c events.c parsing_split.c
 
-SRCB_HUD		:=  main_hud_bonus.c health_bar_bonus.c minimap_bonus.c
-SRCB_INIT		:=	init_gunstext_bonus.c init_data_bonus.c init_map_bonus.c init_player_bonus.c init_assets_bonus.c init_datatext_bonus.c init_thread.c
-SRCB_EVENTS		:=	events_menu_bonus.c events_bonus.c events_gun_bonus.c events_level_bonus.c events_portals_bonus.c events_mouse_bonus.c events_resize_bonus.c
-SRCB_PARSING	:=	parsing_bonus.c parsing_get_bonus.c parsing_utils_bonus.c parsing_split_bonus.c parsing_getbon_bonus.c
-SRCB_RAYCAST	:=	raycast_bonus.c raycast_cast_bonus.c raycast_floor_sky_casting_bonus.c raycast_portal_bonus.c raycast_tools_bonus.c raycast_main_bonus.c sprite_bonus.c
+SRCB_HUD		:=  main_bonus.c health_bar_bonus.c minimap_bonus.c
+SRCB_INIT		:=	gunstext_bonus.c data_bonus.c map_bonus.c player_bonus.c assets_bonus.c datatext_bonus.c thread.c
+SRCB_EVENTS		:=	menu_bonus.c bonus.c gun_bonus.c level_bonus.c portals_bonus.c mouse_bonus.c resize_bonus.c
+SRCB_PARSING	:=	bonus.c get_bonus.c utils_bonus.c split_bonus.c getbon_bonus.c
+SRCB_RAYCAST	:=	bonus.c cast_bonus.c floor_sky_casting_bonus.c portal_bonus.c tools_bonus.c main_bonus.c sprite_bonus.c
 SRCB			:=  main_bonus.c free_bonus.c loading_bonus.c  inertia_bonus.c thread_tools_bonus.c
-SRCS_BONUS		:=	$(SRCB) $(addprefix init/,$(SRCB_INIT)) $(addprefix events/,$(SRCB_EVENTS)) $(addprefix HUD/,$(SRCB_HUD)) $(addprefix parsing/,$(SRCB_PARSING)) $(addprefix raycast/,$(SRCB_RAYCAST)) 
+SRCS_BONUS		:=	$(SRCB) $(addprefix init/init_,$(SRCB_INIT)) $(addprefix events/events_,$(SRCB_EVENTS)) $(addprefix HUD/hud_,$(SRCB_HUD)) $(addprefix parsing/parsing_,$(SRCB_PARSING)) $(addprefix raycast/raycast_,$(SRCB_RAYCAST)) 
 
 OBJS			:= $(SRCS:.c=.o)
 

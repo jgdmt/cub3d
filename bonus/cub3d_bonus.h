@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 14:53:59 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:16:49 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,6 @@ typedef struct s_player
 
 typedef struct s_hud
 {
-	int			width;
-	int			height;
 	int			hidden;
 	mlx_image_t	*menu[12];
 	mlx_image_t	*img;

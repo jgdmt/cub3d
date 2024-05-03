@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:27:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 14:14:35 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:24:18 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ void	init_data_texture(t_data *data, mlx_t *mlx)
 
 void	init_data_hud(t_data *data)
 {
-	data->hud.width = 360;
-	data->hud.height = 375;
-	data->hud.img = mlx_new_image(data->mlx, data->hud.width, data->hud.height);
-	data->hud.buff = malloc(data->hud.width * (data->hud.height - 15) * \
+	data->hud.img = mlx_new_image(data->mlx,360, 375);
+	data->hud.buff = malloc(data->hud.img->width * (data->hud.img->height - 15) * \
 	sizeof(uint32_t));
 	if (!data->hud.img || !data->hud.buff)
 		free_all(ERR_MALLOC, 2, data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loading_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:23:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/04/29 19:09:58 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:04:06 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	cursor_screen(t_data *data)
 		curr = 2;
 	else
 		curr = 3;
-	// printf("cursor %i %i %i %i %i %i\n", curr, data->cursor[0]->enabled, data->cursor[1]->enabled, data->cursor[2]->enabled, data->cursor[3]->enabled, data->cursor[4]->enabled);
 	data->cursor[i]->enabled = false;
 	data->cursor[curr]->enabled = true;
 	i = curr;

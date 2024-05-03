@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite_bonus.c                                     :+:      :+:    :+:   */
+/*   raycast_sprite_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:11:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 13:50:43 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:57:56 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	init_var(t_data *data, t_raycast *rc, t_sprites *sp, int i)
 	sp->size.x = abs((int)(data->width / (sp->transform.y))) / 2;
 }
 
-static void	put_sprite(t_data *data, t_raycast *rc, t_sprites *sp, int j)
+static void	put_sprite(t_data *data, t_raycast *rc, t_sprites *sp, t_enemy en)
 {
 	t_int_vector	i;
 	int				d;
@@ -85,7 +85,7 @@ static void	put_sprite(t_data *data, t_raycast *rc, t_sprites *sp, int j)
 	while (i.x < sp->draw_end.x)
 	{
 		sp->tex.x = (i.x - (-sp->size.x / 2 + sp->sprite_screen)) \
-		* data->map->enemies[data->map->sp_order[j]].t->width / sp->size.x;
+		* en.t->width / sp->size.x;
 		i.y = sp->draw_start.y;
 		if (sp->transform.y > 0 && i.x > 0 && i.x < data->width && \
 			sp->transform.y < rc->z_buff_x[i.x])
@@ -93,9 +93,9 @@ static void	put_sprite(t_data *data, t_raycast *rc, t_sprites *sp, int j)
 			while (i.y < sp->draw_end.y)
 			{
 				d = (i.y - sp->z_cor) * 256 + (sp->size.y - data->height) * 128;
-				sp->tex.y = ((d * data->map->enemies[data->map->sp_order[j]].t->height) / sp->size.y) / 256;
-				sp->color = correct_color(&data->map->enemies[data->map->sp_order[j]].t->pixels[
-						(data->map->enemies[data->map->sp_order[j]].t->width * sp->tex.y + sp->tex.x) * 4]);
+				sp->tex.y = ((d * en.t->height) / sp->size.y) / 256;
+				sp->color = correct_color(&en.t->pixels[
+						(en.t->width * sp->tex.y + sp->tex.x) * 4]);
 				if (sp->color)
 					data->buff[(i.y * data->width) + i.x] = sp->color;
 				(i.y)++;
@@ -129,6 +129,6 @@ void	sprite(t_data *data, t_raycast *rc)
 		sp.draw_end.x = sp.size.x / 2 + sp.sprite_screen;
 		if (sp.draw_end.x >= data->width)
 			sp.draw_end.x = data->width - 1;
-		put_sprite(data, rc, &sp, i);
+		put_sprite(data, rc, &sp, data->map->enemies[data->map->sp_order[i]]);
 	}
 }

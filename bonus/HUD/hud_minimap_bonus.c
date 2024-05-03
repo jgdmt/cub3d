@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minimap_bonus.c                                    :+:      :+:    :+:   */
+/*   hud_minimap_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:51:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 16:02:11 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:44:29 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-void	put_rot_px(t_int_vector coord, uint32_t color, float theta, t_data *data)
+void	put_rot_px(t_int_vector coord, uint32_t color, float th, t_data *data)
 {
-	t_int_vector	coord_rot;
-	int	mid_x = data->hud.width / 2;
-	int	mid_y = (data->hud.height - 15) / 2;
-	coord_rot.x = (coord.x - mid_x) * cos(theta) + (coord.y - mid_y) * -sin(theta);
-	coord_rot.y = (coord.x - mid_x) * sin(theta) + (coord.y - mid_y) * cos(theta);
-	if (coord_rot.x + mid_x <  0 || coord_rot.y + mid_y < 0 || coord_rot.x + mid_x >= data->hud.width || coord_rot.y + mid_y >= data->hud.height - 15)
-		return;
-	if (((uint32_t *)data->hud.img->pixels)[((coord_rot.y + mid_y) * data->hud.width) + (coord_rot.x + mid_x)] == 0xff0000ff)
+	t_int_vector	rot;
+	t_int_vector	mid;
+	t_int_vector	img;
+	uint32_t		*px;
+
+	img.x = data->hud.img->width;
+	img.y = data->hud.img->height;
+	px = (uint32_t *)data->hud.img->pixels;
+	mid.x = img.x / 2;
+	mid.y = (img.y - 15) / 2;
+	rot.x = (coord.x - mid.x) * cos(th) + (coord.y - mid.y) * -sin(th);
+	rot.y = (coord.x - mid.x) * sin(th) + (coord.y - mid.y) * cos(th);
+	if (rot.x + mid.x < 0 || rot.y + mid.y < 0 || rot.x + mid.x >= img.x \
+	|| rot.y + mid.y >= img.y - 15)
 		return ;
-	((uint32_t *)data->hud.img->pixels)[((coord_rot.y + mid_y) * data->hud.width) + (coord_rot.x + mid_x)] = color;
-	// ((uint32_t *)data->hud.img->pixels)[(coord.y * data->hud.img->width) + coord.x] = color;
+	if (px[((rot.y + mid.y) * img.x) + (rot.x + mid.x)] == 0xff0000ff)
+		return ;
+	px[((rot.y + mid.y) * img.x) + (rot.x + mid.x)] = color;
 }
 
 static void	put_buff(mlx_image_t *hud, uint32_t *buff, t_data *data)
@@ -34,9 +41,9 @@ static void	put_buff(mlx_image_t *hud, uint32_t *buff, t_data *data)
 	double			distance;
 	float			theta;
 
-	i.y = 0;
+	i.y = -1;
 	theta = angle(data->player->dir.x, data->player->dir.y, 0, -1);
-	while ((u_int32_t)i.y < hud->height - 15)
+	while ((u_int32_t)++i.y < hud->height - 15)
 	{
 		i.x = 0;
 		while ((u_int32_t)i.x < hud->width)
@@ -49,12 +56,10 @@ static void	put_buff(mlx_image_t *hud, uint32_t *buff, t_data *data)
 				if (distance <= -1.00000000)
 					put_rot_px(i, buff[(i.y * hud->width) + i.x], theta, data);
 				else
-					// data->hud.img->pixels[(i.y * data->hud.img->width) + i.x] =  0xff000000;
 					put_rot_px(i, 0xff000000, theta, data);
 			}
 			(i.x)++;
 		}
-		(i.y)++;
 	}
 }
 
@@ -77,35 +82,35 @@ void	get_minimap(t_data *data)
 	t_vector	pos;
 	t_vector	temp_pos;
 	t_vector	delta;
-	int			i;
+	uint32_t	i;
 	int			j;
 
-	delta.x = (double)10 / data->hud.width;
-	delta.y = (double)10 / (data->hud.height - 15);
+	delta.x = (double)10 / data->hud.img->width;
+	delta.y = (double)10 / (data->hud.img->height - 15);
 	temp_pos = data->player->pos;
 	pos = temp_pos;
 	pos.y -= 5;
 	i = 0;
-	while (i < data->hud.height - 15)
+	while (i < data->hud.img->height - 15)
 	{
-		j = data->hud.width - 1;
+		j = data->hud.img->width - 1;
 		pos.x = temp_pos.x - 5;
 		while (j >= 0)
 		{
 			if (pos.x < 0 || pos.y < 0 || !data->map->map[(int)floor(pos.y)][(int)floor(pos.x)])
-				data->hud.buff[(data->hud.width * i) + j] = 0xff898989;
+				data->hud.buff[(data->hud.img->width * i) + j] = 0xff898989;
 			else if (data->map->map[(int)floor(pos.y)][(int)floor(pos.x)] == '1')
-				data->hud.buff[(data->hud.width * i) + j] = 0xff898989;
+				data->hud.buff[(data->hud.img->width * i) + j] = 0xff898989;
 			else if (data->map->map[(int)floor(pos.y)][(int)floor(pos.x)] == '0')
-				data->hud.buff[(data->hud.width * i) + j] = 0xffbbdbf5;
+				data->hud.buff[(data->hud.img->width * i) + j] = 0xffbbdbf5;
 			else
-				data->hud.buff[(data->hud.width * i) + j] = 0xff898989;
+				data->hud.buff[(data->hud.img->width * i) + j] = 0xff898989;
 			if (data->player->portal[0].status == 1 && data->player->portal[0].pos.x == floor(pos.x) && data->player->portal[0].pos.y == floor(pos.y))
-				data->hud.buff[(data->hud.width * i) + j] = 0xfffcdc04;
+				data->hud.buff[(data->hud.img->width * i) + j] = 0xfffcdc04;
 			else if (data->player->portal[1].status == 1 && data->player->portal[1].pos.x == floor(pos.x) && data->player->portal[1].pos.y == floor(pos.y))
-				data->hud.buff[(data->hud.width * i) + j] = 0xff049cfc;
+				data->hud.buff[(data->hud.img->width * i) + j] = 0xff049cfc;
 			if (is_enemy2(data, pos.x, pos.y))
-				data->hud.buff[(data->hud.width * i) + j] = 0xff000000;
+				data->hud.buff[(data->hud.img->width * i) + j] = 0xff000000;
 			
 			if ((pos.x > 0 && pos.y > 0 && data->map->map[(int)floor(pos.y)][(int)floor(pos.x)]) || pos.x < 0)
 				pos.x += delta.x;
@@ -116,14 +121,4 @@ void	get_minimap(t_data *data)
 		i++;
 	}
 	put_buff(data->hud.img, data->hud.buff, data);
-
-
-	unsigned int k = data->hud.img->width / 2 - data->hud.img->width / 40;
-	while (k < data->hud.img->width / 2 + data->hud.img->width / 40)
-	{
-	unsigned	int l = data->hud.img->width / 2 - data->hud.img->width / 40;
-		while (l < data->hud.img->width / 2 + data->hud.img->width / 40)
-			mlx_put_pixel(data->hud.img, k, l++, 0xff0000ff);
-		k++;
-	}
 }

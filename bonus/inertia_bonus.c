@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:24:32 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 18:19:14 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:03:49 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	moving(t_data *data, t_enemy *enemy, int i)
 		enemy->pos.y += 0.02f;
 }
 
-void	move_enemy(t_data *data)
+static void	refresh_enemy(t_data *data)
 {
 	int			i;
 	static int	j = 0;
@@ -72,6 +72,23 @@ void	move_enemy(t_data *data)
 		k = 0;
 }
 
+static void inertia(t_data *data)
+{
+	data->player->posz += data->player->vz;
+	if (data->player->posz > 0)
+		data->player->vz -= INERTIA * 100;
+	if (data->player->posz == 0)
+		data->player->vz = 0;
+	if (data->player->vx > 10e-8)
+		data->player->vx -= INERTIA;
+	else if (data->player->vx < -10e-8)
+		data->player->vx += INERTIA;
+	if (data->player->vy > 10e-8)
+		data->player->vy -= INERTIA;
+	else if (data->player->vy < -10e-8)
+		data->player->vy += INERTIA;
+}
+
 /**
  * @brief Slow the player by tends data::player::vx and data::player::vy towards 0.
  * 
@@ -89,22 +106,9 @@ void	*update_inertia(void *gdata)
 	{
 		if (!data->exit)
 		{
-			// check_death(data);
-			move_enemy(data);
+			refresh_enemy(data);
 			move(data);
-			data->player->posz += data->player->vz;
-			if (data->player->posz > 0)
-				data->player->vz -= INERTIA * 100;
-			if (data->player->posz == 0)
-				data->player->vz = 0;
-			if (data->player->vx > 10e-8)
-				data->player->vx -= INERTIA;
-			else if (data->player->vx < -10e-8)
-				data->player->vx += INERTIA;
-			if (data->player->vy > 10e-8)
-				data->player->vy -= INERTIA;
-			else if (data->player->vy < -10e-8)
-				data->player->vy += INERTIA;
+			inertia(data);
 		}
 		time = get_time();
 		if (time - last_time < 13)
