@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 12:19:55 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:00:50 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ float	angle(double ux, double uy, double vx, double vy)
 int	collide_enemy(t_data *data, double x, double y)
 {
 	int	i;
-
+	pthread_t	sprite;
 	i = 0;
 	while (i < data->map->nb_enemy)
 	{
@@ -88,6 +88,7 @@ int	collide_enemy(t_data *data, double x, double y)
 		{
 		// printf("enemy, player, diff %lf %lf %lf %lf %lf %lf\n", data->map->enemies[i].pos.x, data->map->enemies[i].pos.y, x, y, data->map->enemies[i].pos.x - x, data->map->enemies[i].pos.y - y);
 		// printf("life %i\n", data->player->hp);
+			pthread_create(&sprite, NULL, attack_sprite, (void *)&data->map->enemies[i]);
 			data->player->hp -= 11;
 			return (1);
 		}

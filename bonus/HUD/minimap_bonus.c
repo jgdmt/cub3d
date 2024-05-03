@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:51:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/02 17:45:35 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:02:11 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	put_rot_px(t_int_vector coord, uint32_t color, float theta, t_data *data)
 	coord_rot.y = (coord.x - mid_x) * sin(theta) + (coord.y - mid_y) * cos(theta);
 	if (coord_rot.x + mid_x <  0 || coord_rot.y + mid_y < 0 || coord_rot.x + mid_x >= data->hud.width || coord_rot.y + mid_y >= data->hud.height - 15)
 		return;
+	if (((uint32_t *)data->hud.img->pixels)[((coord_rot.y + mid_y) * data->hud.width) + (coord_rot.x + mid_x)] == 0xff0000ff)
+		return ;
 	((uint32_t *)data->hud.img->pixels)[((coord_rot.y + mid_y) * data->hud.width) + (coord_rot.x + mid_x)] = color;
 	// ((uint32_t *)data->hud.img->pixels)[(coord.y * data->hud.img->width) + coord.x] = color;
 }
@@ -114,5 +116,14 @@ void	get_minimap(t_data *data)
 		i++;
 	}
 	put_buff(data->hud.img, data->hud.buff, data);
-	mlx_put_pixel(data->hud.img, data->hud.img->width / 2, (data->hud.img->height - 15) / 2, 0xff0000ff);
+
+
+	unsigned int k = data->hud.img->width / 2 - data->hud.img->width / 40;
+	while (k < data->hud.img->width / 2 + data->hud.img->width / 40)
+	{
+	unsigned	int l = data->hud.img->width / 2 - data->hud.img->width / 40;
+		while (l < data->hud.img->width / 2 + data->hud.img->width / 40)
+			mlx_put_pixel(data->hud.img, k, l++, 0xff0000ff);
+		k++;
+	}
 }

@@ -8,7 +8,7 @@ EA ./maps/pics/purplestone.png
 F ./maps/pics/floor_128.png
 C ./maps/pics/ceilling_128.png
 
-E ./maps/pics/purplestone.png,./maps/pics/purplestone.png,./maps/pics/purplestone.png,./maps/pics/purplestone.png
+E ./maps/pics/purplestone.png,./maps/pics/bluestone.png,./maps/pics/colorstone.png,./maps/pics/greystone.png
 
 1111111111111111111111
 1000000002100000000001

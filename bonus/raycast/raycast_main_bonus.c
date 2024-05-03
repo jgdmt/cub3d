@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:22:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 11:38:08 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:51:00 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ static void	raycast(t_data *data)
 		rc.z_buff_x[rc.x] = rc.perp_wall_dist;
 		rc.x += 1;
 	}
-	if (data->map->nb_enemy)
-		sprite(data, &rc);
+	sprite(data, &rc);
 	put_to_screen(data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:10:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 11:09:53 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:26:16 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,27 +72,25 @@ void	portal(t_data *data, t_raycast *rc, int from, int deep)
 	t_raycast	cam;
 	double		delta;
 
+	cam = *rc;
 	if (rc->side == 0)
 	{
-		delta = rc->player.pos.y + (rc->side_dist.x - rc->delta_dist.x) * rc->ray_dir.y - rc->player.portal[from].pos.y;
-		rc->portal_first_ray += (rc->side_dist.x - rc->delta_dist.x);
+		delta = rc->player.pos.y + (rc->side_dist.x - rc->delta_dist.x) \
+		* rc->ray_dir.y - rc->player.portal[from].pos.y;
+		cam.portal_first_ray += (rc->side_dist.x - rc->delta_dist.x);
 	}
 	else
 	{
-		delta = rc->player.pos.x + (rc->side_dist.y - rc->delta_dist.y) * rc->ray_dir.x - rc->player.portal[from].pos.x;
-		rc->portal_first_ray += (rc->side_dist.y - rc->delta_dist.y);
+		delta = rc->player.pos.x + (rc->side_dist.y - rc->delta_dist.y) \
+		* rc->ray_dir.x - rc->player.portal[from].pos.x;
+		cam.portal_first_ray += (rc->side_dist.y - rc->delta_dist.y);
 	}
-	cam = *rc;
 	cam.player.dir = cam.ray_dir;
 	init_cam(&cam.player, rc, from, delta);
 	cast_a_ray(data, &cam, deep);
 	if (cam.print == false)
 		print_ray(data, &cam);
 	rc->t = data->portal[2 + from];
-	if (rc->side == 0)
-		rc->portal_first_ray -= (rc->side_dist.x - rc->delta_dist.x);
-	else
-		rc->portal_first_ray -= (rc->side_dist.y - rc->delta_dist.y);
 	print_ray(data, rc);
 	rc->print = true;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 12:36:01 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:53:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,12 @@ typedef struct s_portal
  */
 typedef struct s_enemy
 {
-	t_vector	pos;
-	bool		status;
-	int			life;
+	t_vector		pos;
+	bool			status;
+	int				life;
+	_Atomic bool	flag;
+	mlx_image_t		*t;
+	mlx_image_t		**en_sprites;
 }	t_enemy;
 
 /**
@@ -146,7 +149,7 @@ typedef struct s_hud
 	int			height;
 	int			hidden;
 	mlx_image_t	*menu[12];
-	mlx_image_t *img;
+	mlx_image_t	*img;
 	uint32_t	*buff;
 }	t_hud;
 
@@ -235,7 +238,6 @@ typedef struct s_map
 	mlx_image_t	**en_sprites;
 	mlx_image_t	*door_open;
 	mlx_image_t	*door_close;
-	mlx_image_t	*en_sp;
 	t_enemy		*enemies;
 	int			*sp_order;
 	double		*sp_distance;
@@ -354,6 +356,7 @@ void		scroll(double xdelta, double ydelta, void *gdata);
 void		mouse_move(void *gdata);
 float		angle(double ux, double uy, double vx, double vy);
 void		move(t_data *data);
+void		*attack_sprite(void *gdata);
 
 void        door_event(t_data *data);
 
