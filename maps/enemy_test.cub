@@ -6,7 +6,7 @@ WE ./maps/pics/blank_wall_128.png
 
 EA                 ./maps/pics/iron_128.png
 F ./maps/pics/floor_128.png
-E ./maps/pics/barrel.png,./maps/pics/pillar.png,./maps/pics/barrel.png,./maps/pics/pillar.png
+E NONE
 
 C ./maps/pics/ceilling_128.png
 
