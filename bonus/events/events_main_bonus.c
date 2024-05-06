@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/06 17:49:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:52:47 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ void	hook(void *gdata)
 	t_data			*data;
 
 	data = gdata;
-	if (data->player->hp <= 0)
-		free_all(MSG_DEATH, 1, data);
-	if (data->exit == 3)
+	init_mouse(data);
+	if (data->exit == LOADING)
 		change_map(data, 1);
 	if (data->exit)
 		return ;
+	if (data->player->hp <= 0)
+		free_all(MSG_DEATH, 1, data);
 	if (data->player->hp <= 0)
 		free_all(MSG_DEATH, 1, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
