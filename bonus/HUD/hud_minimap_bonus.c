@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:51:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 20:42:20 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:39:21 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,21 @@ static void	put_buff(mlx_image_t *hud, uint32_t *buff, t_data *data)
 	}
 }
 
-int	is_enemy2(t_data *data, double i, double j)
-{
-	int	k;
+// int	is_enemy2(t_data *data, double i, double j)
+// {
+// 	int	k;
 
-	k = 0;
-	while (k < data->map->nb_enemy)
-	{
-		if (data->map->enemies[k].status && \
-		fabs(data->map->enemies[k].pos.x - i) < 0.5f \
-		&& fabs(data->map->enemies[k].pos.y - j) < 0.5f)
-			return (1);
-		k++;
-	}
-	return (0);
-}
+// 	k = 0;
+// 	while (k < data->map->nb_enemy)
+// 	{
+// 		if (data->map->enemies[k].status && \
+// 		fabs(data->map->enemies[k].pos.x - i) < 0.5f \
+// 		&& fabs(data->map->enemies[k].pos.y - j) < 0.5f)
+// 			return (1);
+// 		k++;
+// 	}
+// 	return (0);
+// }
 
 void	get_minimap(t_data *data)
 {
@@ -111,7 +111,7 @@ void	get_minimap(t_data *data)
 				data->hud.buff[(data->hud.img->width * i) + j] = 0xfffcdc04;
 			else if (data->player->portal[1].status == 1 && data->player->portal[1].pos.x == floor(pos.x) && data->player->portal[1].pos.y == floor(pos.y))
 				data->hud.buff[(data->hud.img->width * i) + j] = 0xff049cfc;
-			if (is_enemy2(data, pos.x, pos.y))
+			if (is_enemy(data, pos.x, pos.y, -1) != -1)
 				data->hud.buff[(data->hud.img->width * i) + j] = 0xff000000;
 			
 			if ((pos.x > 0 && pos.y > 0 && data->map->map[(int)floor(pos.y)][(int)floor(pos.x)]) || pos.x < 0)
