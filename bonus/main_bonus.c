@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:09:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 20:38:58 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:21:28 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int	main(int argc, char **argv)
 	map = init_map();
 	player = init_player();
 	data = init_data(&map, &player, mlx, argv);
-	parsing(argv[1], &data);
 	data.buff = malloc(WIDTH * HEIGHT * sizeof(int));
 	if (!data.buff)
 		free_all(ERR_MALLOC, 2, &data);
+	parsing(argv[1], &data);
 	init_thread(&data);
 	mlx_set_cursor_mode(mlx, MLX_MOUSE_DISABLED);
 	play(&data);

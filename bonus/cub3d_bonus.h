@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 12:38:52 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:10:28 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@
 # define ERR_FILEEXTENSION "File extension invalid."
 
 # define MSG_END "You reached the end. Congratulations, your cake is waiting."
+# define MSG_START "What are you doing? You are going the wrong way."
 # define MSG_DEATH "Tests results: humans are too weak. NB: upgrade to robots."
 # define MSG_GAMEQUIT "You've already ragequit? Not surprising coming from you."
 # define MSG_NEXT1_1 "I should praise you for the finally flawless parsing.\n"
@@ -64,6 +65,11 @@
 # define MSG_NEXT1_3 "I heard humans were happy with meaningless words.\n"
 # define MSG_NEXT2_1 "What, were you expecting more? Get over yourself."
 # define MSG_NEXT2_2 " It's just parsing.\n"
+
+# define RUN 0
+# define MENU 1
+# define EXIT 2
+# define LOADING 3
 
 /**
  * @brief Simple 2D vector structure that uses doubles.
@@ -233,7 +239,7 @@ typedef struct s_map
 	mlx_image_t	*ea;
 	mlx_image_t	*floor_color;
 	mlx_image_t	*ceiling_color;
-	mlx_image_t	**en_sprites;
+	mlx_image_t	*en_sprites[5];
 	mlx_image_t	*door_open;
 	mlx_image_t	*door_close;
 	t_enemy		*enemies;
@@ -275,6 +281,7 @@ typedef struct s_data
 	mlx_image_t		*portal_gun[10];
 	mlx_image_t		*gun[5];
 	uint32_t		*buff;
+	pthread_t		threads[3];
 	size_t			time;
 	char			**argv;
 	int				inv;
@@ -323,6 +330,7 @@ void		init_portals_text(t_data *data, mlx_t *mlx);
 void		init_cursor_text(t_data *data, mlx_t *mlx);
 void		init_door_text(t_data *data, mlx_t *mlx);
 void		init_hud_text(t_data *data, mlx_t *mlx);
+void		init_hud(t_data *data);
 void		init_portalgun_text(t_data *data, mlx_t *mlx);
 void		init_gun_text(t_data *data, mlx_t *mlx);
 

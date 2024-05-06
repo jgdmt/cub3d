@@ -6,11 +6,29 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:51:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 14:31:40 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:56:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
+
+int	is_enemy(t_data *data, double x, double y, int j)
+{
+	int		i;
+	t_enemy	*enemies;
+
+	i = 0;
+	enemies = data->map->enemies;
+	while (i < data->map->nb_enemy)
+	{
+		if (i != j && enemies[i].status \
+		&& fabs(enemies[i].pos.x - x) <= 0.5f \
+		&& fabs(enemies[i].pos.y - y) <= 0.5f)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 
 void	put_rot_px(t_int_vector coord, uint32_t color, float th, t_data *data)
 {

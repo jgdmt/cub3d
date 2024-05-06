@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:23:56 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 15:36:21 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:14:45 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,8 @@ void	get_sprite(char *line, int start, t_data *data, t_map *map)
 		free_all(ERR_MALLOC, 2, data);
 	if (ft_strslen(text) != 4)
 		free_ex(data, ERR_NBENTEX, text, 1);
-	map->en_sprites = ft_calloc(ft_strslen(text) + 1, sizeof(mlx_image_t *));
-	if (!map->en_sprites)
-		free_ex(data, ERR_MALLOC, text, 1);
 	i = 0;
-	while (text[i])
+	while (i < 4)
 	{
 		map->en_sprites[i] = check_texture(text[i], 0, data);
 		if (!map->en_sprites[i])

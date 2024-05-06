@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loading_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:23:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 20:35:29 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:32:07 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	loading_screen(t_data *data)
 {
 	static int	exit = 0;
 
-	if (data->exit == 2 && exit != 2)
+	if (data->exit == LOADING && exit != 2)
 	{
 		data->loading->enabled = true;
 		data->img->enabled = false;
 		exit = 2;
 	}
-	else if (data->exit != 2 && exit == 2)
+	else if (data->exit != LOADING && exit == 2)
 	{
 		exit = 0;
 		data->loading->enabled = false;

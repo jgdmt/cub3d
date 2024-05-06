@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_main_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/06 12:26:37 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:16:53 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	hook(void *gdata)
 	t_data			*data;
 
 	data = gdata;
-	if (data->player->hp <= 0)
-		free_all(MSG_DEATH, 1, data);
-	if (data->exit == 3)
+	if (data->exit == LOADING)
 		change_map(data, 1);
 	if (data->exit)
 		return ;
+	if (data->player->hp <= 0)
+		free_all(MSG_DEATH, 1, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 		rotate(RSPEED, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))

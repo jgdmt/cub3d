@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_portals_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 19:31:27 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:18:38 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	check_portal(t_data *data, int x, int y, t_vector v)
 		&& fabs(data->map->door_pos.x - x) == 1) || \
 		(data->map->door_pos.x == x && fabs(data->map->door_pos.y - y) == 1)))
 	{
-		data->exit = 3;
+		data->exit = LOADING;
 		return (1);
 	}
 	while (i < 2)

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:24:32 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 14:32:01 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:12:37 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	*update_inertia(void *gdata)
 
 	data = gdata;
 	last_time = get_time();
-	while (1)
+	while (data->exit != EXIT)
 	{
 		if (!data->exit)
 		{
@@ -105,4 +105,5 @@ void	*update_inertia(void *gdata)
 			ft_usleep(13 - (time - last_time));
 		last_time = time;
 	}
+	return (NULL);
 }

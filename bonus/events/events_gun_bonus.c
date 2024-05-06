@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   events_gun_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:36:49 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/06 12:49:47 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:59:48 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-int	is_enemy(t_data *data, double x, double y, int j)
+int	to_be_or_not_to_be(t_data *data, int x, int y)
 {
 	int		i;
 	t_enemy	*enemies;
@@ -21,9 +21,8 @@ int	is_enemy(t_data *data, double x, double y, int j)
 	enemies = data->map->enemies;
 	while (i < data->map->nb_enemy)
 	{
-		if (i != j && enemies[i].status \
-		&& fabs(enemies[i].pos.x - x) <= 0.5f \
-		&& fabs(enemies[i].pos.y - y) <= 0.5f)
+		if (enemies[i].status && (int)enemies[i].pos.x == x \
+		&& (int)enemies[i].pos.y == y)
 			return (i);
 		i++;
 	}
@@ -51,7 +50,7 @@ static int	dda_enemy(t_data *data, t_raycast *rc)
 		if (data->map->map[rc->ipos.y][rc->ipos.x] == '1' \
 		|| data->map->map[rc->ipos.y][rc->ipos.x] == '2')
 			return (-1);
-		i = is_enemy(data, rc->ipos.x, rc->ipos.y, -1);
+		i = to_be_or_not_to_be(data, rc->ipos.x, rc->ipos.y);
 		if (i >= 0)
 			return (i);
 	}

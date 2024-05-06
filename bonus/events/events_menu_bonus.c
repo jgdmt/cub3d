@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 19:19:34 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/02 14:12:29 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:14:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	menu_events(mlx_key_data_t key, void *gdata)
 		menu(data);
 		i = 0;
 	}
-	if (data->exit != 1)
+	if (data->exit != MENU)
 		return ;
 	old = i;
 	if (key.key == MLX_KEY_DOWN && key.action == MLX_PRESS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_main_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:00:32 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/06 12:27:25 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:28:24 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ static void	check_map(t_data *data, t_map *map)
 		i++;
 	}
 	map->maxy = i;
-	if (map->nb_enemy > 0 && !map->en_sprites)
+	if (map->nb_enemy > 0 && !map->en_sprites[0])
 		free_all(ERR_ENTEX, 2, data);
 	map->sp_distance = malloc(map->nb_enemy * sizeof(double));
 	map->sp_order = malloc(map->nb_enemy * sizeof(int));

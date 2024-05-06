@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_level_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:33:09 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 20:26:37 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:08:14 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	reinit_data(t_data *data)
 	data->player->pos.y = 0;
 	data->map->floor_color = 0;
 	data->map->ceiling_color = 0;
-	data->map->en_sprites = 0;
+	data->map->en_sprites[0] = 0;
+	data->map->en_sprites[4] = 0;
 	data->map->enemies = 0;
 	data->map->nb_enemy = 0;
 	data->map->max = 0;
@@ -52,21 +53,21 @@ void	reinit_data(t_data *data)
 void	change_map(t_data *data, int np)
 {
 	static int	i = 1;
-	t_map		*map;
 
-	data->exit = 2;
+	data->exit = LOADING;
 	ft_usleep(250);
-	map = data->map;
+	free_smap(data->mlx, data->map);
 	reinit_data(data);
-	free_smap(data->mlx, map);
 	i = i + np;
 	if (data->argv[i] && i > 0)
 		parsing(data->argv[i], data);
+	else if (i == 0)
+		free_all(MSG_START, 1, data);
 	else
 		free_all(MSG_END, 1, data);
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
 	data->hud.img->enabled = true;
-	data->exit = 0;
+	data->exit = RUN;
 }
 
 void	show_menu(t_data *data, bool show)
@@ -100,7 +101,7 @@ void	menu(t_data *data)
 	if (!data->exit)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
-		data->exit = 1;
+		data->exit = MENU;
 		ft_usleep(250);
 		i = -1;
 		while (++i < data->img->width * data->img->height)
@@ -108,10 +109,10 @@ void	menu(t_data *data)
 		data->hud.img->enabled = false;
 		show_menu(data, 1);
 	}
-	else if (data->exit == 1)
+	else if (data->exit == MENU)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
-		data->exit = 0;
+		data->exit = RUN;
 		show_menu(data, 0);
 		data->hud.img->enabled = true;
 		ft_usleep(250);

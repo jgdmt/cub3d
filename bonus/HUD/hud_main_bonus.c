@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hud_main_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:32:23 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 20:39:49 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:15:20 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*thread_hud(void *gdata)
 
 	data = gdata;
 	last_time = get_time();
-	while (1)
+	while (data->exit != EXIT)
 	{
 		if (!data->exit)
 		{
@@ -32,4 +32,5 @@ void	*thread_hud(void *gdata)
 			ft_usleep(13 - (time - last_time));
 		last_time = time;
 	}
+	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_getbon_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:06:01 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 18:39:15 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:31:05 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	fill_enemy_infos(t_data *data, double x, double y)
 	map->enemies[i].life = 3;
 	map->enemies[i].flag = 0;
 	map->enemies[i].t = map->en_sprites[0];
-	map->enemies[i].en_sprites = map->en_sprites;
+	map->enemies[i].en_sprites = (mlx_image_t **) map->en_sprites;
 	data->map->map[(int)floor(y)][(int)floor(x)] = '0';
 	i++;
 	if (i == data->map->nb_enemy)

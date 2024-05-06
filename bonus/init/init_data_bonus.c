@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:27:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 20:39:44 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:41:53 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	init_data_hud(t_data *data)
 		free_all(ERR_MALLOC, 2, data);
 	if (mlx_image_to_window(data->mlx, data->hud.img, 0, 0) == -1)
 		free_all(ERR_MLX, 2, data);
+	init_hud(data);
 }
 
 t_data	init_data(t_map *map, t_player *player, mlx_t *mlx, char **argv)

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:04:02 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/03 12:08:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:44:29 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 void	init_thread(t_data *data)
 {
-	pthread_t	thread;
-	pthread_t	inertia;
-	pthread_t	hud;
-
-	if (pthread_create(&thread, NULL, raycast_threader, data))
+	if (pthread_create(&data->threads[0], NULL, raycast_threader, data))
 		free_all(ERR_MUTEX, 2, data);
-	if (pthread_create(&inertia, NULL, update_inertia, data))
+	if (pthread_create(&data->threads[1], NULL, update_inertia, data))
 		free_all(ERR_MUTEX, 2, data);
-	if (pthread_create(&hud, NULL, thread_hud, data))
+	if (pthread_create(&data->threads[2], NULL, thread_hud, data))
 		free_all(ERR_MUTEX, 2, data);
 }
