@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inertia_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:24:32 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 12:47:56 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:32:01 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,6 @@ void	anim_enemy(t_enemy *enemy, int *i)
 	if (*i > 2)
 		*i = 0;
 }
-
-// int	is_enemy3(t_data *data, double x, double y, int j)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < data->map->nb_enemy)
-// 	{
-// 		if (i != j && data->map->enemies[i].status \
-// 		&& (fabs(data->map->enemies[i].pos.x - x) < 1 \
-// 		&& fabs(data->map->enemies[i].pos.y - y) < 1))
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
 
 void	moving(t_data *data, t_enemy *enemy, int i)
 {
@@ -112,7 +96,7 @@ void	*update_inertia(void *gdata)
 	{
 		if (!data->exit)
 		{
-			// refresh_enemy(data);
+			refresh_enemy(data);
 			move(data);
 			inertia(data);
 		}

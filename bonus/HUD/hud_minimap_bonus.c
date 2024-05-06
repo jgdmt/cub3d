@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hud_minimap_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:51:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 12:39:21 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:31:40 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,64 +63,56 @@ static void	put_buff(mlx_image_t *hud, uint32_t *buff, t_data *data)
 	}
 }
 
-// int	is_enemy2(t_data *data, double i, double j)
-// {
-// 	int	k;
+static void	fill_map(t_data *data, t_vector *pos, t_vector delt, t_int_vector i)
+{
+	t_portal	*pl;
 
-// 	k = 0;
-// 	while (k < data->map->nb_enemy)
-// 	{
-// 		if (data->map->enemies[k].status && \
-// 		fabs(data->map->enemies[k].pos.x - i) < 0.5f \
-// 		&& fabs(data->map->enemies[k].pos.y - j) < 0.5f)
-// 			return (1);
-// 		k++;
-// 	}
-// 	return (0);
-// }
+	pl = data->player->portal;
+	if (pos->x < 0 || pos->y < 0 || !data->map->map[(int)floor(pos->y)] \
+	[(int)floor(pos->x)])
+		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xff898989;
+	else if (data->map->map[(int)floor(pos->y)][(int)floor(pos->x)] == '1')
+		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xff898989;
+	else if (data->map->map[(int)floor(pos->y)][(int)floor(pos->x)] == '0')
+		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xffbbdbf5;
+	else
+		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xff898989;
+	if (pl[0].status == 1 && pl[0].pos.x == floor(pos->x) && pl[0].pos.y \
+	== floor(pos->y))
+		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xfffcdc04;
+	else if (pl[1].status == 1 && pl[1].pos.x == floor(pos->x) && pl[1].pos.y \
+	== floor(pos->y))
+		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xff049cfc;
+	if (is_enemy(data, pos->x, pos->y, -1) != -1)
+		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xff000000;
+	if ((pos->x > 0 && pos->y > 0 && data->map->map[(int)floor(pos->y)] \
+	[(int)floor(pos->x)]) || pos->x < 0)
+		pos->x += delt.x;
+}
 
 void	get_minimap(t_data *data)
 {
-	t_vector	pos;
-	t_vector	temp_pos;
-	t_vector	delta;
-	uint32_t	i;
-	int			j;
+	t_vector		pos;
+	t_vector		temp_pos;
+	t_vector		delta;
+	t_int_vector	i;
 
 	delta.x = (double)10 / data->hud.img->width;
 	delta.y = (double)10 / (data->hud.img->height - 15);
 	temp_pos = data->player->pos;
 	pos = temp_pos;
 	pos.y -= 5;
-	i = 0;
-	while (i < data->hud.img->height - 15)
+	i.x = 0;
+	while ((unsigned int)i.x < data->hud.img->height - 15)
 	{
-		j = data->hud.img->width - 1;
+		i.y = data->hud.img->width;
 		pos.x = temp_pos.x - 5;
-		while (j >= 0)
-		{
-			if (pos.x < 0 || pos.y < 0 || !data->map->map[(int)floor(pos.y)][(int)floor(pos.x)])
-				data->hud.buff[(data->hud.img->width * i) + j] = 0xff898989;
-			else if (data->map->map[(int)floor(pos.y)][(int)floor(pos.x)] == '1')
-				data->hud.buff[(data->hud.img->width * i) + j] = 0xff898989;
-			else if (data->map->map[(int)floor(pos.y)][(int)floor(pos.x)] == '0')
-				data->hud.buff[(data->hud.img->width * i) + j] = 0xffbbdbf5;
-			else
-				data->hud.buff[(data->hud.img->width * i) + j] = 0xff898989;
-			if (data->player->portal[0].status == 1 && data->player->portal[0].pos.x == floor(pos.x) && data->player->portal[0].pos.y == floor(pos.y))
-				data->hud.buff[(data->hud.img->width * i) + j] = 0xfffcdc04;
-			else if (data->player->portal[1].status == 1 && data->player->portal[1].pos.x == floor(pos.x) && data->player->portal[1].pos.y == floor(pos.y))
-				data->hud.buff[(data->hud.img->width * i) + j] = 0xff049cfc;
-			if (is_enemy(data, pos.x, pos.y, -1) != -1)
-				data->hud.buff[(data->hud.img->width * i) + j] = 0xff000000;
-			
-			if ((pos.x > 0 && pos.y > 0 && data->map->map[(int)floor(pos.y)][(int)floor(pos.x)]) || pos.x < 0)
-				pos.x += delta.x;
-			j--;
-		}
-		if ((pos.x > 0 && pos.y > 0 && data->map->map[(int)ceil(pos.y)]) || pos.y < 0)
+		while (--i.y >= 0)
+			fill_map(data, &pos, delta, i);
+		if ((pos.x > 0 && pos.y > 0 && \
+		data->map->map[(int)ceil(pos.y)]) || pos.y < 0)
 			pos.y += delta.y;
-		i++;
+		i.x++;
 	}
 	put_buff(data->hud.img, data->hud.buff, data);
 }
