@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:22:30 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/06 17:38:33 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:59:37 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void	free_array(char **array)
+static void	free_array(char **array)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	destroy(mlx_t *mlx, mlx_image_t	**imgs, int i)
+static void	destroy(mlx_t *mlx, mlx_image_t	**imgs, int i)
 {
 	int	j;
 
@@ -58,6 +58,21 @@ void	free_smap(mlx_t *mlx, t_map *map)
 		mlx_delete_image(mlx, map->floor_color);
 }
 
+static void	free_data_img(t_data *data)
+{
+	if (data->map->door_open)
+		mlx_delete_image(data->mlx, data->map->door_open);
+	if (data->map->door_close)
+		mlx_delete_image(data->mlx, data->map->door_close);
+	if (data->loading)
+		mlx_delete_image(data->mlx, data->loading);
+	destroy(data->mlx, data->cursor, 5);
+	destroy(data->mlx, data->portal, 4);
+	destroy(data->mlx, data->hud.menu, 12);
+	destroy(data->mlx, data->portal_gun, 10);
+	destroy(data->mlx, data->gun, 5);
+}
+
 void	free_all(char *str, int out, t_data *data)
 {
 	if (data->exit == EXIT)
@@ -72,18 +87,9 @@ void	free_all(char *str, int out, t_data *data)
 	pthread_join(data->threads[1], NULL);
 	pthread_join(data->threads[2], NULL);
 	free_smap(data->mlx, data->map);
-	if (data->map->door_open)
-		mlx_delete_image(data->mlx, data->map->door_open);
-	if (data->map->door_close)
-		mlx_delete_image(data->mlx, data->map->door_close);
-	destroy(data->mlx, data->cursor, 5);
-	destroy(data->mlx, data->portal, 4);
-	destroy(data->mlx, data->hud.menu, 12);
-	destroy(data->mlx, data->portal_gun, 10);
-	destroy(data->mlx, data->gun, 5);
-	if (data->loading)
-		mlx_delete_image(data->mlx, data->loading);
-	free(data->hud.buff);
+	free_data_img(data);
+	if (data->hud.buff)
+		free(data->hud.buff);
 	if (data->buff)
 		free(data->buff);
 	if (data->hud.img)

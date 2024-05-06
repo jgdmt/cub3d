@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_main_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/06 17:52:47 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:00:05 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	hook(void *gdata)
 		change_map(data, 1);
 	if (data->exit)
 		return ;
-	if (data->player->hp <= 0)
-		free_all(MSG_DEATH, 1, data);
 	if (data->player->hp <= 0)
 		free_all(MSG_DEATH, 1, data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
