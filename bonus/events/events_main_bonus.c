@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:10:19 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/06 16:16:53 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:49:24 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ void	door_event(t_data *data)
 	}
 }
 
+void	init_mouse(t_data *data)
+{
+	static int	i = 0;
+
+	if (i >= 2)
+		return ;
+	else
+	{
+		mlx_set_mouse_pos(data->mlx, WIDTH / 2, HEIGHT / 2);
+		i++;
+	}
+}
+
 /**
  * @brief Handles the possible inputs.
  * 
@@ -40,7 +53,9 @@ void	hook(void *gdata)
 	t_data			*data;
 
 	data = gdata;
-	if (data->exit == LOADING)
+	if (data->player->hp <= 0)
+		free_all(MSG_DEATH, 1, data);
+	if (data->exit == 3)
 		change_map(data, 1);
 	if (data->exit)
 		return ;
