@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:51:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 16:56:59 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:41:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	put_rot_px(t_int_vector coord, uint32_t color, float th, t_data *data)
 	if (rot.x + mid.x < 0 || rot.y + mid.y < 0 || rot.x + mid.x >= img.x \
 	|| rot.y + mid.y >= img.y - 15)
 		return ;
-	if (px[((rot.y + mid.y) * img.x) + (rot.x + mid.x)] == 0xff0000ff)
+	if (px[((rot.y + mid.y) * img.x) + (rot.x + mid.x)] == 0xff000000)
 		return ;
 	px[((rot.y + mid.y) * img.x) + (rot.x + mid.x)] = color;
 }
@@ -102,7 +102,7 @@ static void	fill_map(t_data *data, t_vector *pos, t_vector delt, t_int_vector i)
 	== floor(pos->y))
 		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xff049cfc;
 	if (is_enemy(data, pos->x, pos->y, -1) != -1)
-		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xff000000;
+		data->hud.buff[(data->hud.img->width * i.x) + i.y] = 0xff0000ff;
 	if ((pos->x > 0 && pos->y > 0 && data->map->map[(int)floor(pos->y)] \
 	[(int)floor(pos->x)]) || pos->x < 0)
 		pos->x += delt.x;

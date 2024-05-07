@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:36:21 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 14:41:20 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:44:52 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_hud(t_data *data)
 	{
 		j = img->width / 2 - img->width / 40;
 		while (j < img->width / 2 + img->width / 40)
-			mlx_put_pixel(img, i, j++, 0xff0000ff);
+			mlx_put_pixel(img, i, j++, 0x000000ff);
 		i++;
 	}
 }
@@ -116,5 +116,7 @@ void	resize_window(int32_t width, int32_t height, void *gdata)
 	data = gdata;
 	data->width = width;
 	data->height = height;
+	data->exit = 4;
 	resize_render(data);
+	data->exit = MENU;
 }
