@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 17:10:28 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:14:57 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,7 +369,7 @@ void		rotate(double speed, t_data *data);
 void		get_ray(t_data *data, t_raycast *rc);
 
 void		door_event(t_data *data);
-
+int			collide_enemy(t_data *data, double x, double y);
 int			is_enemy(t_data *data, double x, double y, int j);
 
 #endif // CUB3D_BONUS_H

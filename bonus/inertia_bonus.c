@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:24:32 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/06 16:12:37 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:26:48 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,26 @@ void	moving(t_data *data, t_enemy *enemy, int i)
 		enemy->pos.y += 0.02f;
 }
 
-void	refresh_enemy(t_data *data)
+void	refresh_enemy(t_data *data, int i)
 {
-	int			i;
-	static int	j = 0;
-	static int	k = 0;
+	pthread_t		sprite;
+	static int		j = 0;
+	static int		k = 0;
+	static size_t	time = 0;
 
-	i = 0;
 	if (k < 100)
 		k++;
 	while (i < data->map->nb_enemy)
 	{
 		moving(data, &data->map->enemies[i], i);
+		if (collide_enemy(data, data->player->pos.x, data->player->pos.y) \
+		&& labs((long int)(time - get_time())) > 300)
+		{
+			pthread_create(&sprite, NULL, atk_sprite, \
+			(void *)&data->map->enemies[i]);
+			data->player->hp -= 3;
+			time = get_time();
+		}
 		if (k == 100)
 			anim_enemy(&data->map->enemies[i], &j);
 		i++;
@@ -96,7 +104,7 @@ void	*update_inertia(void *gdata)
 	{
 		if (!data->exit)
 		{
-			refresh_enemy(data);
+			refresh_enemy(data, 0);
 			move(data);
 			inertia(data);
 		}

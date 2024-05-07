@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   events_move_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:47:44 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 20:11:28 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:04:46 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-static int	collide_enemy(t_data *data, double x, double y)
+int	collide_enemy(t_data *data, double x, double y)
 {
 	int			i;
-	pthread_t	sprite;
 	t_map		*map;
 
 	i = 0;
@@ -25,8 +24,6 @@ static int	collide_enemy(t_data *data, double x, double y)
 		if (map->enemies[i].status && fabs(map->enemies[i].pos.x - x) <= 0.5f \
 		&& fabs(map->enemies[i].pos.y - y) <= 0.5f)
 		{
-			pthread_create(&sprite, NULL, atk_sprite, (void *)&map->enemies[i]);
-			data->player->hp -= 11;
 			return (1);
 		}
 		i++;
@@ -34,21 +31,22 @@ static int	collide_enemy(t_data *data, double x, double y)
 	return (0);
 }
 
-static int	move_xy(t_data *data, t_int_vector sign, t_vector v, t_vector pos)
+static void	move_xy(t_data *data, t_int_vector sign, t_vector v, t_vector pos)
 {
 	char	**map;
 
 	map = data->map->map;
 	if (data->map->nb_enemy && collide_enemy(data, pos.x + v.x, pos.y + v.y))
 	{
-		data->player->vy = -data->player->vy * 2;
-		data->player->vx = -data->player->vx * 2;
-		return (1);
+		if (fabs((double)data->player->vy) < MAXV)
+			data->player->vy = -data->player->vy * 2;
+		if (fabs((double)data->player->vx) < MAXV)
+			data->player->vx = -data->player->vx * 2;
 	}
-	else if (map[(int)(pos.y + sign.y * 0.1 + v.y * 2)] \
-	[(int)(pos.x + sign.x + v.x * 2)] == '0'
-		&& map[(int)(pos.y - sign.y * 0.1 + v.y * 2)] \
-		[(int)(pos.x - sign.x + v.x * 2)] == '0')
+	if (map[(int)(pos.y + sign.y * 0.1 + v.y * 2)] \
+	[(int)(pos.x + sign.x + v.x * 2)] == '0' \
+	&& map[(int)(pos.y - sign.y * 0.1 + v.y * 2)] \
+	[(int)(pos.x - sign.x + v.x * 2)] == '0')
 	{
 		data->player->pos.x += v.x;
 		data->player->pos.y += v.y;
@@ -56,11 +54,10 @@ static int	move_xy(t_data *data, t_int_vector sign, t_vector v, t_vector pos)
 	else
 	{
 		if (check_portal(data, floor(pos.x + v.x), floor(pos.y), v))
-			return (1);
+			return ;
 		data->player->vx = data->player->vx * (v.y != 0);
 		data->player->vy = data->player->vy * (v.x != 0);
 	}
-	return (0);
 }
 
 /**

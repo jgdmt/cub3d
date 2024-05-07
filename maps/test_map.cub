@@ -1,10 +1,10 @@
-NO ./maps/pics/eagle.png
-SO       ./maps/pics/mossy.png
+NO ./maps/pics/north_128.png
+SO       ./maps/pics/south_128.png
 
 
-WE ./maps/pics/wood.png
+WE ./maps/pics/blank_wall_128.png
 
-EA                 ./maps/pics/redbrick.png
+EA                 ./maps/pics/iron_128.png
 F ./maps/pics/barrel.png
 E NONE
 C ./maps/pics/barrel.png

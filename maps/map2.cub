@@ -1,10 +1,10 @@
-NO ./maps/pics/colorstone.png
-SO       ./maps/pics/greystone.png
+NO ./maps/pics/north_128.png
+SO       ./maps/pics/south_128.png
 
 
-WE ./maps/pics/bluestone.png
+WE ./maps/pics/blank_wall_128.png
 
-EA ./maps/pics/purplestone.png
+EA                 ./maps/pics/iron_128.png
 F ./maps/pics/floor_128.png
 C ./maps/pics/ceilling_128.png
 
