@@ -5,18 +5,19 @@ SO       ./maps/pics/south_128.png
 WE ./maps/pics/blank_wall_128.png
 
 EA                 ./maps/pics/iron_128.png
-F ./maps/pics/floor_128.png
-C ./maps/pics/ceilling_128.png
 
-E ./maps/pics/purplestone.png,./maps/pics/bluestone.png,./maps/pics/colorstone.png,./maps/pics/greystone.png
+F ./maps/pics/floor_128.png
+E ./maps/pics/turret/turret0.png,./maps/pics/turret/turret1.png,./maps/pics/turret/turret2.png,./maps/pics/turret/turret3.png
+
+C ./maps/pics/ceilling_128.png
 
 1111111111111111111111
 1000000002100000000001
 1000000000000000000001
-1000000000000000003001
+1000000000000000000001
 1100000000000000000001
 100000000N000000000001
-1100000000000000003001
+1100000000000000000001
 1000000000000000000001
 1000000010101000000001
 1111111111111111111111

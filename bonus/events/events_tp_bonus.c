@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_tp_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:55:15 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/03 19:23:22 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:13:08 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	tp(t_data *data, int to, int from)
 	if (p->portal[to].dir.x < 0 || p->portal[to].dir.y < 0)
 		test_a = 0.1;
 	else
-		test_a = 1;
+		test_a = 1.1;
 	if (abs(p->portal[to].dir.x) != abs(p->portal[from].dir.x))
 	{
 		tmp = test.x;

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:22:41 by vilibert          #+#    #+#             */
-/*   Updated: 2024/05/07 11:14:57 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:30:25 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,7 +356,7 @@ void		show_menu(t_data *data, bool show);
 void		tp(t_data *data, int to, int from);
 void		portals(mouse_key_t b, action_t act, modifier_key_t mod, void *dt);
 void		reset_portal(t_data *data);
-int			check_portal(t_data *data, int x, int y, t_vector v);
+int			check_portal(t_data *data, double x, double y, t_vector v);
 void		shoot_portal(t_data *data, int type, int other);
 void		shoot(t_data *data);
 void		scroll(double xdelta, double ydelta, void *gdata);

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:08:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/05/06 16:18:38 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:35:29 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,28 +92,28 @@ void	shoot_portal(t_data *data, int type, int other)
  * @param y coordonate y of the future player position
  * @return int 
  */
-int	check_portal(t_data *data, int x, int y, t_vector v)
+int	check_portal(t_data *data, double x, double y, t_vector v)
 {
 	t_portal	*port;
 	int			i;
 
 	port = data->player->portal;
 	i = 0;
-	if (data->map->door_stat == 1 && ((data->map->door_pos.y == y \
-		&& fabs(data->map->door_pos.x - x) == 1) || \
-		(data->map->door_pos.x == x && fabs(data->map->door_pos.y - y) == 1)))
+	if (data->map->door_stat == 1 && \
+	fabs(data->map->door_pos.x + 0.5 - x) < 0.7 \
+	&& fabs(data->map->door_pos.y + 0.5 - y) < 0.7)
 	{
 		data->exit = LOADING;
 		return (1);
 	}
 	while (i < 2)
 	{
-		if (port[i].status && ((port[i].pos.y == y && (abs(port[i].pos.x - x) \
-		== 1)) || (port[i].pos.x == x && (abs(port[i].pos.y - y) == 1))))
-			if (port[(i + 1) % 2].status)
-				if ((port[i].dir.x && port[i].dir.x * v.x < 0) \
+		if (port[i].status && port[(i + 1) % 2].status \
+		&& (fabs(port[i].pos.x + 0.5 - x) < 0.56 \
+		&& fabs(port[i].pos.y + 0.5 - y) < 0.56))
+			if ((port[i].dir.x && port[i].dir.x * v.x < 0) \
 				|| (port[i].dir.y && port[i].dir.y * v.y < 0))
-					return (tp(data, (i + 1) % 2, i), 1);
+				return (tp(data, (i + 1) % 2, i), 1);
 		i++;
 	}
 	return (0);
