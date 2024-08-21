@@ -2,6 +2,9 @@
 
 Welcome to **Cub3d**, a 3D game engine built using the raycasting technique, inspired by the classic FPS game Wolfenstein. This project is developed as part of the 42 school curriculum and serves as an introduction to basic 3D rendering principle.
 
+## 🎬 Video
+[![Watch the video](https://img.youtube.com/vi/WQD2mrOBF8Y/maxresdefault.jpg)](https://youtu.be/WQD2mrOBF8Y)
+
 ## ✨ Project Overview
 
 ### 📚 Features
